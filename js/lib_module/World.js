@@ -26,9 +26,8 @@ define(['Class'], function(my){
         },
 
         doInTime: function(time, callback){
-        
             this.timeLocal += this.game.FRAMEDURATION;
-            
+
             if(this.timeLocal > time ){
                 this.timeLocal = 0;
                 callback.call(this);

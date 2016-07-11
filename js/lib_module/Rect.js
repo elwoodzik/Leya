@@ -4,6 +4,7 @@ define(['Class', 'require', 'lib_module/Body'], function(my, require, Body){
 		constructor: function(game, x, y, width, height, strokeStyle, fillStyle){
 			
 			this.game = game; 
+			this.used = true;
 			this.x = x || 0; 
 			this.y = y || 0; 
 		
@@ -32,7 +33,7 @@ define(['Class', 'require', 'lib_module/Body'], function(my, require, Body){
 		},
 
 		draw: function(lag){
-			this.useRotate();
+			//this.useRotate();
 			if (this.previousX) {
 	            this.renderX = (this.x - this.previousX) * lag + this.previousX;
 	        } else {
@@ -44,7 +45,7 @@ define(['Class', 'require', 'lib_module/Body'], function(my, require, Body){
 	            this.renderY = this.y;
 	        }
 			this.game.ctx.strokeStyle = this.strokeStyle;
-            this.game.ctx.lineWidth = 2;
+            this.game.ctx.lineWidth = 1;
             this.game.ctx.fillStyle = this.fillStyle;
             
 			if(this.strokeStyle === null){
@@ -65,10 +66,12 @@ define(['Class', 'require', 'lib_module/Body'], function(my, require, Body){
 	        this.y += this.body.velocity.y;
 		},
 
-		destroy: function(array){
-			this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-			array.splice(array.indexOf(this), 1);
-		},
+		 destroy: function(array){
+            this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
+            if(Array.isArray(array)){
+                array.splice(array.indexOf(this), 1);
+            }
+        },
 		
 		worldBounce: function(){
             if(this.body.colideWorldSide){
@@ -91,9 +94,9 @@ define(['Class', 'require', 'lib_module/Body'], function(my, require, Body){
             }
         },
 		
-		useRotate: function(){
-             this.body.angle += this.body.angleSpeed; 
-        }
+		// useRotate: function(){
+  //            this.body.angle += this.body.angleSpeed; 
+  //       }
 	});
 
 	return Rect;

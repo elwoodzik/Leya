@@ -19,6 +19,7 @@ define(['Class'], function(my){
             this.game.canvas.addEventListener("mousemove", function(e){that.mouseMove(e)});
             this.game.canvas.addEventListener("mousedown", function(e){that.mouseDown(e)});
             this.game.canvas.addEventListener("touchstart", function(e){that.touchDown(e)});
+            this.game.canvas.addEventListener("touchmove", function(e){that.touchMove(e)});
             this.game.canvas.addEventListener("touchend", function(e){that.mouseUp(e)});
             this.game.canvas.addEventListener("mouseup", function(e){that.mouseUp(e)});
         },
@@ -35,12 +36,22 @@ define(['Class'], function(my){
 
         touchDown: function(e){
             //
-            this.mouseX = e.touches[0].clientX / this.game.scale1 + this.game.camera.xScroll;
+            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 + this.game.camera.xScroll;
             this.mouseY = e.touches[0].clientY / this.game.scale1 + this.game.camera.yScroll;
 
             this.click = !this.down;
             this.down = true;
             this.trig = false;
+        },
+
+        touchMove: function(e){ 
+            e.preventDefault();
+            //
+            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 + this.game.camera.xScroll;
+            this.mouseY = e.touches[0].clientY / this.game.scale1 + this.game.camera.yScroll;
+            //
+            //this.click = (e.which == 1 && !this.down);
+            //this.down = (e.which == 1);
         },
 
         mouseDown: function(e){

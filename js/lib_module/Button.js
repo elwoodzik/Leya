@@ -6,6 +6,7 @@ define(['Class'], function(my){
             //Button.Super.apply(this, arguments); 
             //
             this.game = game;
+            this.used = true;
             //
             this.x = x;
             this.y = y;

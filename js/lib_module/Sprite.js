@@ -2,13 +2,15 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
    var id = 0; 
    var Sprite = my.Class({
         constructor: function(game, x, y, key, width, height){
-            var Loader = require('module/Loader');
+            this.loader = require('module/Loader');
+
+            this.used = true;
             this.game = game; 
             this.x = x || 0; 
             this.y = y || 0; 
             this.key = key;
             this.zIndex = 3;
-            this.image = Loader.assetManager.get(this.key); 
+            this.image = this.loader.assetManager.get(this.key); 
 
             this.fW = this.image.width || 500;
             this.fH = this.image.height || 500; 
@@ -17,6 +19,8 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
             this.currentHeight = null;
             this.currentHalfWidth = null;
             this.currentHalfHeight = null;
+            
+            this.timeLocal = 0;
 
             this.clicked = false;
             this.hovered = false;
@@ -27,10 +31,11 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
             };
 
             this.scale = 1;
+            
 
             this.animations = new GameAnimationFactory(this);
             
-            this.body = new Body(this);
+            this.body = new Body(this.game, this);
 
             this.useCollision = true;
             this.useRpgCollision = false;
@@ -38,12 +43,13 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
             this.current_f = 0;
             this.change_f_delay = 0;
             this.f_max_delay = 4;
+            this.playCallbackDellayCurrent = 0;
             
-            this.game.physic.outOfScreen(this)
+            
             //
             this.ID = id;
             id++;
-            this.game.gameObject.unshift(this); 
+            this.game.gameObject.push(this); 
             
             this.sortByIndex();
 
@@ -62,6 +68,7 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
         },
 
         draw: function(lag){
+
             if (this.previousX) {
                 this.renderX = (this.x - this.previousX) * lag + this.previousX;
             } else {
@@ -84,10 +91,12 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
                this.states[this.state].fH * this.scale
             )
            
-            this.frameUpdate();
+            
+           
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
+
             //this.inRange();
             //this.collide();
         },
@@ -100,26 +109,51 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
             
             this.x += this.body.velocity.x;
             this.y += this.body.velocity.y;
+            this.frameUpdate();
         },
 
         frameUpdate: function(){
-            if(this.change_f_delay<this.f_max_delay){
-                this.change_f_delay++;
+            if(!this.once){
+                if(this.change_f_delay<this.f_max_delay){
+                    this.change_f_delay++;
+                }else{
+                    this.change_f_delay = 0;
+                    this.current_f = this.current_f+1>=this.states[this.state].f.length ? 0 : this.current_f+1;
+
+                    if(this.current_f === this.states[this.state].f.length-1 && typeof this.playCallback === 'function'){
+                        this.playCallbackDellayCurrent++;
+                        if(this.playCallbackDellay === this.playCallbackDellayCurrent){
+                            this.playCallbackDellayCurrent = 0;
+                            this.playCallback.call(this.game, this);
+                        }  
+                    }
+                }
             }else{
-                this.change_f_delay = 0;
-                this.current_f = this.current_f+1>=this.states[this.state].f.length ? 0 : this.current_f+1;
+                if(this.change_f_delay<this.f_max_delay){
+                    this.change_f_delay++;
+                }else{
+                    this.change_f_delay = 0;
+                    this.current_f = this.current_f+1>=this.states[this.state].f.length ?  this.states[this.state].f.length-1 : this.current_f+1;
+
+                    if(this.current_f === this.states[this.state].f.length-1 && typeof this.onceCallback === 'function'){
+                        return this.onceCallback.call(this.game, this);
+                    }
+                }
             }
         },
 
         destroy: function(array){
-            this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
+            
             if(Array.isArray(array)){
                 array.splice(array.indexOf(this), 1);
             }
+            return this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
         },
 
-        kill: function(){
-            this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
+        kill: function(array){
+            if(Array.isArray(array)){
+                array.splice(array.indexOf(this), 1);
+            }
         },
 
         rpgCollision: function(){
@@ -190,6 +224,16 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
                 }
             }
         },
+        
+        moveByLine: function(mouseX, mouseY, speed, callback){
+            var dx = (mouseX - this.x - this.currentHalfWidth);
+            var dy = (mouseY - this.y - this.currentHalfHeight);
+            var angle = Math.atan2(dy, dx);
+            this.body.rotate(angle*(180/Math.PI))
+
+            this.body.velocity.x = Math.cos(angle) * speed;
+            this.body.velocity.y = Math.sin(angle) * speed;
+        },
 
         moveToPoint: function(x, y, speed, callback){
             //if(!this.moveTo){
@@ -201,12 +245,14 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
                 this.oldUseCollision = this.useCollision;
                 this.useCollision = false;
                 this.moveTo = true;
+                
                 this.positionCallback = callback;
             //}
         },
 
         moveToPointHandler: function(){
             if(this.moveTo){
+                
                 this.myX = Math.floor(this.x+ this.currentWidth /2);
                 this.myY = Math.floor(this.y+ this.currentHeight /2 );
             
@@ -230,6 +276,15 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
             
         },
 
+        doInTime: function(time, callback){
+            this.timeLocal += this.game.FRAMEDURATION;
+
+            if(this.timeLocal > time ){
+                this.timeLocal = 0;
+                callback.call(this);
+            }
+        },
+
         setAtributes: function(options){
             for(var i=0; i<Object.keys(options).length; i++){
                 this[Object.keys(options)[i]] = options[Object.keys(options)[i]];
@@ -251,7 +306,8 @@ define(['Class', 'require', 'lib_module/Body', 'lib_module/GameAnimationFactory'
                     return 0;
                 }
             });
-        }
+        },
+        
     });  
     return Sprite;    
 });

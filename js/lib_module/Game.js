@@ -12,7 +12,7 @@ define([
     //private
     var PREVIOUS = 0,
         FPS = 60,
-        FRAMEDURATION = 1000/FPS,
+        
         LAG = 0,
         loop = null,
         elapsed = 0,
@@ -28,6 +28,7 @@ define([
     var Game = my.Class({
         
         constructor: function(width, height, orientation){
+            this.FRAMEDURATION = 1000/FPS;
             
             this.add = new GameObjectFactory(this);
 
@@ -69,20 +70,20 @@ define([
             elapsed = timestamp - PREVIOUS;
             
             if (elapsed > 1000 || elapsed < 0) {
-                elapsed = FRAMEDURATION;
+                elapsed = this.FRAMEDURATION;
                 LAG = 0;
             }
            
             LAG += elapsed;
         
-            while (LAG >= FRAMEDURATION) {  
+            while (LAG >= this.FRAMEDURATION) {  
                //this.capturePreviousPositions(this.gameObject);
-               this.cTime += FRAMEDURATION;
+               this.cTime += this.FRAMEDURATION;
                this.update(this.cTime);
-               LAG -= FRAMEDURATION;
+               LAG -= this.FRAMEDURATION;
             }
 
-            lagOffset = LAG / FRAMEDURATION;
+            lagOffset = LAG / this.FRAMEDURATION;
             
             this.render(lagOffset);
             
@@ -98,22 +99,12 @@ define([
         
         render: function(lagOffset){
             if(this.renderer){
-
-
                 this.clearCanvas();
-                //   this.gameObject.sort(function(obj1, obj2) {
-                //     if(obj1.zIndex > obj2.zIndex)
-                //         return 1;
-                //     else if(obj1.zIndex < obj2.zIndex) {
-                //         return -1;
-                //     } else {
-                //         return 0;
-                //     }
-                // });
+                
                 for(i=0, iMax=this.gameObject.length; i<iMax; i++){
                     entityRender = this.gameObject[i];
                     if(entityRender){
-                        if(!entityRender.isOutOfScreen){            
+                        if(!entityRender.isOutOfScreen && entityRender.used){            
                             if(entityRender.body && entityRender.body.angle != 0 ){
                                 this.ctx.save();
                                 this.ctx.translate(entityRender.x + entityRender.currentWidth * entityRender.body.anchorX, entityRender.y + entityRender.currentHeight * entityRender.body.anchorY)
@@ -140,7 +131,7 @@ define([
             
             for(u=0, uMax=this.gameObject.length; u<uMax; u++){
                 entityUpdate = this.gameObject[u];
-                if(entityUpdate && entityUpdate.update){
+                if(entityUpdate && entityUpdate.update && entityUpdate.used){
                     //if(!entityUpdate.isOutOfScreen){
                             
                         entityUpdate.update(time);

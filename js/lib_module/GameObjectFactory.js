@@ -10,8 +10,9 @@ define([
 	'lib_module/Particles',
 	'lib_module/Rect',
 	'lib_module/Camera',
-	'lib_module/Map'
-	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map){
+	'lib_module/Map',
+	'lib_module/Bar'
+	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map, Bar){
 
 	var GameObjectFactory = my.Class( {
 		
@@ -59,6 +60,10 @@ define([
 	    map: function (key, arr, width, height) {
 	        this.game.map = new Map(this.game, key, arr, width, height);
 	        return this.game.map;
+	    },
+
+	    bar: function (x, y, w, h, s, f, min, max) {
+	        return new Bar(this.game, x, y, w, h, s, f, min, max);
 	    },
 
 	    sounds: function(sounds){

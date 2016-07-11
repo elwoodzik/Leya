@@ -10,7 +10,9 @@ define(['Class'], function(my){
         outOfScreen: function(item, callback){
             if(Array.isArray(item)){
                 for (var i = 0, max = item.length;  i < max; i++){
-                    this.outOfScreenHandler(item[i], callback)
+                    if(item[i] && item[i].used){
+                        this.outOfScreenHandler(item[i], callback)
+                    }
                 }
             }else{
                 this.outOfScreenHandler(item, callback)
@@ -21,10 +23,12 @@ define(['Class'], function(my){
         outOfScreenHandler: function(item, callback){
 
             if(item){
+                  
                 if(!item.isOutOfScreen){
+             
                     if(item.y  >= this.game.canvas.height+this.game.camera.yScroll || item.y + item.currentHeight <= 0+this.game.camera.yScroll){
                         item.isOutOfScreen = true;
-
+                      
                         if(typeof callback === 'function'){
                             return callback.call(this, item)
                         }
@@ -45,7 +49,7 @@ define(['Class'], function(my){
             }
         },
 
-        collected: function(obj1, obj2, callback, bounds) {
+        overLap: function(obj1, obj2, callback, bounds) {
             if (!Array.isArray(obj1) && Array.isArray(obj2)){
                 if(typeof obj1 === 'object'){
                     for (var i = 0, max = obj2.length;  i < max; i++){
@@ -205,7 +209,7 @@ define(['Class'], function(my){
                             entity2.checked = true;
                             
                             if(typeof callback === 'function'){
-                                return callback.call(Leya, entity1, entity2, colDir)
+                                return callback.call(this, entity1, entity2, colDir)
                             }
                             
                         }

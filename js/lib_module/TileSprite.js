@@ -4,6 +4,7 @@ define(['Class', 'require', 'lib_module/Body'], function(my, require, Body){
         constructor: function(game, x, y, key, width, height){
             var Loader = require('module/Loader');
             this.game = game; 
+            this.used = true;
             this.x = x || 0; 
             this.y = y || 0; 
             this.velocity = {

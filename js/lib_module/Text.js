@@ -4,6 +4,7 @@ define(['Class'], function(my){
         constructor: function(game, text, x, y, size, color, action){
             this.game = game;
             //
+            this.used = true;
             this.x = x;
             this.y = y;
             this.size = size;

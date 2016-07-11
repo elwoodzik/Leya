@@ -12,6 +12,7 @@ define(['Class'], function(my){
 			};
 
             this.game = game;
+            this.used = true;
             this.key = key;
             this.mapArray = arr;
            // this.createCanvas(this.game.canvas.width, this.game.canvas.height, this.game.orientation);
