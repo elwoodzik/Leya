@@ -31,13 +31,11 @@ define(['Class'], function(my){
             //
             //this.click = (e.which == 1 && !this.down);
             //this.down = (e.which == 1);
-            console.log(this.game.canvas.offsetLeft)
         },
 
         touchDown: function(e){
             //
-            
-            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 + this.game.camera.xScroll ;
+            this.mouseX = e.touches[0].clientX / this.game.scale1 + this.game.camera.xScroll;
             this.mouseY = e.touches[0].clientY / this.game.scale1 + this.game.camera.yScroll;
 
             this.click = !this.down;

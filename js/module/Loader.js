@@ -1,12 +1,8 @@
 define([
     'Class',
     'AssetManager',
-    'Game',
-    'module/Solitaire',
-    'module/Menu',
-    'module/Settings',
-    'module/Options',
-], function(my, AssetManager, Game, Solitaire, Menu, Settings, Options){
+    'Game'
+], function(my, AssetManager, Game){
     
     //variable
     var that;
@@ -23,12 +19,7 @@ define([
 
         create: function(){
             this.assetManager.load({
-                "revers": "images/revers1.jpg",
-                "cards2": "images/poker-deck1.jpg",
-                "deck_960": "images/deck_960.jpg",
-                "revers_960": "images/revers_960.jpg",
-                "znaczki": "images/znaczki1.png",
-                "cardPlace3": "sounds/cardSlide3.wav"
+                //"revers": "images/revers1.jpg",
             }, this.onComplete, this.onProgress);
         },
 
@@ -36,23 +27,15 @@ define([
 
         },
 
-        onComplete: function(){
-            // game = new Game(960, 540);
-            // game.res = new Settings(0);
-           
+        onComplete: function(){    
             game = new Game(1920, 1080);
-            game.res = new Settings(1);
             game.scallable(true);
             game.add.sounds(that.assetManager);
-            
-            console.log(game.res)
             
             game.mouse.initialize();
             game.keyboard.initialize();
             
             game.state.add("Menu", Menu);
-            game.state.add("Solitaire", Solitaire);
-            game.state.add("Options", Options);
             game.state.start("Menu");
         }
     });
