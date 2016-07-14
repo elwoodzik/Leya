@@ -1,8 +1,10 @@
 define([
     'Class',
     'AssetManager',
-    'Game'
-], function(my, AssetManager, Game){
+    'Game',
+    'module/Menu',
+    'Socket'
+], function(my, AssetManager, Game, Menu, io){
     
     //variable
     var that;
@@ -31,12 +33,19 @@ define([
             game = new Game(1920, 1080);
             game.scallable(true);
             game.add.sounds(that.assetManager);
-            
+            game.add.multiplayer('http://localhost:3000');
+
+            game.multiplayer.onSocket('message', that.getMessage);
+           
             game.mouse.initialize();
             game.keyboard.initialize();
             
             game.state.add("Menu", Menu);
             game.state.start("Menu");
+        },
+
+        getMessage: function(data){
+            console.log(data);
         }
     });
 
