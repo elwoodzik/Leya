@@ -3,7 +3,7 @@ requirejs.config({
     paths: {
         'Class': 'lib/myclass',
         'AssetManager': 'lib_module/client/AssetManager',
-        'Socket': 'http://localhost:3000/socket.io/socket.io',
+        'Socket': '/socket.io/socket.io',
         'Game': 'lib_module/client/Game'
     },
 });

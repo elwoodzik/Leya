@@ -1,9 +1,13 @@
+/**
+ * Moduł odpowiedzialny za poczatkowe ładownie.
+ * @Module Loader
+ */
 define([
     'Class',
     'AssetManager',
     'Game',
-    'module/Irobot',
-], function(my, AssetManager, Game, Irobot){
+    'module/Irobot2',
+], function(my, AssetManager, Game, Irobot2){
     
     //variable
     var that;
@@ -32,7 +36,7 @@ define([
                 "ok9": "images/ok9.png",
                 'logo': "images/logo.jpg",
                 'zamknij': "images/zamknij.png",
-                'zamknij_hover': 'images/zamknij_hover.png'
+                'zamknij-hover': 'images/zamknij-hover.png'
             }, this.onComplete, this.onProgress);
         },
 
@@ -51,8 +55,8 @@ define([
            
             game.mouse.initialize();
             
-            game.state.add("Irobot", Irobot);
-            game.state.start("Irobot");
+            game.state.add("Irobot2", Irobot2);
+            game.state.start("Irobot2");
         },
 
         getMessage: function(data){

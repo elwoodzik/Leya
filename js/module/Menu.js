@@ -7,11 +7,18 @@ define(['Class'], function(my){
 	var cards2 = [];
 
 	var Menu = my.Class({
-
+		/**
+		 * Represents a book.
+		 * @constructor
+		 */
 		constructor: function(){
 
 		},
-
+		//*
+		/**
+		 * Represents a create Method.
+		 * This is a description of the foo function.
+		 */
 		create: function(){
 			
 			this.add.text("test", (this.canvas.width/2)-74, 170, 152, "white", null);

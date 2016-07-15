@@ -162,6 +162,10 @@ define([
             
             this.animationLoop();
         },
+
+        destroyCanvas: function(){
+
+        },
         
         resizeCanvas: function(canvas, orientation) {
             if(!orientation){

@@ -105,15 +105,16 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             var dx = (_mouseX - this.x - this.currentHalfWidth);
             var dy = (_mouseY - this.y - this.currentHalfHeight);
 			var distance = Math.sqrt(dx * dx + dy * dy);
-			var maxDistance = _maxDistance || 2;
+			var maxDistance = _maxDistance || 10;
+			var speed = _speed || 4;
 			
 			if(distance > maxDistance){
 				if(Math.abs(dx) > 1 && Math.abs(dy) > 1){
 					var angle = Math.atan2(dy, dx);
 					this.body.rotate(angle*(180/Math.PI));
 
-					this.body.velocity.x = Math.cos(angle) * _speed;
-					this.body.velocity.y = Math.sin(angle) * _speed;
+					this.body.velocity.x = Math.cos(angle) * speed;
+					this.body.velocity.y = Math.sin(angle) * speed;
 				}
 			}else{
 				this.body.velocity.x = 0;//Math.cos(angle) * speed;

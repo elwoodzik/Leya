@@ -16,17 +16,9 @@
     }
     </style>
     <body>
+        
         <script src="js/lib/sound.js"></script>
         <script data-main="js/main" src="js/lib/RequireJS.js"></script>
-        <script>
-            var parsed = (document.location.href.split('#')[1]||'').split('&');
-            var params = parsed.reduce(function (params, param) { 
-            var param = param.split('=');  
-            params[param[0]] = decodeURIComponent(param.slice(1).join('='));
-            return params;
-            }, {});
-            var clickTag = null;
-            clickTag = params.clickTag;
-        </script>
+        
     </body>
 </html>
