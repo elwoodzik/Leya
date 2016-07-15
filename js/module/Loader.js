@@ -19,6 +19,7 @@ define([
             this.assetManager = new AssetManager();
             //
             this.create();
+            console.log('a');
 
         },
 
