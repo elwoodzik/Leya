@@ -1,8 +1,11 @@
-define(['Class', 'Socket'], function(my, io){
+define(['Class'], function(my, io){
     
    var Multiplayer = my.Class({
+
         constructor: function(game, _ip){
-            this.socket = io.connect(_ip);
+            require(['Socket'], function(io){
+                this.socket = io.connect(_ip);
+            });
         },
 
         onSocket: function(name, callback){

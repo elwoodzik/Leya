@@ -9,6 +9,6 @@ requirejs.config({
 });
     
     
-require([
+require([ 
     'module/Loader',
 ]);
