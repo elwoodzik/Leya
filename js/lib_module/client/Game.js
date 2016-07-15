@@ -57,6 +57,8 @@ define([
             this.gameObject = [];
             //
             this.createCanvas(width, height, orientation);
+
+            this.useFpsCounter = false;
         },
 
         animationLoop : function(timestamp) {
@@ -87,11 +89,7 @@ define([
             
             this.render(lagOffset);
             
-            actualFps = Math.floor(1000 / elapsed);
-
-            this.ctx.fillStyle = "red";
-            this.ctx.font = 16 + "px Arial";
-            this.ctx.fillText(actualFps, this.canvas.width- 50, this.canvas.height- 50);
+            this.showFPS(elapsed);
             
             PREVIOUS = timestamp;
           
@@ -283,9 +281,17 @@ define([
                 arr[index] = tmp;
             }
             return arr;
+        },
+
+        showFPS: function(_elapse){
+            if(this.useFpsCounter){
+                actualFps = Math.floor(1000 / _elapse);
+
+                this.ctx.fillStyle = "red";
+                this.ctx.font = 16 + "px Arial";
+                this.ctx.fillText(actualFps, this.canvas.width- 50, this.canvas.height- 50);
+            }
         }
-        
-        
     })
     
     return Game;

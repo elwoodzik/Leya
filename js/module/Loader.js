@@ -2,8 +2,8 @@ define([
     'Class',
     'AssetManager',
     'Game',
-    'module/Menu',
-], function(my, AssetManager, Game, Menu){
+    'module/Irobot',
+], function(my, AssetManager, Game, Irobot){
     
     //variable
     var that;
@@ -20,7 +20,19 @@ define([
 
         create: function(){
             this.assetManager.load({
-                //"revers": "images/revers1.jpg",
+                "irobot": "images/irobot.png",
+                "ok1": "images/ok1.png",
+                "ok2": "images/ok2.png",
+                "ok3": "images/ok3.png",
+                "ok4": "images/ok4.png",
+                "ok5": "images/ok5.png",
+                "ok6": "images/ok6.png",
+                "ok7": "images/ok7.png",
+                "ok8": "images/ok8.png",
+                "ok9": "images/ok9.png",
+                'logo': "images/logo.jpg",
+                'zamknij': "images/zamknij.png",
+                'zamknij_hover': 'images/zamknij_hover.png'
             }, this.onComplete, this.onProgress);
         },
 
@@ -29,18 +41,18 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(1920, 1080);
-            game.scallable(true);
-            game.add.sounds(that.assetManager);
-           // game.add.multiplayer('http://localhost:3000');
+            game = new Game(600, 600);
+            
+            //game.scallable(true);
+            //game.useFpsCounter = true;
+            // game.add.multiplayer('http://localhost:3000');
 
             //game.multiplayer.onSocket('message', that.getMessage);
            
             game.mouse.initialize();
-            game.keyboard.initialize();
             
-            game.state.add("Menu", Menu);
-            game.state.start("Menu");
+            game.state.add("Irobot", Irobot);
+            game.state.start("Irobot");
         },
 
         getMessage: function(data){

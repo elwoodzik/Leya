@@ -140,22 +140,13 @@ define(['Class'], function(my){
         trigger: function(obj, callback, hold){
             var wasNotClicked = this.click;
             
-
             if(wasNotClicked ){
-                
                 if(!this.trig){
                     this.trig = hold ? true : false;
 
                     if(Array.isArray(obj)){
-                        // for(u=0, uMax=obj.length; u<uMax; u++){
-                        //     if(this.updateStats(obj[u], hold) ){
-                                
-                        //         return callback.call(this, obj[u]);
-                        //     }
-                        // }
                         for(u=obj.length-1; u>=0; u--){
                             if(this.updateStats(obj[u], hold) ){
-                                
                                 return callback.call(this, obj[u]);
                             }
                         }
@@ -163,20 +154,19 @@ define(['Class'], function(my){
                     }
                     else if(typeof obj === 'object' && obj != null){
                         if(this.updateStats(obj, hold)){
-                           
                             return callback.call(this, obj);
                         }
-                         this.trig = false; 
+                        this.trig = false; 
                     }
                     else if(obj === null){
                         if(typeof callback === 'function'){
-                           
+                            this.click = false;
+                            this.trig = false;
+                            this.down = false;
                             return callback.call(this);
                         }   
-                       
                     }
                 }
-                
             }
         },
         

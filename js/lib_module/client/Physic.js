@@ -178,13 +178,13 @@ define(['Class'], function(my){
                             if (vY > 0) {
                                 colDir = "t";
                                 entity1.y += oY;
-                                entity2.y -= oY;
+                                //entity2.y -= oY;
                                 entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : entity1.body.velocity.y;
                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
                             } else {
                                 colDir = "b"; 
                                 entity1.y -= oY;
-                                entity2.y += oY;
+                                //entity2.y += oY;
 
                                 entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : entity1.body.velocity.y;
                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
@@ -193,13 +193,13 @@ define(['Class'], function(my){
                             if (vX > 0) {
                                 colDir = "l";
                                 entity1.x += oX;
-                                entity2.x -= oX;
+                               // entity2.x -= oX;
                                 entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
                                 entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
                             } else {
                                 colDir = "r";
                                 entity1.x -= oX;
-                                entity2.x += oX;
+                                //entity2.x += oX;
                                 entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
                                 entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
                             }

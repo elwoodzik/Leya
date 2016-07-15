@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -17,13 +12,21 @@ and open the template in the editor.
     	overflow: hidden;
     }
     canvas{
-        background-image: url("images/red_felt.jpg");
+        background-image: url("images/napis.jpg");
     }
     </style>
     <body>
-       
         <script src="js/lib/sound.js"></script>
         <script data-main="js/main" src="js/lib/RequireJS.js"></script>
-   
+        <script>
+            var parsed = (document.location.href.split('#')[1]||'').split('&');
+            var params = parsed.reduce(function (params, param) { 
+            var param = param.split('=');  
+            params[param[0]] = decodeURIComponent(param.slice(1).join('='));
+            return params;
+            }, {});
+            var clickTag = null;
+            clickTag = params.clickTag;
+        </script>
     </body>
 </html>
