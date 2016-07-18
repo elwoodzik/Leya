@@ -56,7 +56,7 @@ define(['Class'], function(my){
                         this.collectedHandler(obj1, obj2[i], callback, bounds)
                     }
                 }else{
-                    throw 'oczekiwano obiektu jako pierwszy parametr';
+                    throw 'overLap(): oczekiwano obiektu jako pierwszy parametr';
                 }
             }
             if (Array.isArray(obj1) && !Array.isArray(obj2)){
@@ -65,7 +65,7 @@ define(['Class'], function(my){
                         this.collectedHandler(obj1[i], obj2, callback, bounds)
                     }
                 }else{
-                    throw 'oczekiwano obiektu jako drugi parametr';
+                    throw 'overLap(): oczekiwano obiektu jako drugi parametr';
                 }
             }
             if (Array.isArray(obj1) && Array.isArray(obj2)){

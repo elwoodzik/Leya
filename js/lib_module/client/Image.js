@@ -1,7 +1,7 @@
 define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Body){
 	
 	var Image = my.Class({
-		constructor: function(game, x, y, key, width, height, fullscreen){
+		constructor: function(game, context, x, y, key, width, height, fullscreen){
 			var Loader = require('module/Loader');
 			
 			this.game = game; 
@@ -22,15 +22,13 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			this.currentHeight = this.height;
 
 			this.useCollision = true;
-
+			
 	        this.currentHalfWidth = this.currentWidth / 2;
 	        this.currentHalfHeight = this.currentHeight / 2;
 
 	        this.isOutOfScreen = false;
 
-			this.gameObjectLength = Object.keys(this.game.gameObject).length;
-			this.game.gameObject[this.gameObjectLength] = this; 
-
+			this.setContext(context);
 		},
 
 		draw: function(lag){
@@ -47,7 +45,37 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	        } else {
 	            this.renderY = this.y;
 	        }
-			this.game.ctx.drawImage(
+			this.context.drawImage(
+	            this.image,
+	            0,
+	            0,
+	            this.width,
+	            this.height,
+	            this.renderX - this.game.camera.xScroll, // * this.scale
+	            this.renderY - this.game.camera.yScroll, // * this.scale
+	            this.fullscreen ? this.game.canvas.width : this.width,
+	            this.fullscreen ? this.game.canvas.height : this.height
+	        )
+		},
+
+		redraw: function(lag){
+			
+			this.useRotate();
+			
+			if (this.previousX) {
+	            this.renderX = (this.x - this.previousX) * lag + this.previousX;
+	        } else {
+	            this.renderX = this.x;
+	        }
+	        if (this.previousY) {
+	            this.renderY = (this.y - this.previousY) * lag + this.previousY;
+	        } else {
+	            this.renderY = this.y;
+	        }
+			
+			this.context.clearRect(this.renderX, this.renderY,this.currentWidth, this.currentHeight);
+
+			this.context.drawImage(
 	            this.image,
 	            0,
 	            0,
@@ -61,8 +89,9 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 		},
 
 		update: function(){
-			
 			this.worldBounce();
+			this.moveToPointHandler();
+
 			this.x += this.body.velocity.x;
 	        this.y += this.body.velocity.y;
 		},
@@ -71,10 +100,22 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
         },
 
-		destroy: function(array){
-			this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-			array.splice(array.indexOf(this), 1);
-		},
+		destroy: function(array){  
+            if(Array.isArray(array)){
+                array.splice(array.indexOf(this), 1);
+            }else if(typeof array === 'object'){
+				array = null;
+			}
+			if(this.contextType === 'main'){
+            	return this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
+			}else if(this.contextType === 'background'){
+				var destroyed = this.game.gameObjectStatic.splice(this.game.gameObjectStatic.indexOf(this), 1);
+				this.context.clearRect(destroyed[0].x, destroyed[0].y, destroyed[0].currentWidth, destroyed[0].currentHeight);
+			}else if(this.contextType === 'onbackground'){
+				var destroyed = this.game.gameObjectOnStatic.splice(this.game.gameObjectOnStatic.indexOf(this), 1);
+				this.context.clearRect(destroyed[0].x, destroyed[0].y, destroyed[0].currentWidth, destroyed[0].currentHeight);
+			}
+        },
 		
 		worldBounce: function(){
             if(this.body.colideWorldSide){
@@ -96,12 +137,48 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                 }
             }
         },
+
+		changeContext: function(context, array){
+            if(this.contextType != context){
+				this.destroy(array);
+                this.setContext(context);
+            }
+			return this;
+        },
+
+        setContext: function(context){
+		
+            if(context === 'main'){
+				this.context = this.game.ctx;
+				this.contextType = context;
+				this.gameObjectLength = this.game.gameObject.length;
+				this.game.gameObject[this.gameObjectLength] = this; 
+			}else if(context === 'background'){
+				this.context = this.game.bgctx;
+				this.contextType = context;
+				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
+				this.game.gameObjectStatic[this.gameObjectStaticLength] = this;
+				this.draw(); 
+			}
+			else if(context === 'onbackground'){
+				this.context = this.game.onbgctx;
+				this.contextType = context;
+				this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
+				this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
+				this.draw();
+			}else{
+				return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
+			}
+        },
 		
 		useRotate: function(){
              this.body.angle += this.body.angleSpeed; 
         },
 
 		moveByLine: function(_mouseX, _mouseY, _speed, _maxDistance, _callback){
+			if(!_mouseX || !_mouseY){
+				return false;
+			}
             var dx = (_mouseX - this.x - this.currentHalfWidth);
             var dy = (_mouseY - this.y - this.currentHalfHeight);
 			var distance = Math.sqrt(dx * dx + dy * dy);

@@ -142,8 +142,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
 
-        destroy: function(array){
-            
+        destroy: function(array){  
             if(Array.isArray(array)){
                 array.splice(array.indexOf(this), 1);
             }
@@ -226,6 +225,9 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
         
         moveByLine: function(_mouseX, _mouseY, _speed, _maxDistance, _callback){
+            if(!_mouseX || !_mouseY){
+				return false;
+			}
             var dx = (_mouseX - this.x - this.currentHalfWidth);
             var dy = (_mouseY - this.y - this.currentHalfHeight);
 			var distance = Math.sqrt(dx * dx + dy * dy);

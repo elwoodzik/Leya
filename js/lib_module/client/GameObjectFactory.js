@@ -21,8 +21,8 @@ define([
 		 	this.game = game;
 		},
 
-	  	image: function (x, y, key, w, h, f) {
-	        return new Image(this.game, x, y, key, w, h, f);
+	  	image: function (context, x, y, key, w, h, f) {
+	        return new Image(this.game, context, x, y, key, w, h, f);
 	    },
 
 	    tileSprite: function(x, y, key, w, h){
@@ -37,12 +37,12 @@ define([
 	        return new Button(this.game, text, x, y, width, height, background, backgroundHover, textColor, action);
 	    },
 		
-		buttonImg: function (key, keyHover, x, y, width, height, action) {
-	        return new ButtonImg(this.game, key, keyHover, x, y, width, height, action);
+		buttonImg: function (context, key, keyHover, x, y, width, height, action) {
+	        return new ButtonImg(this.game, context, key, keyHover, x, y, width, height, action);
 	    },
 
-	    text: function (text, x, y, size, color, action) {
-	        return new Text(this.game, text, x, y, size, color, action);
+	    text: function (context, text, x, y, size, color, action) {
+	        return new Text(this.game, context, text, x, y, size, color, action);
 	    },
 		
 		particles: function (x, y, options) {

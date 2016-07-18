@@ -9,8 +9,8 @@ define(['Class'], function(my){
             this.hover = false;
             this.down = false;
             this.trig = false;
-            this.mouseX = 0;
-            this.mouseY = 0;
+            this.mouseX = null;
+            this.mouseY = null;
         },
 
         initialize: function(){

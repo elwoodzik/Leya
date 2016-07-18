@@ -19,8 +19,6 @@ define([
             this.assetManager = new AssetManager();
             //
             this.create();
-            console.log('a');
-
         },
 
         create: function(){
@@ -37,7 +35,9 @@ define([
                 "ok9": "images/ok9.png",
                 'logo': "images/logo.jpg",
                 'zamknij': "images/zamknij.png",
-                'zamknij-hover': 'images/zamknij-hover.png'
+                'zamknij-hover': 'images/zamknij-hover.png',
+                'napis': 'images/napis.jpg'
+                
             }, this.onComplete, this.onProgress);
         },
 
@@ -46,10 +46,12 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(600, 600);
+            game = new Game(600, 600, false, true);
+            game.createBgCanvas();
+            game.createOnBgCanvas();
             
-            //game.scallable(true);
-            //game.useFpsCounter = true;
+           // game.scallable(true);
+            game.useFpsCounter = true;
             //game.add.multiplayer('http://localhost:3000');
 
             //game.multiplayer.onSocket('message', that.getMessage);

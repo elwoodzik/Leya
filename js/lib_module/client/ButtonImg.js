@@ -2,7 +2,7 @@ define(['Class'], function(my){
     
    var Button = my.Class( {
 
-        constructor: function(game, key, keyHover, x, y, width, height, action){
+        constructor: function(game, context, key, keyHover, x, y, width, height, action){
             this.Loader = require('module/Loader');
             //
             this.game = game;
@@ -27,17 +27,27 @@ define(['Class'], function(my){
             this.zIndex = 5;
             //
             //this.game.physic.outOfScreen(this)
-            this.game.gameObjectLength = Object.keys(this.game.gameObject).length;
-            this.game.gameObject[this.game.gameObjectLength] = this; 
+            if(context === 'main'){
+				this.context = this.game.ctx;
+				this.contextType = context;
+				this.gameObjectLength = this.game.gameObject.length;
+				this.game.gameObject[this.gameObjectLength] = this; 
+			}else if(context === 'background'){
+				this.context = this.game.bgctx;
+				this.contextType = context;
+				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
+				this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
+			}
         },
 
         update: function() {
             var wasNotClicked = this.game.mouse.click;
-            
+             
             if (this.game.mouse.updateStats(this) && wasNotClicked && typeof this.action === 'function') {
                 this.game.mouse.click = false;
-                
+              
                 this.action.call(this.game, this);
+               
             }
         },
 
@@ -58,7 +68,7 @@ define(['Class'], function(my){
 	        } else {
 	            this.renderY = this.y;
 	        }
-			this.game.ctx.drawImage(
+			this.context.drawImage(
 	            this.image,
 	            0,
 	            0,

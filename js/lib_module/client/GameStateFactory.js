@@ -17,6 +17,7 @@ define(['Class'], function(my, game){
 	    	this.game.world.timeLocal = 0;
 	    	this.game.gameObject.length = 0;
 	    	this.game.currentState = new this.game.states[key]();
+			
 	    	if(this.game.currentState.create){
 	    		this.game.currentState.create.apply(this.game);
 	    	}else{

@@ -23,7 +23,9 @@ define([
         iMax,
         uMax,
         entityUpdate,
-        entityRender;
+        entityRender,
+        entityRenderStatic,
+        entityRenderOnStatic;
     
     var Game = my.Class({
         
@@ -55,6 +57,8 @@ define([
 
             this.states = {};
             this.gameObject = [];
+            this.gameObjectStatic = [];
+            this.gameObjectOnStatic = [];
             //
             this.createCanvas(width, height, orientation);
 
@@ -82,6 +86,7 @@ define([
                //this.capturePreviousPositions(this.gameObject);
                this.cTime += this.FRAMEDURATION;
                this.update(this.cTime);
+              
                LAG -= this.FRAMEDURATION;
             }
 
@@ -97,17 +102,18 @@ define([
         
         render: function(lagOffset){
             if(this.renderer){
-                this.clearCanvas();
+                this.clearCanvas(this.ctx);
                 
                 for(i=0, iMax=this.gameObject.length; i<iMax; i++){
                     entityRender = this.gameObject[i];
-                    if(entityRender){
+                    if(entityRender && entityRender.contextType === 'main'){
+                       
                         if(!entityRender.isOutOfScreen && entityRender.used){            
                             if(entityRender.body && entityRender.body.angle != 0 ){
                                 this.ctx.save();
-                                this.ctx.translate(entityRender.x + entityRender.currentWidth * entityRender.body.anchorX, entityRender.y + entityRender.currentHeight * entityRender.body.anchorY)
+                                this.ctx.translate(entityRender.x + entityRender.currentWidth * entityRender.body.anchorX, entityRender.y + entityRender.currentHeight * entityRender.body.anchorY);
                                 this.ctx.rotate( entityRender.body.angle*Math.PI/180 ); 
-                                this.ctx.translate(-entityRender.x - entityRender.currentWidth * entityRender.body.anchorX, -entityRender.y - entityRender.currentHeight * entityRender.body.anchorY)
+                                this.ctx.translate(-entityRender.x - entityRender.currentWidth * entityRender.body.anchorX, -entityRender.y - entityRender.currentHeight * entityRender.body.anchorY);
                             }
 
                             entityRender.draw(lagOffset);
@@ -121,8 +127,59 @@ define([
             }
         },
 
-        update: function(time){
-            
+        renderStatic: function(lagOffset){
+            if(this.renderer){
+                 this.clearCanvas(this.bgctx);
+                
+                for(i=0, iMax=this.gameObjectStatic.length; i<iMax; i++){
+                    entityRenderStatic = this.gameObjectStatic[i];
+                    if(entityRenderStatic && entityRenderStatic.contextType === 'background'){
+                        if(!entityRenderStatic.isOutOfScreen && entityRenderStatic.used){            
+                            if(entityRenderStatic.body && entityRenderStatic.body.angle != 0 ){
+                                this.bgctx.save();
+                                this.bgctx.translate(entityRenderStatic.x + entityRenderStatic.currentWidth * entityRenderStatic.body.anchorX, entityRenderStatic.y + entityRenderStatic.currentHeight * entityRenderStatic.body.anchorY)
+                                this.bgctx.rotate( entityRenderStatic.body.angle*Math.PI/180 ); 
+                                this.bgctx.translate(-entityRenderStatic.x - entityRenderStatic.currentWidth * entityRenderStatic.body.anchorX, -entityRenderStatic.y - entityRenderStatic.currentHeight * entityRenderStatic.body.anchorY)
+                            }
+
+                            entityRenderStatic.draw(lagOffset);
+                            
+                            if(entityRenderStatic.body && entityRenderStatic.body.angle!=0 ){
+                                this.bgctx.restore();
+                            }
+                        }
+                    }
+                } 
+            }
+        },
+
+        renderOnStatic: function(lagOffset){
+            if(this.renderer){
+                this.clearCanvas(this.onbgctx);
+                
+                for(i=0, iMax=this.gameObjectOnStatic.length; i<iMax; i++){
+                    entityRenderOnStatic = this.gameObjectOnStatic[i];
+                    if(entityRenderOnStatic && entityRenderOnStatic.contextType === 'onbackground'){
+                        if(!entityRenderOnStatic.isOutOfScreen && entityRenderOnStatic.used){            
+                            if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle != 0 ){
+                                this.onbgctx.save();
+                                this.onbgctx.translate(entityRenderOnStatic.x + entityRenderOnStatic.currentWidth * entityRenderOnStatic.body.anchorX, entityRenderOnStatic.y + entityRenderOnStatic.currentHeight * entityRenderOnStatic.body.anchorY)
+                                this.onbgctx.rotate( entityRenderOnStatic.body.angle*Math.PI/180 ); 
+                                this.onbgctx.translate(-entityRenderOnStatic.x - entityRenderOnStatic.currentWidth * entityRenderOnStatic.body.anchorX, -entityRenderOnStatic.y - entityRenderOnStatic.currentHeight * entityRenderOnStatic.body.anchorY)
+                            }
+
+                            entityRenderOnStatic.draw(lagOffset);
+                            
+                            if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle!=0 ){
+                                this.onbgctx.restore();
+                            }
+                        }
+                    }
+                } 
+            }
+        },
+
+        update: function(time){  
             if(this.currentState && typeof this.currentState.update === 'function'){
                 this.currentState.update.apply(this, arguments);
             }
@@ -130,14 +187,65 @@ define([
             for(u=0, uMax=this.gameObject.length; u<uMax; u++){
                 entityUpdate = this.gameObject[u];
                 if(entityUpdate && entityUpdate.update && entityUpdate.used){
-                    //if(!entityUpdate.isOutOfScreen){
-                            
+                    //if(!entityUpdate.isOutOfScreen){   
                         entityUpdate.update(time);
                     //}
                 }
             } 
         },
         
+        createBgCanvas: function(){
+            var that = this;
+            //
+            this.bgcanvas = document.createElement('canvas');
+            this.bgctx = this.bgcanvas.getContext("2d");
+            this.screenWidth = this.screenWidth;
+            this.screenHeight =  this.screenHeight;
+            this.portViewWidth = this.portViewWidth;
+            this.portViewHeight = this.portViewHeight;
+            this.orientation = this.orientation;
+            this.bgcanvas.style.zIndex = 3;
+            this.bgcanvas.id = "background";
+            this.bgcanvas.width = ((this.screenWidth));
+            this.bgcanvas.height = ((this.screenHeight));
+            
+            document.body.style.overflow = 'hidden';
+                
+            document.body.appendChild(this.bgcanvas);
+
+            this.resizeCanvas(this.bgcanvas, this.orientation);
+            
+            window.addEventListener("resize", function() {
+                that.resizeCanvas(that.bgcanvas, that.orientation);
+            }, false);
+        },
+
+        createOnBgCanvas: function(){
+            var that = this;
+            //
+            this.onbgcanvas = document.createElement('canvas');
+            this.onbgctx = this.onbgcanvas.getContext("2d");
+            this.screenWidth = this.screenWidth;
+            this.screenHeight =  this.screenHeight;
+            this.portViewWidth = this.portViewWidth;
+            this.portViewHeight = this.portViewHeight;
+            this.orientation = this.orientation;
+            this.onbgcanvas.style.zIndex = 4;
+            this.onbgcanvas.id = "onbackground";
+            this.onbgcanvas.width = ((this.screenWidth));
+            this.onbgcanvas.height = ((this.screenHeight));
+            
+            document.body.style.overflow = 'hidden';
+                
+            document.body.appendChild(this.onbgcanvas);
+
+            this.resizeCanvas(this.onbgcanvas, this.orientation);
+            
+            window.addEventListener("resize", function() {
+                that.resizeCanvas(that.onbgcanvas, that.orientation);
+            }, false);
+        },
+
         createCanvas: function(width, height, orientation){
             var that = this;
             //
@@ -149,17 +257,21 @@ define([
             this.portViewHeight = height;
             this.orientation = orientation || false;
             this.canvas.style.zIndex = 5;
-            this.canvas.id = "test";
+            this.canvas.id = "main";
+            this.canvas.width = ((this.screenWidth));
+            this.canvas.height = ((this.screenHeight));
             
             document.body.style.overflow = 'hidden';
                 
             document.body.appendChild(this.canvas);
             this.resizeCanvas(this.canvas, that.orientation);
             
+           
             window.addEventListener("resize", function() {
                 that.resizeCanvas(that.canvas, that.orientation);
             }, false);
             
+
             this.animationLoop();
         },
 
@@ -172,8 +284,7 @@ define([
                 var w = window.innerWidth;
                 var h =  window.innerHeight;
 
-                canvas.width = ((this.screenWidth));
-                canvas.height = ((this.screenHeight));
+               
                 this.portViewWidth = this.portViewWidth;
                 this.portViewHeight = this.portViewHeight;
                 if(this.scaleUsed){
@@ -182,26 +293,29 @@ define([
                         (Math.min(h,h)/this.screenHeight)
                     ));
 
-                    var width = Math.min(Math.floor(this.screenWidth * this.scale1), w) ;
-                    var height = Math.min(Math.floor(this.screenHeight * this.scale1),h) ;
+                    var width = Math.min(Math.floor(this.screenWidth * this.scale1), w);
+                    var height = Math.min(Math.floor(this.screenHeight * this.scale1),h);
                
                     canvas.style.width = width + "px";
                     canvas.style.height = height + "px";
                     canvas.style.position = 'absolute';
                     canvas.style.left = '50%';
                     canvas.style.marginLeft = -width/2 + "px";
+
+                   
                  }else{
                     this.scale1 = 1;
                     canvas.style.position = 'absolute';
                     canvas.style.left = '50%';
                     canvas.style.marginLeft = -this.screenWidth/2 + "px";
                  }
+               
+               
             }else{
                 var w = window.innerHeight; 
                 var h =  window.innerWidth;
 
-                canvas.width = this.screenHeight//((screenWidth));
-                canvas.height = this.screenWidth//((screenHeight));
+               
                 this.portViewWidth = this.portViewHeight;
                 this.portViewHeight = this.portViewWidth;
 
@@ -221,6 +335,8 @@ define([
         scallable: function(bool){
             this.scaleUsed = bool;
             this.resizeCanvas(this.canvas, this.orientation);
+            this.resizeCanvas(this.bgcanvas, this.orientation);
+            this.resizeCanvas(this.onbgcanvas, this.orientation);
         },
 
         sortByIndex: function(){
@@ -235,8 +351,8 @@ define([
             });
         },
         
-        clearCanvas: function() {
-            this.ctx.clearRect(0, 0,  this.canvas.width, this.canvas.height);
+        clearCanvas: function(context) {
+            context.clearRect(0, 0,  this.canvas.width, this.canvas.height);
         },
 
         rand: function(min,max){

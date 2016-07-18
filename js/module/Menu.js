@@ -32,8 +32,7 @@ define(['Class'], function(my){
 		update: function(){
 			
 		},
-
 	})
-
+	
 	return Menu;
 })
