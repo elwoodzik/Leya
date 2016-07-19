@@ -23,21 +23,8 @@ define([
 
         create: function(){
             this.assetManager.load({
-                "irobot": "images/irobot.png",
-                "ok1": "images/ok1.png",
-                "ok2": "images/ok2.png",
-                "ok3": "images/ok3.png",
-                "ok4": "images/ok4.png",
-                "ok5": "images/ok5.png",
-                "ok6": "images/ok6.png",
-                "ok7": "images/ok7.png",
-                "ok8": "images/ok8.png",
-                "ok9": "images/ok9.png",
-                'logo': "images/logo.jpg",
-                'zamknij': "images/zamknij.png",
-                'zamknij-hover': 'images/zamknij-hover.png',
-                'napis': 'images/napis.jpg'
-                
+                "mapa": "images/mapa.png",
+                "player": "images/player.png",
             }, this.onComplete, this.onProgress);
         },
 

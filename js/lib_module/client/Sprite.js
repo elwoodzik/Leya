@@ -31,6 +31,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             };
 
             this.scale = 1;
+
+            this.contextType = 'main';
             
 
             this.animations = new GameAnimationFactory(this);
@@ -160,47 +162,78 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
 
         rowAndColumn: function(){
-           
-                this.column = Math.round(this.x/32);
-                this.row = Math.round(this.y/32);
-
-                //this.game.ctx.fillRect(this.column*32 - this.game.camera.xScroll, this.row*32 - this.game.camera.yScroll, 32, 32)
-                
-
-                if(this.game.keyboard._pressed.W || this.game.keyboard._pressed.S || this.game.keyboard._pressed.D || this.game.keyboard._pressed.A){
-                     if(this.game.keyboard._pressed.A || this.game.keyboard._pressed.D){
-                        this.next_row = this.row;
-                        this.next_column = this.game.keyboard._pressed.A ? Math.floor(this.x/32) : Math.ceil(this.x/32);
-                     }
-                     else{
-                        this.next_row =  this.game.keyboard._pressed.W ? Math.floor(this.y/32) : Math.ceil(this.y/32);
-                        this.next_column = this.column;
-                     }
-                     if( !(this.row == this.next_row && this.column == this.next_column) && this.game.map.b[this.next_row][this.next_column].type != 'empty'){
+ 
+            this.column = Math.floor(this.x/70);
+            this.row = Math.floor((this.y)/70);
+            
+            if(this.game.map.b[this.row+1][this.column].type !== 'empty'){
+                this.x = this.column * 70;
+                this.y = (this.row) * 70 - 20;
+                this.body.velocity.y = 0;
+            }
+            this.game.ctx.fillRect(this.column*70 - this.game.camera.xScroll, this.row*70 - this.game.camera.yScroll, 70, 70)
+                // if()
+                 
+                     
+                //         this.next_row =  Math.floor(this.y/70) 
+                //         this.next_column = this.column;
+                    
+                //      if( !(this.row == this.next_row && this.column == this.next_column) && this.game.map.b[this.next_row][this.next_column].type != 'empty'){
                         
-                        this.current_f = 0;
-                        if(this.row != this.next_row ){
-                            this.y = this.row * 32;
-                        }
-                        else {
-                            this.x = this.column * 32;
-                        }
-                     }
-                     else{
-                        if(this.row != this.next_row){
-                            this.x = this.column * 32;
-                        }
-                        else if(this.column != this.next_column){
-                            this.y = this.row * 32;
-                        }
-                     }
-                }
-                else{
-                    this.current_f = 0;
-                    this.animations.play('idle');
-                    this.next_row = this.row;
-                    this.next_column = this.column;
-                }
+                //         this.current_f = 0;
+                //         if(this.row != this.next_row ){
+                //             this.y = this.row * 70;
+                //         }
+                //         else {
+                //             this.x = this.column * 70;
+                //         }
+                //      }
+                //      else{
+                //         if(this.row != this.next_row){
+                //             this.x = this.column * 70;
+                //         }
+                //         else if(this.column != this.next_column){
+                //             this.y = this.row * 70;
+                //         }
+                //      }
+              
+             
+
+
+                // if(this.game.keyboard._pressed.W || this.game.keyboard._pressed.S || this.game.keyboard._pressed.D || this.game.keyboard._pressed.A){
+                //      if(this.game.keyboard._pressed.A || this.game.keyboard._pressed.D){
+                //         this.next_row = this.row;
+                //         this.next_column = this.game.keyboard._pressed.A ? Math.floor(this.x/70) : Math.ceil(this.x/70);
+                //      }
+                //      else{
+                //         this.next_row =  this.game.keyboard._pressed.W ? Math.floor(this.y/70) : Math.ceil(this.y/70);
+                //         this.next_column = this.column;
+                //      }
+                //      if( !(this.row == this.next_row && this.column == this.next_column) && this.game.map.b[this.next_row][this.next_column].type != 'empty'){
+                        
+                //         this.current_f = 0;
+                //         if(this.row != this.next_row ){
+                //             this.y = this.row * 70;
+                //         }
+                //         else {
+                //             this.x = this.column * 70;
+                //         }
+                //      }
+                //      else{
+                //         if(this.row != this.next_row){
+                //             this.x = this.column * 70;
+                //         }
+                //         else if(this.column != this.next_column){
+                //             this.y = this.row * 70;
+                //         }
+                //      }
+                // }
+                // else{
+                //     this.current_f = 0;
+                //     this.animations.play('idle');
+                //     this.next_row = this.row;
+                //     this.next_column = this.column;
+                // }
         },
 
         worldBounce: function(){

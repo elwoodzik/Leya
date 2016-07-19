@@ -78,7 +78,7 @@ define(['Class'], function(my){
                     for (var j = 0, max1 = obj2.length;  j < max1; j++){
                         if(obj2[j]){
                             obj2[j].checked = false;
-                            this.collectedHandler(obj1[i], obj2[j], callback, bounds)
+                            this.collectedHandler(obj1[i], obj2[j], callback, bounds);
                         }else{
                             return false;
                         }
@@ -88,7 +88,7 @@ define(['Class'], function(my){
             if (!Array.isArray(obj1) && !Array.isArray(obj2)){
                 obj1.checked = false;
                 obj2.checked = false;
-                this.collectedHandler(obj1, obj2, callback, bounds)
+                this.collectedHandler(obj1, obj2, callback, bounds);
             }
         },
 

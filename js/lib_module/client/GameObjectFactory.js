@@ -58,8 +58,8 @@ define([
 	    	return this.game.camera
 	    },
 
-	    map: function (key, arr, width, height) {
-	        this.game.map = new Map(this.game, key, arr, width, height);
+	    map: function (context, key, arr, width, height, scalled) {
+	        this.game.map = new Map(this.game, context, key, arr, width, height, scalled);
 	        return this.game.map;
 	    },
 
