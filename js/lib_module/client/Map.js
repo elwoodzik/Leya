@@ -11,13 +11,17 @@ define(['Class'], function(my){
             this.key = key;
             this.mapArray = arr;
 
+            this.w = width;
+            this.h = height;
+
             this.currentWidth = width;
             this.currentHeight = height;
 
-            this.currentHalfWidth = this.currentWidth / 2;
-            this.currentHalfHeight = this.currentHeight / 2;
+           
 
             this.scalled = scalled;
+
+            
 
             this.image = Loader.assetManager.get(this.key); 
 
@@ -39,10 +43,10 @@ define(['Class'], function(my){
                         this.image,
                         this.b[i][j].x,
                         this.b[i][j].y,
-                        this.currentWidth,
-                        this.currentHeight,
-                        j * (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
-                        i * (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length)),
+                        this.w,
+                        this.h,
+                        j * this.currentWidth,
+                        i * this.currentHeight,
                         (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
                         (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
                     ); 
@@ -65,6 +69,12 @@ define(['Class'], function(my){
 					}
 				}
 			}
+
+            this.currentWidth  = (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[0].length));
+            this.currentHeight = (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length));
+
+            this.currentHalfWidth = this.currentWidth / 2;
+            this.currentHalfHeight = this.currentHeight / 2;
 		},
 
         setElements: function(elements){

@@ -34,8 +34,11 @@ define(['Class'], function(my){
 
         useGravity: function(obj){
             // !obj.body.isGround && 
-            if(obj.y + obj.states[obj.state].fH < obj.game.canvas.height  ){
+            if(obj.y + obj.states[obj.state].fH < obj.game.canvas.height && !obj.body.ground ){
                 obj.body.velocity.y += obj.body.gravity.y/1000;
+            }else{
+                obj.body.velocity.y = 0;
+                obj.body.ground = false;
             }
         },
 

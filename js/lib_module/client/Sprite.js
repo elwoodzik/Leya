@@ -34,7 +34,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
 
             this.contextType = 'main';
             
-
             this.animations = new GameAnimationFactory(this);
             
             this.body = new Body(this.game, this);
@@ -47,7 +46,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.f_max_delay = 4;
             this.playCallbackDellayCurrent = 0;
             
-            
+            console.log(this.game.map)
             //
             this.ID = id;
             id++;
@@ -162,16 +161,31 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
 
         rowAndColumn: function(){
- 
-            this.column = Math.floor(this.x/70);
-            this.row = Math.floor((this.y)/70);
+
+            // var tx        = p2t(this.x),
+            //     ty        = p2t(this.y),
+            //     nx        = this.x % this.game.map.currentWidth,         // true if this overlaps right
+            //     ny        = this.y % this.game.map.currentWidth,         // true if player overlaps below
+            //     cell      = tcell(tx,     ty),
+            //     cellright = tcell(tx + 1, ty),
+            //     celldown  = tcell(tx,     ty + 1),
+            //     celldiag  = tcell(tx + 1, ty + 1);
+
+
+
+            // var tolerance = this.currentHeight -  this.game.map.currentHeight;
+
+            // this.column = Math.floor(this.x / this.game.map.currentWidth);
+            // this.row = Math.floor((this.y+tolerance) / this.game.map.currentHeight);
+
+            // this.down = this.game.map.b[this.row+1][this.column].type
+            // this.rightDown = this.game.map.b[this.row][this.column+1].type
             
-            if(this.game.map.b[this.row+1][this.column].type !== 'empty'){
-                this.x = this.column * 70;
-                this.y = (this.row) * 70 - 20;
-                this.body.velocity.y = 0;
-            }
-            this.game.ctx.fillRect(this.column*70 - this.game.camera.xScroll, this.row*70 - this.game.camera.yScroll, 70, 70)
+            // if(this.down !== 'empty' || this.rightDown !== 'empty'){
+            //     this.body.ground = true;
+            //     console.log('a')
+            // }
+            // this.game.ctx.fillRect(this.column*this.game.map.currentWidth - this.game.camera.xScroll, (this.row)*this.game.map.currentWidth - this.game.camera.yScroll, 70, 70)
                 // if()
                  
                      
@@ -234,6 +248,19 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 //     this.next_row = this.row;
                 //     this.next_column = this.column;
                 // }
+        },
+
+        t2p: function(t){
+            return t*this.game.map.currentWidth;
+        },
+
+        p2t: function(p){
+            return Math.floor(p/this.game.map.currentWidth);
+        },
+        
+        tcell: function(tx,ty) {
+            
+            return this.game.map.mapArray[tx + (ty*MAP.tw)]; 
         },
 
         worldBounce: function(){

@@ -1,4 +1,4 @@
-/**
+  /**
  * Moduł odpowiedzialny za poczatkowe ładownie.
  * @Module Loader
  */
@@ -44,6 +44,7 @@ define([
             //game.multiplayer.onSocket('message', that.getMessage);
            
             game.mouse.initialize();
+            game.keyboard.initialize();
             
             game.state.add("Irobot2", Irobot2);
             game.state.start("Irobot2");
