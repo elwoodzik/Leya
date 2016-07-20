@@ -2,18 +2,21 @@ define(['Class'], function(my){
 	
     var that;
     var player;
+    var water;
     var map;
     var mapTab = [
-        'ffffff',
-        'ffffff',
-        'ffffff',
-        'ffffff',
-        'efefee',
-        'efefef',
+        'ffffffffff',
+        'ffffffffff',
+        'ffffffffff',
+        'ffffffffff',
+        'ffffffffff',
+        'ffffffffff',
+        'fggggffggg',
     ];
     var mapElements = {
         'f':{x: 12*72, y:4*72, type:'empty', sub_type: 'board'},
-        'e':{x:7*72, y:8*72, type:'solid', sub_type: 'board'},
+        'g':{x:7*72, y:8*72, type:'solid', sub_type: 'board'},
+        'w':{x:6*72, y:8*72, type:'solid', sub_type: 'board'},
         // 'W':{sx:33, sy:33, type:'solid', sub_type: 'board'},
         // 'X':{sx:0, sy:528, type:'solid', sub_type: 'board'},
         // 'box':{sx:126, sy:0, type:'soft', sub_type: 'board', ko_obj : 'Crate'}
@@ -32,23 +35,52 @@ define(['Class'], function(my){
             map = that.game.add.map('background', 'mapa', mapTab, 70,70, false);
             map.setElements(mapElements);
 
-            player = that.game.add.sprite(140, 140, 'player');
-            
+            player = that.game.add.sprite(130, 130, 'player');
             player.animations.add('idle', 0, 190, 65, 90, [0]);
-            player.animations.add('move', 0, 0, 70,90, [0,1,2,3,4]);
+            player.animations.add('moveRight', 0, 0, 70,90, [0,1,2,3,4]);
+            player.animations.add('moveLeft', 0, 0, 70,90, [0,1,2,3,4], true);
             player.animations.play('idle');
-
-            player.body.gravity.y = 53;
-
+            player.body.gravity.y = 175;
+            player.body.colideWorldSide = true;
             player.rpgCollision();
+            //
+            water = that.game.add.sprite(70*5, 70*6+30, 'mapa');
+            water.animations.add('idle', 5*72, 8*75, 70, 40, [0,1]);
+            water.animations.play('idle', 6);
+           
 		},
 
 		update: function(){
-            that.game.keyboard.trigger('D', that.moveLeft);
+            
+            // if(!this.keyboard.hold){
+            //     player.animations.play('idle');
+            //     //player.body.velocity.x = 0;
+            // }
+            //
+            that.game.keyboard.trigger('W', that.moveUp, false);
+
+            that.game.keyboard.trigger('D', that.moveRight, true);
+            that.game.keyboard.trigger('A', that.moveLeft, true);
+            
+            that.game.physic.overLap(player, water, function(){
+                that.game.state.start('Irobot2')
+            })
+            
 		},
 
-        moveLeft: function(_player){
+        moveRight: function(_player){
             player.x += 3;
+            player.animations.play('moveRight');
+        },
+
+        moveUp: function(_player){
+            player.body.velocity.y = -7;
+           // player.animations.play('idle');
+        },
+
+        moveLeft: function(_player){
+            player.x -= 3;
+            
         }
 
 	});

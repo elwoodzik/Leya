@@ -33,7 +33,7 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(600, 600, false, true);
+            game = new Game(700, 490, false, true);
             game.createBgCanvas();
             game.createOnBgCanvas();
             

@@ -80,6 +80,11 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             } else {
                 this.renderY = this.y;
             }
+
+            if(this.states[this.state].flip){
+                this.game.ctx.save();
+                this.game.ctx.scale(-1,1);
+            }
             this.game.ctx.drawImage(
                this.image,
                this.states[this.state].sx+this.states[this.state].f[this.current_f]*this.states[this.state].fW,
@@ -91,9 +96,11 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].fW * this.scale,
                this.states[this.state].fH * this.scale
             )
-           
-            
-           
+
+             if(this.states[this.state].flip){
+                this.game.ctx.restore();
+            }
+
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
@@ -157,13 +164,61 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
 
         rpgCollision: function(){
+ 
             this.useRpgCollision = this.useRpgCollision ? false : true;
+
         },
 
         rowAndColumn: function(){
+            var tolerance = this.currentHeight -  this.game.map.currentHeight;
+         
+            var tx        = this.p2t(this.x),
+                ty        = this.p2t(this.y + tolerance),
+                nx        = this.x % this.game.map.currentWidth,         // true if player overlaps right
+                ny        = this.y % this.game.map.currentHeight,         // true if player overlaps below
+                cell      = this.tcell(tx,     ty),
+                cellright = this.tcell(tx + 1, ty),
+                celldown  = this.tcell(tx,     ty + 1),
+                celldiag  = this.tcell(tx + 1, ty + 1);
+                
+                if(this.body.velocity.y > 0){
+                       
+                    if ((celldown.type === 'solid'  && cell.type != 'solid') || (celldiag === 'solid'  && cellright.type != 'solid' && nx)) {
+                        this.body.ground = true;
+                        this.y = this.t2p(ty) - tolerance;
+                      
+                      
+                    }
+                }
+               
+                
 
-            // var tx        = p2t(this.x),
-            //     ty        = p2t(this.y),
+                if(cellright.type === 'solid' && cell.type != 'solid' || celldiag === 'solid'  && celldown != 'solid' && ny){
+                    
+                    this.body.ground = true;
+                    this.x = this.t2p(tx);
+                }
+                if(cell.type === 'solid' && cellright.type != 'solid' || celldown === 'solid' && celldiag != 'solid' && ny){
+                   
+                    this.body.ground = true;
+                    this.x = this.t2p(tx+1);
+                }
+
+                this.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
+                
+                //console.log(celldown)
+                // if (celldown && !cell) {
+                //    this.body.ground = true;
+                // }
+                // else if (this.body.velocity.y < 0) {
+                //     if ((cell      && !celldown) ||
+                //         (cellright && !celldiag && nx)) {
+                //           console.log('drugie')
+                //     }
+                // }
+
+                //  this.falling = ! (celldown || (nx && celldiag));
+          
             //     nx        = this.x % this.game.map.currentWidth,         // true if this overlaps right
             //     ny        = this.y % this.game.map.currentWidth,         // true if player overlaps below
             //     cell      = tcell(tx,     ty),
@@ -258,9 +313,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             return Math.floor(p/this.game.map.currentWidth);
         },
         
-        tcell: function(tx,ty) {
-            
-            return this.game.map.mapArray[tx + (ty*MAP.tw)]; 
+        tcell: function(tx, ty) {
+            return this.game.map.b[ty][tx]; 
         },
 
         worldBounce: function(){

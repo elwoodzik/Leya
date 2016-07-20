@@ -4,7 +4,10 @@ define(['Class'], function(my){
         constructor: function(game){
             this.game = game;
 
-            this._pressed = {};
+            this._pressed = {
+
+            };
+
             this.keys = {
                 '37': 'left',
                 '38': 'up',
@@ -28,29 +31,51 @@ define(['Class'], function(my){
         },
 
         keyDown: function(e){
-            var code = e.which || e.keyCode;
-            this._pressed = {};
-            this._pressed[this.getKeyByCode(e, code)] = true;
-            return this._pressed[code]; 
-        },
 
+            var code = e.which || e.keyCode;
+            var key = this.getKeyByCode(e, code);
+
+            if(!this._pressed[key]){
+                 this._pressed[key] = {
+                    hold: true,
+                    pressed: true,
+                    name: key
+                };
+            }
+            //return this._pressed[code]; 
+        },
+        
         keyUp: function(e){
             var code = e.which || e.keyCode;
             this.hold = false;
             delete this._pressed[this.getKeyByCode(e, code)];
+
+            console.log(this._pressed)
         },
 
         trigger: function(currentKey, callback, hold){
-            if(!this.hold){
-                if(this._pressed[currentKey]){
-                    this.hold = hold ? true : false;
+            if(!currentKey){
+                return;
+            }
+            var key = this._pressed[currentKey] || false;
+            
+            if(key){
+                if(key.pressed || key.hold){
+                    key.pressed = false;
+                    key.hold = hold ? true : false;
                     if(typeof callback === 'function'){
                         callback.call(this);
                     }
                 }
             }else{
-                return false;
+                return;
             }
+            // 
+            // if(!this.hold){
+               
+            // }else{
+            //     return false;
+            // }
         },
 
         getKeyByCode: function(e,code){

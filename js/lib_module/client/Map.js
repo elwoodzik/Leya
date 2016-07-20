@@ -64,9 +64,9 @@ define(['Class'], function(my){
                    
 					this.b[i].push(this.elements[arr[i].charAt(j)==' ' ? 'floor' : arr[i].charAt(j)]);
 					// Jeśli miejsce jest puste i nie jest to podłoga w lewym górnym rogu (wykluczam trzypozycje) wstaw nowy obiekt z pozycją x i y do tablicy z pustymi miejscami
-					if(this.b[i][j].type=='empty' && !(i==1 && j==1) && !(i==2 && j==1) && !(i==1 && j==2) && !(i==9 && j==13) && !(i==9 && j==12) && !(i==8 && j==13) && !(i==1 && j==12) && !(i==2 && j==13) && !(i==1 && j==13) && !(i==9 && j==1) && !(i==9 && j==2)  && !(i==8 && j==1)){
-						this.emptySpaces.push({x:j, y:i});
-					}
+					// if(this.b[i][j].type=='empty' && !(i==1 && j==1) && !(i==2 && j==1) && !(i==1 && j==2) && !(i==9 && j==13) && !(i==9 && j==12) && !(i==8 && j==13) && !(i==1 && j==12) && !(i==2 && j==13) && !(i==1 && j==13) && !(i==9 && j==1) && !(i==9 && j==2)  && !(i==8 && j==1)){
+					// 	this.emptySpaces.push({x:j, y:i});
+					// }
 				}
 			}
 
