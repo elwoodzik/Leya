@@ -57,11 +57,20 @@ define(['Class'], function(my){
             //     //player.body.velocity.x = 0;
             // }
             //
-            that.game.keyboard.trigger('W', that.moveUp, false);
+            if(that.game.keyboard.trigger('W', false)){
+                that.moveUp();
+            }
 
-            that.game.keyboard.trigger('D', that.moveRight, true);
-            that.game.keyboard.trigger('A', that.moveLeft, true);
-            
+            else if(that.game.keyboard.trigger('D', true)){
+                that.moveRight();
+            }
+            else if(that.game.keyboard.trigger('A', true)){
+                that.moveLeft();
+            }
+            // if(that.game.keyboard._pressed['W']){
+            //     player.body.velocity.y = -7;
+            // }
+
             that.game.physic.overLap(player, water, function(){
                 that.game.state.start('Irobot2')
             })

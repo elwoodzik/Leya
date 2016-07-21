@@ -8,6 +8,8 @@ define(['Class'], function(my){
 
             };
 
+            this.lastEvent = null;
+
             this.keys = {
                 '37': 'left',
                 '38': 'up',
@@ -31,45 +33,53 @@ define(['Class'], function(my){
         },
 
         keyDown: function(e){
-
             var code = e.which || e.keyCode;
             var key = this.getKeyByCode(e, code);
 
+            if(this.lastEvent && this.lastEvent.keyCode === code){
+                return;
+            }
+            
+            this.lastEvent = e;
+
             if(!this._pressed[key]){
-                 this._pressed[key] = {
+                this._pressed[key] = {
                     hold: true,
                     pressed: true,
                     name: key
                 };
             }
+           
+
+           
             //return this._pressed[code]; 
         },
         
         keyUp: function(e){
             var code = e.which || e.keyCode;
             this.hold = false;
+            this.lastEvent = null;
             delete this._pressed[this.getKeyByCode(e, code)];
-
-            console.log(this._pressed)
         },
 
-        trigger: function(currentKey, callback, hold){
-            if(!currentKey){
-                return;
-            }
-            var key = this._pressed[currentKey] || false;
+        trigger: function(currentKey, hold){
+            var key = this._pressed[currentKey] ;
             
             if(key){
                 if(key.pressed || key.hold){
-                    key.pressed = false;
+                   
                     key.hold = hold ? true : false;
-                    if(typeof callback === 'function'){
-                        callback.call(this);
-                    }
+              	    key.pressed = false;
+                      console.log(key)
+                    return true;
                 }
-            }else{
-                return;
-            }
+                   
+           }else{
+               return false;
+           }
+            
+            
+           
             // 
             // if(!this.hold){
                
