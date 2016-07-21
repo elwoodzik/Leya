@@ -46,8 +46,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.f_max_delay = 4;
             this.playCallbackDellayCurrent = 0;
             
-            console.log(this.game.map)
-            //
+              //
             this.ID = id;
             id++;
             this.game.gameObject.push(this); 

@@ -51,22 +51,29 @@ define(['Class'], function(my){
 		},
 
 		update: function(){
-            
+            player.body.platformerMove.use();
             // if(!this.keyboard.hold){
             //     player.animations.play('idle');
             //     //player.body.velocity.x = 0;
             // }
             //
-            if(that.game.keyboard.trigger('W', false)){
-                that.moveUp();
-            }
+            
+            // if(that.game.keyboard._pressed){
 
-            else if(that.game.keyboard.trigger('D', true)){
-                that.moveRight();
-            }
-            else if(that.game.keyboard.trigger('A', true)){
-                that.moveLeft();
-            }
+            //     if(that.game.keyboard._pressed['W']){
+            //         that.moveUp();
+            //     }
+
+            //     if(that.game.keyboard._pressed['D']){
+            //         that.moveRight();
+            //     }
+            //     else if(that.game.keyboard._pressed['A']){
+            //         that.moveLeft();
+            //     }
+            // }
+            // else{
+            //      player.animations.play('idle');
+            // }
             // if(that.game.keyboard._pressed['W']){
             //     player.body.velocity.y = -7;
             // }

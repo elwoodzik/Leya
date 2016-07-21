@@ -85,6 +85,7 @@ define([
             while (LAG >= this.FRAMEDURATION) {  
                //this.capturePreviousPositions(this.gameObject);
                this.cTime += this.FRAMEDURATION;
+               
                this.update(this.cTime);
               
                LAG -= this.FRAMEDURATION;

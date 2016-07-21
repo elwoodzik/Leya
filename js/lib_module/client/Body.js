@@ -1,10 +1,15 @@
-define(['Class'], function(my){
+define(['Class', 'lib_module/client/PlatformerMove'], function(my, PlatformerMove){
     
     var Body = my.Class({
         
         constructor: function(game, sprite){
             this.game = game;
             this.sprite = sprite;
+
+           
+
+            this.platformerMove = new PlatformerMove(this);
+
             
             this.velocity = {
                 x: 0,

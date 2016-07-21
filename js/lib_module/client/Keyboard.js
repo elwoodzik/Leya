@@ -4,9 +4,7 @@ define(['Class'], function(my){
         constructor: function(game){
             this.game = game;
 
-            this._pressed = {
-
-            };
+            this._pressed = false;
 
             this.lastEvent = null;
 
@@ -20,7 +18,7 @@ define(['Class'], function(my){
                 '65': 'A',
                 '68': 'D',
 
-                '32': 'space'
+                '32': 'SPACE'
             }
             this.hold = false;
        
@@ -39,6 +37,10 @@ define(['Class'], function(my){
             if(this.lastEvent && this.lastEvent.keyCode === code){
                 return;
             }
+
+            if(!this._pressed){
+                this._pressed = {};
+            }
             
             this.lastEvent = e;
 
@@ -49,10 +51,6 @@ define(['Class'], function(my){
                     name: key
                 };
             }
-           
-
-           
-            //return this._pressed[code]; 
         },
         
         keyUp: function(e){
@@ -60,6 +58,11 @@ define(['Class'], function(my){
             this.hold = false;
             this.lastEvent = null;
             delete this._pressed[this.getKeyByCode(e, code)];
+            
+            if(Object.keys(this._pressed).length <= 0){
+                return this._pressed = false;
+            }
+            
         },
 
         trigger: function(currentKey, hold){
@@ -70,7 +73,7 @@ define(['Class'], function(my){
                    
                     key.hold = hold ? true : false;
               	    key.pressed = false;
-                      console.log(key)
+                     
                     return true;
                 }
                    
