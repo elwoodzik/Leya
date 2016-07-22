@@ -2,21 +2,23 @@ define(['Class'], function(my){
 	
     var that;
     var player;
+    var ground;
     var water;
     var map;
     var mapTab = [
-        'ffffffffff',
-        'ffffffffff',
-        'ffffffffff',
-        'ffffffffff',
-        'ffffffffff',
-        'ffffffffff',
-        'fggggffggg',
+        'bbbbbbbbbbbbbbbbbbbb',
+        'bffffffffffffggffffb',
+        'bfffffffgggffffffffb',
+        'bfggfffffffffffffffb',
+        'bfffffffffffffgggffb',
+        'bffffffffffffffffffb',
+        'bggggffgggggffgggggb',
     ];
     var mapElements = {
         'f':{x: 12*72, y:4*72, type:'empty', sub_type: 'board'},
         'g':{x:7*72, y:8*72, type:'solid', sub_type: 'board'},
         'w':{x:6*72, y:8*72, type:'solid', sub_type: 'board'},
+        'b':{x:0, y:6*72, type:'solid', sub_type: 'board'},
         // 'W':{sx:33, sy:33, type:'solid', sub_type: 'board'},
         // 'X':{sx:0, sy:528, type:'solid', sub_type: 'board'},
         // 'box':{sx:126, sy:0, type:'soft', sub_type: 'board', ko_obj : 'Crate'}
@@ -35,14 +37,16 @@ define(['Class'], function(my){
             map = that.game.add.map('background', 'mapa', mapTab, 70,70, false);
             map.setElements(mapElements);
 
-            player = that.game.add.sprite(130, 130, 'player');
-            player.animations.add('idle', 0, 190, 65, 90, [0]);
-            player.animations.add('moveRight', 0, 0, 70,90, [0,1,2,3,4]);
-            player.animations.add('moveLeft', 0, 0, 70,90, [0,1,2,3,4], true);
+            ground = that.game.add.image('background', 120, 50, 'ground');
+
+            player = that.game.add.sprite(65*3, 65*2, 'ground');
+            player.animations.add('idle', 0, 0, 70, 70, [0]);
+            player.animations.add('moveRight', 0, 0, 55,70, [0,1,2,3,4]);
+            player.animations.add('moveLeft', 0, 0, 55,70, [0,1,2,3,4], true);
             player.animations.play('idle');
-            player.body.gravity.y = 175;
+           // player.body.gravity.y = 175;
             player.body.colideWorldSide = true;
-            player.rpgCollision();
+            //player.rpgCollision();
             //
             water = that.game.add.sprite(70*5, 70*6+30, 'mapa');
             water.animations.add('idle', 5*72, 8*75, 70, 40, [0,1]);
@@ -77,7 +81,7 @@ define(['Class'], function(my){
             // if(that.game.keyboard._pressed['W']){
             //     player.body.velocity.y = -7;
             // }
-
+          
             that.game.physic.overLap(player, water, function(){
                 that.game.state.start('Irobot2')
             })

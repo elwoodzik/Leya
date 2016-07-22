@@ -169,41 +169,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
 
         rowAndColumn: function(){
-            var tolerance = this.currentHeight -  this.game.map.currentHeight;
-         
-            var tx        = this.p2t(this.x),
-                ty        = this.p2t(this.y + tolerance),
-                nx        = this.x % this.game.map.currentWidth,         // true if player overlaps right
-                ny        = this.y % this.game.map.currentHeight,         // true if player overlaps below
-                cell      = this.tcell(tx,     ty),
-                cellright = this.tcell(tx + 1, ty),
-                celldown  = this.tcell(tx,     ty + 1),
-                celldiag  = this.tcell(tx + 1, ty + 1);
-                
-                if(this.body.velocity.y > 0){
-                       
-                    if ((celldown.type === 'solid'  && cell.type != 'solid') || (celldiag === 'solid'  && cellright.type != 'solid' && nx)) {
-                        this.body.ground = true;
-                        this.y = this.t2p(ty) - tolerance;
-                      
-                      
-                    }
-                }
-               
-                
-
-                if(cellright.type === 'solid' && cell.type != 'solid' || celldiag === 'solid'  && celldown != 'solid' && ny){
-                    
-                    this.body.ground = true;
-                    this.x = this.t2p(tx);
-                }
-                if(cell.type === 'solid' && cellright.type != 'solid' || celldown === 'solid' && celldiag != 'solid' && ny){
-                   
-                    this.body.ground = true;
-                    this.x = this.t2p(tx+1);
-                }
-
-                this.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
+           
                 
                 //console.log(celldown)
                 // if (celldown && !cell) {

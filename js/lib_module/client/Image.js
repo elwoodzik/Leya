@@ -9,7 +9,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			this.x = x || 0; 
 			this.y = y || 0; 
 			this.key = key;
-			this.fullscreen = fullscreen || false;
+			
 			this.image = Loader.assetManager.get(this.key); 
 			
 			this.body = new Body(this.game, this);
@@ -49,12 +49,12 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.image,
 	            0,
 	            0,
-	            this.width,
-	            this.height,
+				this.image.width,
+	            this.image.height,
 	            this.renderX - this.game.camera.xScroll, // * this.scale
 	            this.renderY - this.game.camera.yScroll, // * this.scale
-	            this.fullscreen ? this.game.canvas.width : this.width,
-	            this.fullscreen ? this.game.canvas.height : this.height
+	            this.width,
+	            this.height
 	        )
 		},
 
@@ -79,12 +79,12 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.image,
 	            0,
 	            0,
-	            this.width,
-	            this.height,
+	            this.image.width,
+	            this.image.height,
 	            this.renderX - this.game.camera.xScroll, // * this.scale
 	            this.renderY - this.game.camera.yScroll, // * this.scale
-	            this.fullscreen ? this.game.canvas.width : this.width,
-	            this.fullscreen ? this.game.canvas.height : this.height
+				this.width,
+	            this.height
 	        )
 		},
 

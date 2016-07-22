@@ -38,7 +38,6 @@ define(['Class'], function(my){
                 // 
                 for(var j=0; j<this.b[i].length; j++){
                     // 
-                    console.log(this.b[i][j].x)
                     this.context.drawImage(
                         this.image,
                         this.b[i][j].x,
