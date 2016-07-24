@@ -29,23 +29,23 @@ define(['Class'], function(my){
             this.lastYScroll = null;
             
             this.contextType = context;
-           
+           console.log('a')
         },
 
         draw: function() { 
-
+            
             for(var i=0; i<this.b.length; i++){
                 // 
                 for(var j=0; j<this.b[i].length; j++){
                     // 
                     this.context.drawImage(
                         this.image,
-                        this.b[i][j].x,
-                        this.b[i][j].y,
+                        this.b[i][j].x ,
+                        this.b[i][j].y ,
                         this.w,
                         this.h,
-                        j * this.currentWidth,
-                        i * this.currentHeight,
+                        Math.floor(( j * this.currentWidth) - this.game.camera.xScroll),
+                        Math.floor((i * this.currentHeight) - this.game.camera.yScroll),
                         (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
                         (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
                     ); 

@@ -16,15 +16,16 @@ define(['Class'], function(my, game){
 	    	this.game.cTime = 0;
 	    	this.game.world.timeLocal = 0;
 	    	this.game.gameObject.length = 0;
+	    	this.game.gameObjectStatic.length = 0;
+	    	this.game.gameObjectOnStatic.length = 0;
+	    	this.game.currentState = null;
 	    	this.game.currentState = new this.game.states[key]();
 			
 	    	if(this.game.currentState.create){
-	    		this.game.currentState.create.apply(this.game);
+    			this.game.currentState.create.apply(this.game);
 	    	}else{
 	    		throw "Brakuje metody create w scenie " + key;
 	    	}
-	    	
-	    	
 	    }
 	});
 

@@ -26,6 +26,7 @@ define([
                 "mapa": "images/mapa.png",
                 "player": "images/player.png",
                 "ground": "images/ground.png",
+                "bg": "images/bg.jpg",
             }, this.onComplete, this.onProgress);
         },
 
@@ -34,11 +35,11 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(1400, 490, false, true);
+            game = new Game(1400, 700, false, true);
             game.createBgCanvas();
             game.createOnBgCanvas();
             
-           // game.scallable(true);
+            game.scallable(true);
             game.useFpsCounter = true;
             //game.add.multiplayer('http://localhost:3000');
 

@@ -10,16 +10,21 @@ define([
     
     'use strict';
     //private
-    var PREVIOUS = 0,
+    var that,
+        PREVIOUS = 0,
         FPS = 60,
-        
+        step = 1/FPS,
         LAG = 0,
         loop = null,
         elapsed = 0,
         lagOffset = 0,
         actualFps = 0,
+        dts = 0,
         i = 0,
+        last = 0,
+        now = 0,
         u = 0,
+        dt = 0,
         iMax,
         uMax,
         entityUpdate,
@@ -30,6 +35,7 @@ define([
     var Game = my.Class({
         
         constructor: function(width, height, orientation){
+            that = this;
             this.FRAMEDURATION = 1000/FPS;
             
             this.add = new GameObjectFactory(this);
@@ -49,7 +55,7 @@ define([
                 yScroll : 0
             };
 
-            this.map;
+            this.map = null;
 
             this.cTime = 0;
 
@@ -63,41 +69,66 @@ define([
             this.createCanvas(width, height, orientation);
 
             this.useFpsCounter = false;
+
+            
+        },
+
+        timestamp: function() {
+            return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
         },
 
         animationLoop : function(timestamp) {
-           
-            if (!timestamp) {
+            
+            if(!timestamp){
                 timestamp = 0;
-            } 
+            }
+            dt = (dt + Math.min(1, (timestamp - last) / 1000));
            
+            while(dt > step) {
+              dt = dt - step;
+              this.update(step);
+            }
+            this.render();
+            last = timestamp;
+  
             requestAnimationFrame( this.animationLoop.bind(this) );
+          
+            // if (!timestamp) {
+            //     timestamp = 0;
+            // } 
+            // now = this.last;
+            // console.log(now - this.last)
+            // dt = dt + Math.min(1, (now - this.last) / 1000);
             
-            elapsed = timestamp - PREVIOUS;
-            
-            if (elapsed > 1000 || elapsed < 0) {
-                elapsed = this.FRAMEDURATION;
-                LAG = 0;
-            }
            
-            LAG += elapsed;
-        
-            while (LAG >= this.FRAMEDURATION) {  
-               //this.capturePreviousPositions(this.gameObject);
-               this.cTime += this.FRAMEDURATION;
+            // requestAnimationFrame( this.animationLoop.bind(this) );
+            
+            // elapsed = timestamp - PREVIOUS;
+            
+            // if (elapsed > 1000 || elapsed < 0) {
+            //     elapsed = this.FRAMEDURATION;
+            //     LAG = 0;
+            // }
+           
+            // LAG += elapsed;
+            
+            
+            // while (LAG >= this.FRAMEDURATION) {  
+            //    //this.capturePreviousPositions(this.gameObject);
+            //    this.cTime += this.FRAMEDURATION;
                
-               this.update(this.cTime);
+            //    this.update(this.cTime);
               
-               LAG -= this.FRAMEDURATION;
-            }
+            //    LAG -= this.FRAMEDURATION;
+            // }
 
-            lagOffset = LAG / this.FRAMEDURATION;
+            // lagOffset = LAG / this.FRAMEDURATION;
             
-            this.render(lagOffset);
+            // this.render(lagOffset);
             
-            this.showFPS(elapsed);
+            // this.showFPS(elapsed);
             
-            PREVIOUS = timestamp;
+            // PREVIOUS = timestamp;
           
         },
         
@@ -180,19 +211,18 @@ define([
             }
         },
 
-        update: function(time){  
-            if(this.currentState && typeof this.currentState.update === 'function'){
-                this.currentState.update.apply(this, arguments);
-            }
-            
+        update: function(dt){  
             for(u=0, uMax=this.gameObject.length; u<uMax; u++){
                 entityUpdate = this.gameObject[u];
                 if(entityUpdate && entityUpdate.update && entityUpdate.used){
                     //if(!entityUpdate.isOutOfScreen){   
-                        entityUpdate.update(time);
+                        entityUpdate.update(dt);
                     //}
                 }
             } 
+            if(this.currentState && typeof this.currentState.update === 'function'){
+                this.currentState.update.apply(this, arguments);
+            }
         },
         
         createBgCanvas: function(){

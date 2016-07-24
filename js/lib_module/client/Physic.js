@@ -21,7 +21,6 @@ define(['Class'], function(my){
 
         // Poprawic by dzialaly poprawnie wszystkie kierunki
         outOfScreenHandler: function(item, callback){
-
             if(item){
                   
                 if(!item.isOutOfScreen){
@@ -42,7 +41,7 @@ define(['Class'], function(my){
                 }
                 else if(item.isOutOfScreen){
                     if(item.x   < this.game.canvas.width+this.game.camera.xScroll && item.x+ item.currentWidth > 0 +this.game.camera.xScroll
-                        && item.y + item.currentHeight  < this.game.canvas.height+this.game.camera.yScroll && item.y + item.currentHeight > 0+this.game.camera.yScroll){
+                        && item.y  < this.game.canvas.height+this.game.camera.yScroll && item.y + item.currentHeight > 0+this.game.camera.yScroll){
                             return item.isOutOfScreen = false;
                     }
                 }
@@ -111,7 +110,9 @@ define(['Class'], function(my){
         },
         
         collide: function(obj1, obj2, callback, bounds) {
-            
+            if(!obj1 || !obj2){
+                return false;
+            }
             if (!Array.isArray(obj1) && Array.isArray(obj2)){
 
                 if(typeof obj1 === 'object'){
@@ -177,31 +178,34 @@ define(['Class'], function(my){
                         if(oX >= oY) {
                             if (vY > 0) {
                                 colDir = "t";
-                                entity1.y += oY;
-                                //entity2.y -= oY;
-                                entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : entity1.body.velocity.y;
-                                entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
+                                 entity1.y += entity1.body.immoveable ? oY : 0;
+                                 entity2.y -= entity2.body.immoveable ? oY : 0;
+                                
+                                 entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : entity1.body.velocity.y;
+                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : 0;
                             } else {
                                 colDir = "b"; 
-                                entity1.y -= oY;
-                                //entity2.y += oY;
+                                entity1.y -= entity1.body.immoveable ? oY : 0;
+                                entity2.y += entity2.body.immoveable ? oY : 0;
 
-                                entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : entity1.body.velocity.y;
-                                entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
+                               //entity1.body.falling = false;
+                                //entity1.body.jumping = false;
+                                entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : 0;
+                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
                             }
                         } else {
                             if (vX > 0) {
                                 colDir = "l";
-                                entity1.x += oX;
-                               // entity2.x -= oX;
-                                entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
-                                entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
+                                 entity1.x += entity1.body.immoveable ? oX : 0;
+                                 entity2.x -= entity2.body.immoveable ? oX : 0;
+                                 entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
+                                 entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
                             } else {
                                 colDir = "r";
-                                entity1.x -= oX;
-                                //entity2.x += oX;
-                                entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
-                                entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
+                                 entity1.x -= entity1.body.immoveable ? oX : 0;
+                                 entity2.x += entity2.body.immoveable ? oX : 0;
+                                 entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
+                                 entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
                             }
                         }
                         if(colDir != null){
@@ -209,7 +213,7 @@ define(['Class'], function(my){
                             entity2.checked = true;
                             
                             if(typeof callback === 'function'){
-                                return callback.call(this, entity1, entity2, colDir)
+                                return callback.call(this, entity1, entity2, colDir, oY, oX)
                             }
                             
                         }

@@ -79,7 +79,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             } else {
                 this.renderY = this.y;
             }
-
+            
             if(this.states[this.state].flip){
                 this.game.ctx.save();
                 this.game.ctx.scale(-1,1);
@@ -90,7 +90,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].sy,
                this.states[this.state].fW,
                this.states[this.state].fH,
-               this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX) : this.renderX  - this.game.camera.xScroll, // * this.scale
+               this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + this.game.camera.xScroll) : Math.floor(this.renderX  - this.game.camera.xScroll), // * this.scale
                this.renderY  - this.game.camera.yScroll,// * this.scale
                this.states[this.state].fW * this.scale,
                this.states[this.state].fH * this.scale
@@ -108,14 +108,13 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             //this.collide();
         },
 
-        update: function(time){
-            this.body.useGravity(this);
+        update: function(dt){
+            //this.body.useGravity(this);
             this.worldBounce();
             this.moveToPointHandler();
 
-            
-            this.x += this.body.velocity.x;
-            this.y += this.body.velocity.y;
+            this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
+            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
             this.frameUpdate();
         },
 

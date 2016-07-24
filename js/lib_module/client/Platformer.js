@@ -1,6 +1,6 @@
 define(['Class'], function(my){
     
-    var PlatformerMove = my.Class({
+    var Platformer = my.Class({
         
         constructor: function(body, sprite){
             this.body = body;
@@ -13,66 +13,74 @@ define(['Class'], function(my){
         },
 
         configure: function(options){
-            this.tile     = options.tile || 115;              // the size of each tile (in game pixels)
-            this.meter    = this.tile/100;            // abitrary choice for 1m
-            this.gravity  = options.gravity || this.meter ;    // very exagerated gravity (6x)
-            this.maxdx    = options.maxdx || this.meter * 6;         // max horizontal speed (20 tiles per second)
-            this.maxdy    = options.maxdy || this.meter * 60;         // max vertical speed   (60 tiles per second)
-            this.accel    = options.accel || 0.1;          // horizontal acceleration -  take 1/2 second to reach maxdx
-            this.friction = options.maxdx || 2;          // horizontal friction     -  take 1/6 second to stop from maxdx
-            this.jump     = options.meter || 17;     
+            this.tile     = options.tile || 70;              // the size of each tile (in game pixels)
+            this.meter    = this.tile;            // abitrary choice for 1m
+            this.gravity  = options.gravity || this.meter * 9.8 * 5 ;    // very exagerated gravity (6x)
+            this.maxdx    = options.maxdx || this.meter * 4;         // max horizontal speed (20 tiles per second)
+            this.maxdy    = options.maxdy || this.meter * 40;         // max vertical speed   (60 tiles per second)
+            this.accel    = options.accel || this.maxdx * 3;          // horizontal acceleration -  take 1/2 second to reach maxdx
+            this.friction = options.maxdx || this.maxdx * 136;          // horizontal friction     -  take 1/6 second to stop from maxdx
+            this.jump     = options.meter || this.meter * 1000;     
               
+            this.ddx = 0;
             this.ddy = 0;  
         },
 
-        use: function(){
+        move: function(dt){
              
-            var wasleft  = this.ddx < 0,
-                wasright = this.ddx > 0,
-                falling  = this.body.falling;
-           
-                this.ddx = 0;
-                this.ddy = this.gravity;
-       
-            if (this.game.keyboard._pressed['A']){
-                this.ddx = this.ddx - this.accel;     // player wants to go left
-            }
-            else if (wasleft){
-                this.ddx = this.ddx + this.friction;  // player was going left, but not any more 
-            }
-
-            if ( this.game.keyboard._pressed['D']){
-                this.ddx = this.ddx + this.accel;  
-            }else if (wasright){
-                this.ddx = this.ddx - this.friction ;
-            }
             
-            if (this.game.keyboard._pressed['SPACE'] && !this.body.jumping && !falling) {
+            this.keys();
+            
+            
+
+           this.collision(dt);   
+           
+        },
+
+        keys: function(dt){
+            this.wasleft  = this.ddx < 0;
+            this.wasright = this.ddx > 0;
+            this.body.falling  = this.body.falling;
+
+            if (this.game.keyboard._pressed['A'] || this.game.keyboard._pressed['left']){
+                this.ddx = this.ddx - this.accel;     // player wants to go left
+                this.sprite.animations.play('moveLeft')   
+            }else if (this.wasleft){
+                this.ddx = this.ddx + this.friction;  // player was going left, but not any more 
+                this.sprite.animations.play('idle')   
+            }
+            if ( this.game.keyboard._pressed['D'] || this.game.keyboard._pressed['right']){
+                this.ddx = this.ddx + this.accel;
+                this.sprite.animations.play('moveRight')   
+            }else if (this.wasright){
+                this.ddx = this.ddx - this.friction ;
+                this.sprite.animations.play('idle');
+            }
+            if ((this.game.keyboard._pressed['SPACE'] || this.game.keyboard._pressed['up'] )&& !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
             }
 
-            this.body.velocity.x = this.bound(this.body.velocity.x + (this.ddx), -this.maxdx, this.maxdx);
-            this.body.velocity.y = this.bound(this.body.velocity.y + (this.ddy), -this.maxdy, this.maxdy);
-
-            if ((wasleft  && (this.body.velocity.x > 0)) ||
-                (wasright && (this.body.velocity.x < 0))) {
-                   this.body.velocity.x = 0; 
-                   this.ddx = 0;// clamp at zero to prevent friction from making us jiggle side to side
-            }
-
-            this.collision();   
-           
+          
         },
 
-        collision: function(){
+        collision: function(dt){
+            this.body.velocity.x = this.bound(this.body.velocity.x + (dt * this.ddx), -this.maxdx, this.maxdx);
+            this.body.velocity.y = this.bound(this.body.velocity.y + (dt * this.ddy), -this.maxdy, this.maxdy);
+
+            if ((this.wasleft  && (this.body.velocity.x > 0)) ||
+                (this.wasright && (this.body.velocity.x < 0))) {
+                   this.body.velocity.x = 0; 
+            }
+            this.ddy = this.gravity;
+
             var tolerance = this.sprite.currentHeight - this.game.map.currentHeight;
             var tolerance2 = this.sprite.currentWidth - this.game.map.currentWidth;
             
             var tx        = this.p2t(this.sprite.x),
-                ty        = this.p2t(this.sprite.y),
-                nx        = this.sprite.x % 70,         // true if player overlaps right
-                ny        = this.sprite.y % 70,         // true if player overlaps below
+                ty        = this.p2t(this.sprite.y + tolerance)  ,
+                nx        = this.sprite.x % this.tile,         // true if player overlaps right
+                ny        = this.sprite.y % this.tile,         // true if player overlaps below
                 cell      = this.tcell(tx,     ty),
                 cellright = this.tcell(tx + 1, ty),
                 celldown  = this.tcell(tx,     ty + 1),
@@ -82,7 +90,7 @@ define(['Class'], function(my){
                 
                 if(this.body.velocity.y > 0){
                     if ((celldown.type === 'solid' && cell.type != 'solid') || (celldiag.type === 'solid'  && cellright.type != 'solid' && nx)) {
-                        this.sprite.y = this.t2p(ty);
+                        this.sprite.y = this.t2p(ty) -  tolerance;
                         
                         this.body.velocity.y = 0;
                          
@@ -91,9 +99,15 @@ define(['Class'], function(my){
                         ny = 0;
                     }
                 }
+
                 if (this.body.velocity.y < 0) {
+                    ty = this.p2t(this.sprite.y )
+                    cell      = this.tcell(tx,     ty);
+                    cellright = this.tcell(tx + 1, ty);
+                    celldown  = this.tcell(tx,     ty + 1);
+                    celldiag  = this.tcell(tx + 1, ty + 1);
                     if ((cell.type === 'solid' && celldown.type != 'solid' ) || (cellright.type === 'solid' && celldiag.type != 'solid' && nx)) {
-                        this.sprite.y = this.t2p(ty + 1) ;   // clamp the y position to avoid jumping into platform above
+                        this.sprite.y = this.t2p(ty + 1)  ;   // clamp the y position to avoid jumping into platform above
                         this.body.velocity.y = 0;            // stop upward velocity
                         cell      = celldown;     // player is no longer really in that cell, we clamped them to the cell below 
                         cellright = celldiag;     // (ditto)
@@ -134,5 +148,5 @@ define(['Class'], function(my){
 
     });
 
-    return PlatformerMove;
+    return Platformer;
 })

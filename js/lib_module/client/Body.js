@@ -1,4 +1,4 @@
-define(['Class', 'lib_module/client/PlatformerMove'], function(my, PlatformerMove){
+define(['Class', 'lib_module/client/Platformer'], function(my, Platformer){
     
     var Body = my.Class({
         
@@ -8,7 +8,7 @@ define(['Class', 'lib_module/client/PlatformerMove'], function(my, PlatformerMov
 
            
 
-            this.platformerMove = new PlatformerMove(this);
+            this.platformer = new Platformer(this);
 
             
             this.velocity = {

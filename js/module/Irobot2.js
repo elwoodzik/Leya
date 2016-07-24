@@ -2,17 +2,52 @@ define(['Class'], function(my){
 	
     var that;
     var player;
+    var bg;
     var ground;
-    var water;
+    var box;
+    
+    var watersBlockPlaces = [
+        {
+            x: 5,
+            y: 9 
+        },
+        {
+            x: 6,
+            y: 9 
+        },
+        {
+            x: 12,
+            y: 9 
+        },
+        {
+            x: 13,
+            y: 9 
+        },
+        {
+            x: 29,
+            y: 9 
+        },
+        {
+            x: 30,
+            y: 9 
+        },
+        {
+            x: 31,
+            y: 9 
+        }
+    ]
     var map;
     var mapTab = [
-        'bbbbbbbbbbbbbbbbbbbb',
-        'bffffffffffffggffffb',
-        'bfffffffgggffffffffb',
-        'bfggfffffffffffffffb',
-        'bfffffffffffffgggffb',
-        'bffffffffffffffffffb',
-        'bggggffgggggffgggggb',
+        'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        'bffffffffffffffffffffffffffffffffffffffb',
+        'bfffffffggffffffffffffffffggfffffffffffb',
+        'bfggffffffffffffffffggfffffffffffffffffb',
+        'bfffffffffffffgggffffffffffffffffgggfffb',
+        'bffffgffffffffffffffffffgffffffffffffffb',
+        'bfffffffggffffffffffffffffggfffffffffffb',
+        'bffffffffffffffffffffffffffffffffffffffb',
+        'bffffffffffffffffffffffffffffffffffffffb',
+        'bggggffgggggffgggggggggggggggfffggggggbb',
     ];
     var mapElements = {
         'f':{x: 12*72, y:4*72, type:'empty', sub_type: 'board'},
@@ -32,32 +67,63 @@ define(['Class'], function(my){
 		},
 
 		create: function(){
+           
             that.game = this;
+            bg =  that.game.add.image('background', 0,0, 'bg', 1400,700)
+            that.watersBlock = [];
+            that.map = that.game.add.map('main', 'mapa', mapTab, 70,70, false);
+            that.map.setElements(mapElements);
 
-            map = that.game.add.map('background', 'mapa', mapTab, 70,70, false);
-            map.setElements(mapElements);
+            //ground = that.game.add.image('background', 120, 50, 'ground');
 
-            ground = that.game.add.image('background', 120, 50, 'ground');
-
-            player = that.game.add.sprite(65*3, 65*2, 'ground');
-            player.animations.add('idle', 0, 0, 70, 70, [0]);
-            player.animations.add('moveRight', 0, 0, 55,70, [0,1,2,3,4]);
-            player.animations.add('moveLeft', 0, 0, 55,70, [0,1,2,3,4], true);
+            player = that.game.add.sprite(370, 190, 'player');
+            player.animations.add('idle', 0, 190, 65, 90, [0]);
+            player.animations.add('moveRight', 0, 0, 71,90, [0,1,2,3,4]);
+            player.animations.add('moveLeft', 0, 0, 71,90, [0,1,2,3,4], true);
             player.animations.play('idle');
            // player.body.gravity.y = 175;
             player.body.colideWorldSide = true;
+            player.body.immoveable = true;
             //player.rpgCollision();
             //
-            water = that.game.add.sprite(70*5, 70*6+30, 'mapa');
-            water.animations.add('idle', 5*72, 8*75, 70, 40, [0,1]);
-            water.animations.play('idle', 6);
-           
+            for(var i = 0; i < watersBlockPlaces.length; i++){
+                var pos = watersBlockPlaces[i];
+                that.watersBlock.push(that.game.add.sprite(70*pos.x, 70*pos.y+30, 'mapa'));
+                that.watersBlock[that.watersBlock.length-1].animations.add('idle', 5*72, 8*75, 72, 70, [1]);
+                that.watersBlock[that.watersBlock.length-1].animations.play('idle');
+               // this.watersBlock[this.watersBlock.length-1].body.velocity.x = 200;
+            }
+
+            box = that.game.add.sprite(350, 140, 'mapa');
+            box.animations.add('idle', 0, 0, 70, 70, [0]);
+            box.animations.play('idle');
+            box.body.immoveable = true;
+
+            that.game.add.camera(player);
+            that.game.world.setPortView(2800, 700)
+            console.log(that.game.gameObject.length)
 		},
 
-		update: function(){
-            player.body.platformerMove.use();
+		update: function(dt){
+            that.game.physic.collide(that.watersBlock, box, function(p, w , dir, oy, ox){
+                w.body.immoveable = false;
+                
+            })
+            that.game.physic.collide(box, player, function(p, w , dir, oy, ox){
+                if(dir === 't'){
+                    w.body.falling = false;
+                    w.body.jumping = false;
+                }
+
+               
+            })
+           
+            player.body.platformer.move(dt);
+            box.body.platformer.collision(dt);
+  
+           
             // if(!this.keyboard.hold){
-            //     player.animations.play('idle');
+            //     
             //     //player.body.velocity.x = 0;
             // }
             //
@@ -82,9 +148,7 @@ define(['Class'], function(my){
             //     player.body.velocity.y = -7;
             // }
           
-            that.game.physic.overLap(player, water, function(){
-                that.game.state.start('Irobot2')
-            })
+            
             
 		},
 
