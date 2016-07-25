@@ -81,7 +81,7 @@ define(['Class'], function(my){
             
 
             var tx        = this.p2t(this.sprite.x ),
-                ty        = this.p2t(this.sprite.y + this.body.tolerance)  ,
+                ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
                 nx        = this.sprite.x % this.tile,         // true if player overlaps right
                 ny        = this.sprite.y % this.tile,         // true if player overlaps below
                 cell      = this.tcell(tx,     ty),
@@ -109,12 +109,12 @@ define(['Class'], function(my){
                 }
             }
             if (this.body.velocity.x > 0 || this.body.pushedRight) {
-                if(this.checkmove(this.sprite.x +1, this.sprite.y)){
+                if(this.checkmove(this.sprite.x +5, this.sprite.y)){
                      //this.body.pushedLeft = false;
                       this.body.pushedRight = false;
                     this.body.velocity.x = 0;
                     console.log('z')
-                   this.sprite.x = this.t2p(tx);
+                   this.sprite.x = this.sprite.x - 5;
                 }
             }else if (this.body.velocity.x < 0 | this.body.pushedLeft) {  
                 if(this.checkmove(this.sprite.x-5, this.sprite.y)){
