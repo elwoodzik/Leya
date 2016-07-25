@@ -77,10 +77,10 @@ define(['Class'], function(my){
 
             //ground = that.game.add.image('background', 120, 50, 'ground');
 
-            player = that.game.add.sprite(370, 90, 'player2');
-            player.animations.add('idle', 0,200, 65, 88, [0]);
-            player.animations.add('moveRight', 0, 0, 73,90, [0,1,2,3,4]);
-            player.animations.add('moveLeft', 0, 0, 73,90, [0,1,2,3,4], true);
+            player = that.game.add.sprite(370, 90, 'player3');
+            player.animations.add('idle', 0,195, 65, 90, [0]);
+            player.animations.add('moveRight', 0, 0, 73, 90, [0,1,2,3,4]);
+            player.animations.add('moveLeft', 0, 0, 73, 90, [0,1,2,3,4], true);
             player.animations.play('idle');
            // player.body.gravity.y = 175;
             player.body.colideWorldSide = true;
@@ -95,7 +95,7 @@ define(['Class'], function(my){
                // this.watersBlock[this.watersBlock.length-1].body.velocity.x = 200;
             }
 
-            box = that.game.add.sprite(210, 210, 'mapa');
+            box = that.game.add.sprite(210, 280, 'mapa');
             box.animations.add('idle', 0, 0, 70, 70, [0]);
             box.animations.play('idle');
             box.body.immoveable = true;
@@ -114,13 +114,14 @@ define(['Class'], function(my){
                 if(dir === 'b'){
                     p.body.falling = false;
                     p.body.jumping = false;
+                    b.y -= oy;
                 }
                
                
             })
             
             player.body.platformer.move(dt);
-            box.body.platformer.collision(dt);
+           box.body.platformer.collision(dt);
   
            
             // if(!this.keyboard.hold){

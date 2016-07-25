@@ -69,8 +69,9 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             });
         },
 
-        draw: function(lag){
-
+        draw: function(dt){
+            
+            
             if (this.previousX) {
                 this.renderX = (this.x - this.previousX) * lag + this.previousX;
             } else {

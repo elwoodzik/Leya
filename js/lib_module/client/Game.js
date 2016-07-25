@@ -88,7 +88,7 @@ define([
               dt = dt - step;
               this.update(step);
             }
-            this.render();
+            this.render(dt);
             last = timestamp;
   
             requestAnimationFrame( this.animationLoop.bind(this) );
@@ -132,7 +132,7 @@ define([
           
         },
         
-        render: function(lagOffset){
+        render: function(dt){
             if(this.renderer){
                 this.clearCanvas(this.ctx);
                 
@@ -148,7 +148,7 @@ define([
                                 this.ctx.translate(-entityRender.x - entityRender.currentWidth * entityRender.body.anchorX, -entityRender.y - entityRender.currentHeight * entityRender.body.anchorY);
                             }
 
-                            entityRender.draw(lagOffset);
+                            entityRender.draw(dt);
                             
                             if(entityRender.body && entityRender.body.angle!=0 ){
                                 this.ctx.restore();
@@ -159,7 +159,7 @@ define([
             }
         },
 
-        renderStatic: function(lagOffset){
+        renderStatic: function(dt){
             if(this.renderer){
                  this.clearCanvas(this.bgctx);
                 
@@ -174,7 +174,7 @@ define([
                                 this.bgctx.translate(-entityRenderStatic.x - entityRenderStatic.currentWidth * entityRenderStatic.body.anchorX, -entityRenderStatic.y - entityRenderStatic.currentHeight * entityRenderStatic.body.anchorY)
                             }
 
-                            entityRenderStatic.draw(lagOffset);
+                            entityRenderStatic.draw(dt);
                             
                             if(entityRenderStatic.body && entityRenderStatic.body.angle!=0 ){
                                 this.bgctx.restore();
@@ -185,7 +185,7 @@ define([
             }
         },
 
-        renderOnStatic: function(lagOffset){
+        renderOnStatic: function(dt){
             if(this.renderer){
                 this.clearCanvas(this.onbgctx);
                 
@@ -200,7 +200,7 @@ define([
                                 this.onbgctx.translate(-entityRenderOnStatic.x - entityRenderOnStatic.currentWidth * entityRenderOnStatic.body.anchorX, -entityRenderOnStatic.y - entityRenderOnStatic.currentHeight * entityRenderOnStatic.body.anchorY)
                             }
 
-                            entityRenderOnStatic.draw(lagOffset);
+                            entityRenderOnStatic.draw(dt);
                             
                             if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle!=0 ){
                                 this.onbgctx.restore();
