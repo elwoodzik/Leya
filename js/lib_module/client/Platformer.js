@@ -72,13 +72,15 @@ define(['Class'], function(my){
                 (this.wasright && (this.body.velocity.x < 0))) {
                    this.body.velocity.x = 0; 
             }
-            this.ddy = this.gravity;
+          
+            this.ddy = this.gravity ;
 
-            var tolerance = this.sprite.currentHeight - this.game.map.currentHeight;
+            
+            this.body.tolerance = this.sprite.currentHeight - this.game.map.currentHeight;
             var tolerance2 = this.sprite.currentWidth - this.game.map.currentWidth;
             
-            var tx        = this.p2t(this.sprite.x),
-                ty        = this.p2t(this.sprite.y + tolerance)  ,
+            var tx        = this.p2t(this.sprite.x ),
+                ty        = this.p2t(this.sprite.y +this.body.tolerance)  ,
                 nx        = this.sprite.x % this.tile,         // true if player overlaps right
                 ny        = this.sprite.y % this.tile,         // true if player overlaps below
                 cell      = this.tcell(tx,     ty),
@@ -87,47 +89,56 @@ define(['Class'], function(my){
                 celldiag  = this.tcell(tx + 1, ty + 1);
                 // this.game.ctx.fillStyle="red"
                 // this.game.ctx.fillRect(this.sprite.x, this.sprite.y, 170,170)
-                
+               
                 if(this.body.velocity.y > 0){
                     if ((celldown.type === 'solid' && cell.type != 'solid') || (celldiag.type === 'solid'  && cellright.type != 'solid' && nx)) {
-                        this.sprite.y = this.t2p(ty) -  tolerance;
+                        this.sprite.y = this.t2p(ty) - this.body.tolerance ;
+                        
                         
                         this.body.velocity.y = 0;
-                         
+                        
                         this.body.falling = false;   // no longer falling
                         this.body.jumping = false;
                         ny = 0;
+                        
                     }
                 }
 
-                if (this.body.velocity.y < 0) {
-                    ty = this.p2t(this.sprite.y )
+                else if (this.body.velocity.y < 0) {
+                    ty = this.p2t(this.sprite.y - this.body.tolerance) 
+                    
                     cell      = this.tcell(tx,     ty);
                     cellright = this.tcell(tx + 1, ty);
                     celldown  = this.tcell(tx,     ty + 1);
                     celldiag  = this.tcell(tx + 1, ty + 1);
                     if ((cell.type === 'solid' && celldown.type != 'solid' ) || (cellright.type === 'solid' && celldiag.type != 'solid' && nx)) {
-                        this.sprite.y = this.t2p(ty + 1)  ;   // clamp the y position to avoid jumping into platform above
+                        this.sprite.y = this.t2p(ty + 1) + this.body.tolerance ;   // clamp the y position to avoid jumping into platform above
                         this.body.velocity.y = 0;            // stop upward velocity
                         cell      = celldown;     // player is no longer really in that cell, we clamped them to the cell below 
                         cellright = celldiag;     // (ditto)
                         ny        = 0; 
                      }
                 }
-                if (this.body.velocity.x > 0) {
+                if (this.body.velocity.x > 0 || this.body.pushedRight) {
                     if(cellright.type === 'solid' && cell.type != 'solid' || celldiag.type === 'solid'  && celldown.type != 'solid' && ny){
+                        this.body.pushedRight = false;
                         this.sprite.x = this.t2p(tx);
                         this.body.velocity.x = 0;
+                        
                     }
-                }else if (this.body.velocity.x < 0) {
+                }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {
+                  
                     if(cell.type === 'solid' && cellright.type != 'solid' || celldown.type === 'solid' && celldiag.type != 'solid' && ny){
+                        this.body.pushedLeft = false;
                         this.sprite.x = this.t2p(tx+1);
+                        
                         this.body.velocity.x = 0;
+                        
                     }
                 }
                 
                 this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
-               // console.log(this.body.falling)
+                //console.log(this.body.falling)
         },
 
         bound:function(x, min, max) {

@@ -24,6 +24,7 @@ define(['Class', 'lib_module/client/Platformer'], function(my, Platformer){
             this.angleSpeed = 0;
             this.anchorX = 0;
             this.anchorY = 0;
+            this.pushed = false;
             //
             this.colideWorldSide = false;
             this.colideWorldSideLeft = true;

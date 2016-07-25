@@ -45,15 +45,16 @@ define(['Class'], function(my){
         'bfffffffffffffgggffffffffffffffffgggfffb',
         'bffffgffffffffffffffffffgffffffffffffffb',
         'bfffffffggffffffffffffffffggfffffffffffb',
-        'bffffffffffffffffffffffffffffffffffffffb',
-        'bffffffffffffffffffffffffffffffffffffffb',
-        'bggggffgggggffgggggggggggggggfffggggggbb',
+        'bfffffffffffffffgffffffffffffffffffffffb',
+        'bfffffffgffffffgfffffffgfffffffffffffffb',
+        'bgggggggggggffgggggggggggggggfffggggggbb',
     ];
     var mapElements = {
         'f':{x: 12*72, y:4*72, type:'empty', sub_type: 'board'},
         'g':{x:7*72, y:8*72, type:'solid', sub_type: 'board'},
         'w':{x:6*72, y:8*72, type:'solid', sub_type: 'board'},
         'b':{x:0, y:6*72, type:'solid', sub_type: 'board'},
+        't':{x:8*72, y:2*72, type:'solid', sub_type: 'board'},
         // 'W':{sx:33, sy:33, type:'solid', sub_type: 'board'},
         // 'X':{sx:0, sy:528, type:'solid', sub_type: 'board'},
         // 'box':{sx:126, sy:0, type:'soft', sub_type: 'board', ko_obj : 'Crate'}
@@ -69,17 +70,17 @@ define(['Class'], function(my){
 		create: function(){
            
             that.game = this;
-            bg =  that.game.add.image('background', 0,0, 'bg', 1400,700)
+           // bg =  that.game.add.image('background', 0,0, 'bg', 1400,700)
             that.watersBlock = [];
             that.map = that.game.add.map('main', 'mapa', mapTab, 70,70, false);
             that.map.setElements(mapElements);
 
             //ground = that.game.add.image('background', 120, 50, 'ground');
 
-            player = that.game.add.sprite(370, 190, 'player');
-            player.animations.add('idle', 0, 190, 65, 90, [0]);
-            player.animations.add('moveRight', 0, 0, 71,90, [0,1,2,3,4]);
-            player.animations.add('moveLeft', 0, 0, 71,90, [0,1,2,3,4], true);
+            player = that.game.add.sprite(370, 90, 'player2');
+            player.animations.add('idle', 0,200, 65, 88, [0]);
+            player.animations.add('moveRight', 0, 0, 73,90, [0,1,2,3,4]);
+            player.animations.add('moveLeft', 0, 0, 73,90, [0,1,2,3,4], true);
             player.animations.play('idle');
            // player.body.gravity.y = 175;
             player.body.colideWorldSide = true;
@@ -89,12 +90,12 @@ define(['Class'], function(my){
             for(var i = 0; i < watersBlockPlaces.length; i++){
                 var pos = watersBlockPlaces[i];
                 that.watersBlock.push(that.game.add.sprite(70*pos.x, 70*pos.y+30, 'mapa'));
-                that.watersBlock[that.watersBlock.length-1].animations.add('idle', 5*72, 8*75, 72, 70, [1]);
-                that.watersBlock[that.watersBlock.length-1].animations.play('idle');
+                that.watersBlock[that.watersBlock.length-1].animations.add('idle', 5*72, 8*75, 72, 70, [0,1]);
+                that.watersBlock[that.watersBlock.length-1].animations.play('idle',7);
                // this.watersBlock[this.watersBlock.length-1].body.velocity.x = 200;
             }
 
-            box = that.game.add.sprite(350, 140, 'mapa');
+            box = that.game.add.sprite(210, 210, 'mapa');
             box.animations.add('idle', 0, 0, 70, 70, [0]);
             box.animations.play('idle');
             box.body.immoveable = true;
@@ -109,15 +110,15 @@ define(['Class'], function(my){
                 w.body.immoveable = false;
                 
             })
-            that.game.physic.collide(box, player, function(p, w , dir, oy, ox){
-                if(dir === 't'){
-                    w.body.falling = false;
-                    w.body.jumping = false;
+            that.game.physic.collide(player, box, function(p, b , dir, oy, ox){
+                if(dir === 'b'){
+                    p.body.falling = false;
+                    p.body.jumping = false;
                 }
-
+               
                
             })
-           
+            
             player.body.platformer.move(dt);
             box.body.platformer.collision(dt);
   

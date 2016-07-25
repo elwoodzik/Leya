@@ -196,16 +196,18 @@ define(['Class'], function(my){
                         } else {
                             if (vX > 0) {
                                 colDir = "l";
-                                 entity1.x += entity1.body.immoveable ? oX : 0;
-                                 entity2.x -= entity2.body.immoveable ? oX : 0;
-                                 entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
-                                 entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
+                                entity1.x += entity1.body.immoveable ? oX : 0;
+                                entity2.x -= entity2.body.immoveable ? oX : 0;
+                                entity2.body.pushedLeft = !entity2.body.pushedLeft ? true : false;
+                                entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
+                                entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
                             } else {
                                 colDir = "r";
-                                 entity1.x -= entity1.body.immoveable ? oX : 0;
-                                 entity2.x += entity2.body.immoveable ? oX : 0;
-                                 entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
-                                 entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
+                                entity1.x -= entity1.body.immoveable ? oX : 0;
+                                entity2.x += entity2.body.immoveable ? oX : 0;
+                                entity2.body.pushedRight = !entity2.body.pushedRight ? true : false;
+                                entity1.body.velocity.x = bounds ? entity1.body.velocity.x*-1 : entity1.body.velocity.x;
+                                entity2.body.velocity.x = bounds ? entity2.body.velocity.x*-1 : entity2.body.velocity.x;
                             }
                         }
                         if(colDir != null){
