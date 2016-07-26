@@ -47,8 +47,8 @@ define(['Class'], function(my){
         'bffffgffffffffffffffffffgffffffffffffffb',
         'bfffffffggffffffffffffffffggfffffffffffb',
         'bfffffffffffffffgffffffffffffffffffffffb',
-        'bfffffffgffffffgfffffffgfffffffffffffffb',
-        'bggggffgggggffgggggggggggggggfffggggggbb',
+        'bgggcfffgffffffgfffffffgfffffffffffffffb',
+        'baaafffgggggffgggggggggggggggfffggggggbb',
     ];
     var mapElements = {
         'f':{x: 12*72, y:4*72, type:'empty', sub_type: 'board'},
@@ -56,6 +56,8 @@ define(['Class'], function(my){
         'w':{x:6*72, y:8*72, type:'solid', sub_type: 'board'},
         'b':{x:0, y:6*72, type:'solid', sub_type: 'board'},
         't':{x:8*72, y:2*72, type:'solid', sub_type: 'board'},
+        'a':{x:8*72, y:12*72, type:'solid', sub_type: 'board'},
+        'c':{x:8*72, y:8*72, type:'solid', sub_type: 'board'},
         // 'W':{sx:33, sy:33, type:'solid', sub_type: 'board'},
         // 'X':{sx:0, sy:528, type:'solid', sub_type: 'board'},
         // 'box':{sx:126, sy:0, type:'soft', sub_type: 'board', ko_obj : 'Crate'}
@@ -71,14 +73,14 @@ define(['Class'], function(my){
 		create: function(){
            
             that.game = this;
-            bg =  that.game.add.image('background', 0,0, 'bg', 1400,700)
+            bg =  that.game.add.image('background', 0, 0, 'bg', 2800, 700);
             that.watersBlock = [];
             that.map = that.game.add.map('main', 'mapa', mapTab, 70,70, false);
             that.map.setElements(mapElements);
 
             //ground = that.game.add.image('background', 120, 50, 'ground');
 
-            player = that.game.add.sprite(370, 90, 'player3');
+            player = that.game.add.sprite(370, 90, 'player1');
             player.animations.add('idle', 0,195, 65, 90, [0]);
             player.animations.add('moveRight', 0, 0, 73, 90, [0,1,2,3,4]);
             player.animations.add('moveLeft', 0, 0, 73, 90, [0,1,2,3,4], true);

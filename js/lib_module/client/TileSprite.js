@@ -15,7 +15,9 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             this.key = key;
             this.zIndex = 1;
             this.image = Loader.assetManager.get(this.key); 
-    
+        
+
+            this.contextType = 'main';
             this.width = this.image.width; 
             this.height = this.image.height; 
 

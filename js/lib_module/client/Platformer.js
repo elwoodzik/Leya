@@ -60,6 +60,7 @@ define(['Class'], function(my){
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
                  this.body.velocity.x = 0; 
+                 
             }
 
           

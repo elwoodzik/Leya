@@ -24,11 +24,12 @@ define([
         create: function(){
             this.assetManager.load({
                 "mapa": "images/mapa.png",
-                "player": "images/player.png",
+                "player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
                 "ground": "images/ground.png",
                 "bg": "images/bg.png",
+                "bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
 
@@ -41,7 +42,7 @@ define([
             game.createBgCanvas();
             game.createOnBgCanvas();
             
-           //game.scallable(true);
+            game.scallable(true);
             game.useFpsCounter = true;
             //game.add.multiplayer('http://localhost:3000');
 
