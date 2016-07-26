@@ -29,11 +29,11 @@ define(['Class'], function(my){
             this.lastYScroll = null;
             
             this.contextType = context;
-           console.log('a')
+           
         },
 
         draw: function() { 
-            
+         
             for(var i=0; i<this.b.length; i++){
                 // 
                 for(var j=0; j<this.b[i].length; j++){

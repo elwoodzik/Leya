@@ -5,6 +5,7 @@ define(['Class'], function(my){
     var bg;
     var ground;
     var box;
+    var boxes = [];
     
     var watersBlockPlaces = [
         {
@@ -41,13 +42,13 @@ define(['Class'], function(my){
         'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
         'bffffffffffffffffffffffffffffffffffffffb',
         'bfffffffggffffffffffffffffggfffffffffffb',
-        'bfggffffffffffffffffggfffffffffffffffffb',
+        'bfffffffffffffffffffggfffffffffffffffffb',
         'bfffffffffffffgggffffffffffffffffgggfffb',
         'bffffgffffffffffffffffffgffffffffffffffb',
         'bfffffffggffffffffffffffffggfffffffffffb',
         'bfffffffffffffffgffffffffffffffffffffffb',
         'bfffffffgffffffgfffffffgfffffffffffffffb',
-        'bgggggggggggffgggggggggggggggfffggggggbb',
+        'bggggffgggggffgggggggggggggggfffggggggbb',
     ];
     var mapElements = {
         'f':{x: 12*72, y:4*72, type:'empty', sub_type: 'board'},
@@ -70,7 +71,7 @@ define(['Class'], function(my){
 		create: function(){
            
             that.game = this;
-           // bg =  that.game.add.image('background', 0,0, 'bg', 1400,700)
+            bg =  that.game.add.image('background', 0,0, 'bg', 1400,700)
             that.watersBlock = [];
             that.map = that.game.add.map('main', 'mapa', mapTab, 70,70, false);
             that.map.setElements(mapElements);
@@ -87,41 +88,74 @@ define(['Class'], function(my){
             player.body.immoveable = true;
             //player.rpgCollision();
             //
+             box = that.game.add.sprite(210, 280, 'mapa');
+            box.animations.add('idle', 0, 0, 70, 70, [0]);
+            box.animations.play('idle');
+            box.body.immoveable = true;
+            box.body.colideWorldSide = true;
+
             for(var i = 0; i < watersBlockPlaces.length; i++){
                 var pos = watersBlockPlaces[i];
                 that.watersBlock.push(that.game.add.sprite(70*pos.x, 70*pos.y+30, 'mapa'));
                 that.watersBlock[that.watersBlock.length-1].animations.add('idle', 5*72, 8*75, 72, 70, [0,1]);
-                that.watersBlock[that.watersBlock.length-1].animations.play('idle',7);
+                that.watersBlock[that.watersBlock.length-1].animations.play('idle',8);
+                
                // this.watersBlock[this.watersBlock.length-1].body.velocity.x = 200;
             }
 
-            box = that.game.add.sprite(210, 280, 'mapa');
-            box.animations.add('idle', 0, 0, 70, 70, [0]);
-            box.animations.play('idle');
-            box.body.immoveable = true;
+           
+            for(var i = 0; i < 1; i++){
+               boxes.push(that.game.add.sprite(70*2, 70*8, 'mapa'));
+               boxes[boxes.length-1].animations.add('idle', 0*72, 9*72, 72, 70, [0]);
+               boxes[boxes.length-1].animations.play('idle',7);
+               boxes[boxes.length-1].body.velocity.y = -40;
+               // this.watersBlock[this.watersBlock.length-1].body.velocity.x = 200;
+            }
+           
 
             that.game.add.camera(player);
-            that.game.world.setPortView(2800, 700)
-            console.log(that.game.gameObject.length)
+            that.game.world.setPortView(2800,700)
 		},
 
 		update: function(dt){
-            that.game.physic.collide(that.watersBlock, box, function(p, w , dir, oy, ox){
-                w.body.immoveable = false;
-                
-            })
+            if(box.body.immoveable){
+                that.game.physic.collide(that.watersBlock, box, function(p, b , dir, oy, ox){
+                    b.body.immoveable = false;
+                    if(dir === 'b'){
+                        b.body.velocity.y = 0;
+                        
+                    }   
+                    console.log('asd')
+                })
+             }
             that.game.physic.collide(player, box, function(p, b , dir, oy, ox){
                 if(dir === 'b'){
                     p.body.falling = false;
                     p.body.jumping = false;
-                    b.y -= oy;
+                    if(b.body.immoveable){
+                        b.y -= oy;
+                    }
+                    
                 }
-               
-               
+            })
+
+            that.game.physic.collide(player, boxes, function(p, b , dir, oy, ox){
+                  if(dir === 'b'){
+                    p.body.falling = false;
+                    p.body.jumping = false;
+                   
+                  }
+                 if(dir === 't'){
+                     p.body.velocity.y = oy
+
+                 }
             })
             
             player.body.platformer.move(dt);
-           box.body.platformer.collision(dt);
+            if(box.body.immoveable){
+                 box.body.platformer.collision(dt);
+            }
+          
   
            
             // if(!this.keyboard.hold){

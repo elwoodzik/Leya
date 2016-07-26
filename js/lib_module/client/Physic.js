@@ -182,7 +182,7 @@ define(['Class'], function(my){
                                  entity2.y -= entity2.body.immoveable ? oY : 0;
                                 
                                  entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : entity1.body.velocity.y;
-                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : 0;
+                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
                             } else {
                                 colDir = "b"; 
                                 entity1.y -= entity1.body.immoveable ? oY : 0;

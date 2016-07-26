@@ -59,6 +59,7 @@ define(['Class'], function(my){
             if ((this.game.keyboard._pressed['SPACE'] || this.game.keyboard._pressed['up'] )&& !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
+                 this.body.velocity.x = 0; 
             }
 
           
@@ -70,6 +71,7 @@ define(['Class'], function(my){
 
             if ((this.wasleft  && (this.body.velocity.x > 0)) ||
                 (this.wasright && (this.body.velocity.x < 0))) {
+                   this.ddx = 0
                    this.body.velocity.x = 0; 
             }
           
@@ -84,8 +86,8 @@ define(['Class'], function(my){
                 ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
                 nx        = this.sprite.x % this.tile,         // true if player overlaps right
                 ny        = this.sprite.y % this.tile,         // true if player overlaps below
-                cell      = this.tcell(tx,     ty),
-                cellright = this.tcell(tx + 1, ty),
+               // cell      = this.tcell(tx,     ty),
+                //cellright = this.tcell(tx + 1, ty),
                 celldown  = this.tcell(tx,     ty + 1),
                 celldiag  = this.tcell(tx + 1, ty + 1);
                 // this.game.ctx.fillStyle="red"
@@ -99,13 +101,13 @@ define(['Class'], function(my){
                     this.body.falling = false;   // no longer falling
                     this.body.jumping = false;
                     this.sprite.y = this.t2p(ty) - this.body.tolerance-1;
-                   
+
                 }
             }else if(this.body.velocity.y < 0){
                 if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
-                    this.sprite.y = this.t2p(ty) 
-                     this.body.velocity.y = 0;   
-                     console.log('down')
+                    this.sprite.y = this.t2p(ty) + 3
+                    this.body.velocity.y = 0;   
+
                 }
             }
             if (this.body.velocity.x > 0 || this.body.pushedRight) {
@@ -113,16 +115,16 @@ define(['Class'], function(my){
                      //this.body.pushedLeft = false;
                       this.body.pushedRight = false;
                     this.body.velocity.x = 0;
-                    console.log('z')
-                   this.sprite.x = this.sprite.x - 5;
+
+                   this.sprite.x = this.sprite.x -5;
                 }
-            }else if (this.body.velocity.x < 0 | this.body.pushedLeft) {  
+            }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {  
                 if(this.checkmove(this.sprite.x-5, this.sprite.y)){
                     this.body.pushedLeft = false;
-                    console.log('sasssss')
+
                   
                     this.body.velocity.x = 0;
-                    this.sprite.x = this.sprite.x + 5;
+                    this.sprite.x = this.sprite.x +5
                 }
             }
            
@@ -177,7 +179,7 @@ define(['Class'], function(my){
                 // }
                 
                 this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
-                //console.log(this.body.falling)
+           
         },
 
         bound:function(x, min, max) {
