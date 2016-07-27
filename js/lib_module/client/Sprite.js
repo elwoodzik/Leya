@@ -95,8 +95,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].fH,
                this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + this.game.camera.xScroll) : Math.floor(this.renderX  - this.game.camera.xScroll), // * this.scale
                this.renderY - this.game.camera.yScroll,// * this.scale
-               this.states[this.state].fW * this.scale,
-               this.states[this.state].fH * this.scale
+               this.states[this.state].fW ,
+               this.states[this.state].fH 
             )
 
              if(this.states[this.state].flip){

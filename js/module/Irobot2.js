@@ -73,14 +73,14 @@ define(['Class'], function(my){
 		create: function(){
            
             that.game = this;
-            bg =  that.game.add.image('background', 0, 0, 'bg', 2800, 700);
+            bg = that.game.add.image('background', 0, 0, 'bg', 2800, 700);
             that.watersBlock = [];
             that.map = that.game.add.map('main', 'mapa', mapTab, 70,70, false);
             that.map.setElements(mapElements);
 
             //ground = that.game.add.image('background', 120, 50, 'ground');
 
-            player = that.game.add.sprite(370, 90, 'player1');
+            player = that.game.add.sprite(370, 90, 'player2');
             player.animations.add('idle', 0,195, 65, 90, [0]);
             player.animations.add('moveRight', 0, 0, 73, 90, [0,1,2,3,4]);
             player.animations.add('moveLeft', 0, 0, 73, 90, [0,1,2,3,4], true);

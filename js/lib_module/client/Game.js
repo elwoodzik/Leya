@@ -162,7 +162,7 @@ define([
         renderStatic: function(dt){
             if(this.renderer){
                  this.clearCanvas(this.bgctx);
-                
+                console.log('asdasd')
                 for(i=0, iMax=this.gameObjectStatic.length; i<iMax; i++){
                     entityRenderStatic = this.gameObjectStatic[i];
                     if(entityRenderStatic && entityRenderStatic.contextType === 'background'){
@@ -230,25 +230,23 @@ define([
             //
             this.bgcanvas = document.createElement('canvas');
             this.bgctx = this.bgcanvas.getContext("2d");
-            this.screenWidth = this.screenWidth;
-            this.screenHeight =  this.screenHeight;
-            this.portViewWidth = this.portViewWidth;
-            this.portViewHeight = this.portViewHeight;
-            this.orientation = this.orientation;
+         
             this.bgcanvas.style.zIndex = 3;
             this.bgcanvas.id = "background";
             this.bgcanvas.width = ((this.screenWidth));
             this.bgcanvas.height = ((this.screenHeight));
-            
-            document.body.style.overflow = 'hidden';
+
+            this.bgcanvas.style.position = 'absolute';
+            this.bgcanvas.style.left = '50%';
+            this.bgcanvas.style.marginLeft = -this.screenWidth/2 + "px";
                 
             document.body.appendChild(this.bgcanvas);
 
-            this.resizeCanvas(this.bgcanvas, this.orientation);
+            // this.resizeCanvas(this.bgcanvas, this.orientation);
             
-            window.addEventListener("resize", function() {
-                that.resizeCanvas(that.bgcanvas, that.orientation);
-            }, false);
+            // window.addEventListener("resize", function() {
+            //     that.resizeCanvas(that.bgcanvas, that.orientation);
+            // }, false);
         },
 
         createOnBgCanvas: function(){
@@ -256,25 +254,26 @@ define([
             //
             this.onbgcanvas = document.createElement('canvas');
             this.onbgctx = this.onbgcanvas.getContext("2d");
-            this.screenWidth = this.screenWidth;
-            this.screenHeight =  this.screenHeight;
-            this.portViewWidth = this.portViewWidth;
-            this.portViewHeight = this.portViewHeight;
-            this.orientation = this.orientation;
+          
             this.onbgcanvas.style.zIndex = 4;
             this.onbgcanvas.id = "onbackground";
             this.onbgcanvas.width = ((this.screenWidth));
             this.onbgcanvas.height = ((this.screenHeight));
+
+           
+            this.onbgcanvas.style.position = 'absolute';
+            this.onbgcanvas.style.left = '50%';
+            this.onbgcanvas.style.marginLeft = -this.onbgcanvas.width/2 + "px";
             
-            document.body.style.overflow = 'hidden';
+         
                 
             document.body.appendChild(this.onbgcanvas);
 
-            this.resizeCanvas(this.onbgcanvas, this.orientation);
+            // this.resizeCanvas(this.onbgcanvas, this.orientation);
             
-            window.addEventListener("resize", function() {
-                that.resizeCanvas(that.onbgcanvas, that.orientation);
-            }, false);
+            // window.addEventListener("resize", function() {
+            //     that.resizeCanvas(that.onbgcanvas, that.orientation);
+            // }, false);
         },
 
         createCanvas: function(width, height, orientation){
@@ -291,16 +290,23 @@ define([
             this.canvas.id = "main";
             this.canvas.width = ((this.screenWidth));
             this.canvas.height = ((this.screenHeight));
+
+             this.canvas.style.width = this.canvas.width + "px";
+            this.canvas.style.height = this.canvas.height + "px";
+            this.canvas.style.position = 'absolute';
+            this.canvas.style.left = '50%';
+            this.canvas.style.marginLeft = -this.canvas.width/2 + "px";
+            
             
             document.body.style.overflow = 'hidden';
                 
             document.body.appendChild(this.canvas);
-            this.resizeCanvas(this.canvas, that.orientation);
+            // this.resizeCanvas(this.canvas, that.orientation);
             
            
-            window.addEventListener("resize", function() {
-                that.resizeCanvas(that.canvas, that.orientation);
-            }, false);
+            // window.addEventListener("resize", function() {
+            //     that.resizeCanvas(that.canvas, that.orientation);
+            // }, false);
             
 
             this.animationLoop();
@@ -364,10 +370,25 @@ define([
         },
 
         scallable: function(bool){
+            var that = this;
             this.scaleUsed = bool;
             this.resizeCanvas(this.canvas, this.orientation);
-            this.resizeCanvas(this.bgcanvas, this.orientation);
-            this.resizeCanvas(this.onbgcanvas, this.orientation);
+            if(that.bgcanvas){
+                this.resizeCanvas(this.bgcanvas, this.orientation);
+            }
+            if(that.onbgcanvas){
+                this.resizeCanvas(this.onbgcanvas, this.orientation);
+            }
+
+            window.addEventListener("resize", function() {
+                that.resizeCanvas(that.canvas, that.orientation);
+                if(that.bgcanvas){
+                    that.resizeCanvas(that.bgcanvas, that.orientation);
+                }
+                if(that.onbgcanvas){
+                    that.resizeCanvas(that.onbgcanvas, that.orientation);
+                }
+            }, false);
         },
 
         sortByIndex: function(){

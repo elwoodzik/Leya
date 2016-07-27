@@ -45,7 +45,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	        } else {
 	            this.renderY = this.y;
 	        }
-			this.context.drawImage(
+			this.game.ctx.drawImage(
 	            this.image,
 	            0,
 	            0,
@@ -56,6 +56,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.width,
 	            this.height
 	        )
+
+		
 		},
 
 		redraw: function(lag){
@@ -156,16 +158,15 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			}else if(context === 'background'){
 				this.context = this.game.bgctx;
 				this.contextType = context;
-				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-				this.game.gameObjectStatic[this.gameObjectStaticLength] = this;
-				this.draw(); 
+			
+				this.redraw(); 
 			}
 			else if(context === 'onbackground'){
 				this.context = this.game.onbgctx;
 				this.contextType = context;
 				this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
 				this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-				this.draw();
+				this.redraw();
 			}else{
 				return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
 			}
