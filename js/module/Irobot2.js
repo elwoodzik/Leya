@@ -80,7 +80,7 @@ define(['Class'], function(my){
 
             //ground = that.game.add.image('background', 120, 50, 'ground');
 
-            player = that.game.add.sprite(370, 90, 'player2');
+            player = that.game.add.sprite('main', 370, 90, 'player3');
             player.animations.add('idle', 0,195, 65, 90, [0]);
             player.animations.add('moveRight', 0, 0, 73, 90, [0,1,2,3,4]);
             player.animations.add('moveLeft', 0, 0, 73, 90, [0,1,2,3,4], true);
@@ -90,7 +90,7 @@ define(['Class'], function(my){
             player.body.immoveable = true;
             //player.rpgCollision();
             //
-             box = that.game.add.sprite(210, 280, 'mapa');
+            box = that.game.add.sprite('main' , 210, 280, 'mapa');
             box.animations.add('idle', 0, 0, 70, 70, [0]);
             box.animations.play('idle');
             box.body.immoveable = true;
@@ -98,7 +98,7 @@ define(['Class'], function(my){
 
             for(var i = 0; i < watersBlockPlaces.length; i++){
                 var pos = watersBlockPlaces[i];
-                that.watersBlock.push(that.game.add.sprite(70*pos.x, 70*pos.y+30, 'mapa'));
+                that.watersBlock.push(that.game.add.sprite('main', 70*pos.x, 70*pos.y+30, 'mapa'));
                 that.watersBlock[that.watersBlock.length-1].animations.add('idle', 5*72, 8*75, 72, 70, [0,1]);
                 that.watersBlock[that.watersBlock.length-1].animations.play('idle',8);
                 
@@ -107,7 +107,7 @@ define(['Class'], function(my){
 
            
             for(var i = 0; i < 1; i++){
-               boxes.push(that.game.add.sprite(70*2, 70*8, 'mapa'));
+               boxes.push(that.game.add.sprite('main', 70*2, 70*8, 'mapa'));
                boxes[boxes.length-1].animations.add('idle', 0*72, 9*72, 72, 70, [0]);
                boxes[boxes.length-1].animations.play('idle',7);
                boxes[boxes.length-1].body.velocity.y = -40;

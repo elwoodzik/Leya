@@ -1,7 +1,7 @@
 define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAnimationFactory', 'lib_module/client/Map',], function(my, require, Body, GameAnimationFactory, Map){
    var id = 0; 
    var Sprite = my.Class({
-        constructor: function(game, x, y, key, width, height){
+        constructor: function(game, context, x, y, key, width, height){
             this.loader = require('module/Loader');
 
             this.used = true;
@@ -49,11 +49,12 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.playCallbackDellayCurrent = 0;
             
               //
-            this.ID = id;
-            id++;
-            this.game.gameObject.push(this); 
+            // this.ID = id;
+            // id++;
+            // this.game.gameObject.push(this); 
             
-            this.sortByIndex();
+            // this.sortByIndex();
+            this.setContext(context);
 
         },
 
@@ -109,6 +110,48 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
 
             //this.inRange();
             //this.collide();
+        },
+        redraw: function(lag){
+
+            if (this.previousX) {
+                this.renderX = (this.x - this.previousX) * lag + this.previousX;
+            } else {
+                this.renderX = this.x;
+            }
+
+            if (this.previousY) {
+                this.renderY = (this.y - this.previousY) * lag + this.previousY;
+            } else {
+                this.renderY = this.y;
+            }
+            
+            if(this.states[this.state].flip){
+                this.game.ctx.save();
+                this.game.ctx.scale(-1,1);
+            }
+
+            this.context.clearRect(this.renderX, this.renderY, this.image.width, this.image.height);
+            this.frameUpdate();
+
+            this.context.drawImage(
+               this.image,
+               this.states[this.state].sx+this.states[this.state].f[this.current_f]*this.states[this.state].fW,
+               this.states[this.state].sy,
+               this.states[this.state].fW,
+               this.states[this.state].fH,
+               this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + this.game.camera.xScroll) : Math.floor(this.renderX  - this.game.camera.xScroll), // * this.scale
+               this.renderY - this.game.camera.yScroll,// * this.scale
+               this.states[this.state].fW * this.scale,
+               this.states[this.state].fH * this.scale
+            )
+
+            if(this.states[this.state].flip){
+                this.game.ctx.restore();
+            }
+
+            if(this.useRpgCollision){
+                this.rowAndColumn();
+            }
         },
 
         update: function(dt){
@@ -390,6 +433,39 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
 
         setScale: function(scale){
             this.scale = scale;
+        },
+
+        changeContext: function(context, array){
+            if(this.contextType != context){
+                this.destroy(array);
+                this.setContext(context);
+            }
+            return this;
+        },
+
+        setContext: function(context){
+        
+            if(context === 'main'){
+                this.context = this.game.ctx;
+                this.contextType = context;
+                this.gameObjectLength = this.game.gameObject.length;
+                this.game.gameObject[this.gameObjectLength] = this; 
+            }else if(context === 'background'){
+                this.context = this.game.bgctx;
+                this.contextType = context;
+                this.gameObjectStaticLength = this.game.gameObjectStatic.length;
+                this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
+                //this.redraw(); 
+            }
+            else if(context === 'onbackground'){
+                this.context = this.game.onbgctx;
+                this.contextType = context;
+                this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
+                this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
+                //this.redraw();
+            }else{
+                return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
+            }
         },
 
         setIndex: function(index){

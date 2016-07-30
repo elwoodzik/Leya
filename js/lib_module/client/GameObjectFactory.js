@@ -29,8 +29,8 @@ define([
 	    	return new TileSprite(this.game, x, y, key, w, h);
 	    },
 
-	    sprite: function(x, y, key, w, h){
-	    	return new Sprite(this.game, x, y, key, w, h);
+	    sprite: function(context, x, y, key, w, h){
+	    	return new Sprite(this.game, context, x, y, key, w, h);
 	    },
 
 	    button: function (text, x, y, width, height,background, backgroundHover, textColor, action) {

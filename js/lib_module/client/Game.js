@@ -162,7 +162,7 @@ define([
         renderStatic: function(dt){
             if(this.renderer){
                  this.clearCanvas(this.bgctx);
-                console.log('asdasd')
+                console.log(this.gameObjectStatic.length)
                 for(i=0, iMax=this.gameObjectStatic.length; i<iMax; i++){
                     entityRenderStatic = this.gameObjectStatic[i];
                     if(entityRenderStatic && entityRenderStatic.contextType === 'background'){
@@ -173,8 +173,8 @@ define([
                                 this.bgctx.rotate( entityRenderStatic.body.angle*Math.PI/180 ); 
                                 this.bgctx.translate(-entityRenderStatic.x - entityRenderStatic.currentWidth * entityRenderStatic.body.anchorX, -entityRenderStatic.y - entityRenderStatic.currentHeight * entityRenderStatic.body.anchorY)
                             }
-
-                            entityRenderStatic.draw(dt);
+                           
+                            entityRenderStatic.redraw(dt);
                             
                             if(entityRenderStatic.body && entityRenderStatic.body.angle!=0 ){
                                 this.bgctx.restore();

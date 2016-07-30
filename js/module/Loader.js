@@ -7,7 +7,8 @@ define([
     'AssetManager',
     'Game',
     'module/Irobot2',
-], function(my, AssetManager, Game, Irobot2){
+    'module/Menu',
+], function(my, AssetManager, Game, Irobot2, Menu){
     
     //variable
     var that;
@@ -29,6 +30,7 @@ define([
                 "player3": "images/player3.png",
                 "ground": "images/ground.png",
                 "bg": "images/bg.png",
+                "levels": "images/levels.png",
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
@@ -38,11 +40,11 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(1400, 700, false, true);
+            game = new Game(960, 540, false, true);
             game.createBgCanvas();
             game.createOnBgCanvas();
             
-           // game.scallable(true);
+            game.scallable(true);
            
            // game.useFpsCounter = true;
             //game.add.multiplayer('http://localhost:3000');
@@ -53,7 +55,9 @@ define([
             game.keyboard.initialize();
             
             game.state.add("Irobot2", Irobot2);
-            game.state.start("Irobot2");
+            game.state.add("Menu", Menu);
+            game.state.start("Menu");
+
         },
 
         getMessage: function(data){

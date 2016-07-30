@@ -15,26 +15,20 @@ define(['Class'], function(my){
         configure: function(options){
             this.tile     = options.tile || 70;              // the size of each tile (in game pixels)
             this.meter    = this.tile;            // abitrary choice for 1m
-            this.gravity  = options.gravity || this.meter * 9.8 * 5 ;    // very exagerated gravity (6x)
-            this.maxdx    = options.maxdx || this.meter * 4;         // max horizontal speed (20 tiles per second)
+            this.gravity  = options.gravity || this.meter * 9.8 * 4 ;    // very exagerated gravity (6x)
+            this.maxdx    = options.maxdx || this.meter * 3;         // max horizontal speed (20 tiles per second)
             this.maxdy    = options.maxdy || this.meter * 40;         // max vertical speed   (60 tiles per second)
             this.accel    = options.accel || this.maxdx * 3;          // horizontal acceleration -  take 1/2 second to reach maxdx
             this.friction = options.maxdx || this.maxdx * 136;          // horizontal friction     -  take 1/6 second to stop from maxdx
-            this.jump     = options.meter || this.meter * 1000;     
+            this.jump     = options.meter || this.meter * 900;     
               
             this.ddx = 0;
             this.ddy = 0;  
         },
 
         move: function(dt){
-             
-            
             this.keys();
-            
-            
-
-           this.collision(dt);   
-           
+            this.collision(dt);   
         },
 
         keys: function(dt){
@@ -59,11 +53,8 @@ define(['Class'], function(my){
             if ((this.game.keyboard._pressed['SPACE'] || this.game.keyboard._pressed['up'] )&& !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
-                 this.body.velocity.x = 0; 
-                 
+                this.body.velocity.x = 0; 
             }
-
-          
         },
 
         collision: function(dt){
@@ -78,11 +69,9 @@ define(['Class'], function(my){
           
             this.ddy = this.body.falling ? this.gravity : 0 ;
 
-            
             this.body.tolerance = this.sprite.currentHeight - this.game.map.currentHeight;
             this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.game.map.currentWidth);
             
-
             var tx        = this.p2t(this.sprite.x ),
                 ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
                 nx        = this.sprite.x % this.tile,         // true if player overlaps right

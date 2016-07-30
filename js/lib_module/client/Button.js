@@ -23,6 +23,8 @@ define(['Class'], function(my){
             this.text = text;
             this.action = action;
             this.zIndex = 5;
+
+            this.contextType = 'main';
             
             this.colors = ["#FFABAB", "#FFDAAB", "#DDFFAB", "#ABE4FF", "#D9ABFF"];
             //

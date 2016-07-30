@@ -14,6 +14,8 @@ define(['Class'], function(my){
             this.currentWidth = size
             this.currentHeight = size
             this.zIndex = 5;
+
+            this.contextType = 'main';
             //
             //this.game.physic.outOfScreen(this);
             this.setContext(context);
@@ -21,6 +23,20 @@ define(['Class'], function(my){
         },
 
         draw: function() { 
+            
+            var fontSize = this.size;
+            this.context.fillStyle = this.color;
+            this.context.font = fontSize + "px Sans";
+    
+            var textSize = this.context.measureText(this.text);
+            this.currentWidth = textSize.width;
+            var textX = this.x;
+            var textY = this.y;
+           
+            this.context.fillText(this.text, textX, textY);
+        },
+
+        redraw: function() { 
             
             var fontSize = this.size;
             this.context.fillStyle = this.color;
