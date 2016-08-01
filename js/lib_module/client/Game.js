@@ -296,6 +296,7 @@ define([
             this.canvas.style.position = 'absolute';
             this.canvas.style.left = '50%';
             this.canvas.style.marginLeft = -this.canvas.width/2 + "px";
+            this.scale1 = 1;
             
             
             document.body.style.overflow = 'hidden';
@@ -419,6 +420,13 @@ define([
             localStorage.setItem(name, JSON.stringify(data));
         },
 
+        saveDataAd: function(name, data) {
+            var oldItems = this.loadData(name) || [];
+            oldItems.push(data);
+           
+            localStorage.setItem(name, JSON.stringify(oldItems));
+        },
+
         loadData: function(name) {
             var data = localStorage.getItem(name);
             //
@@ -428,6 +436,10 @@ define([
             else{
                 return false;
             }
+        },
+
+        removeData: function(name){
+            localStorage.removeItem(name);
         },
 
         capturePreviousPositions: function(entities){

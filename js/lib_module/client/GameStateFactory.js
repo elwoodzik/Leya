@@ -23,7 +23,10 @@ define(['Class'], function(my, game){
 			
 	    	if(this.game.currentState.create){
     			this.game.currentState.create.apply(this.game);
-    			this.game.renderStatic();
+				if(this.game.bgctx){
+					this.game.renderStatic();
+				}
+    			
 	    	}else{
 	    		throw "Brakuje metody create w scenie " + key;
 	    	}

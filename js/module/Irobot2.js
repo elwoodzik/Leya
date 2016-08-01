@@ -47,7 +47,7 @@ define(['Class'], function(my){
         'bffffgffffffffffffffffffgffffffffffffffb',
         'bfffffffggffffffffffffffffggfffffffffffb',
         'bfffffffffffffffgffffffffffffffffffffffb',
-        'bgggcfffgffffffgfffffffgfffffffffffffffb',
+        'bgggcffffffffffffffffffgfffffffffffffffb',
         'baaafffgggggffgggggggggggggggfffggggggbb',
     ];
     var mapElements = {
@@ -73,7 +73,7 @@ define(['Class'], function(my){
 		create: function(){
            
             that.game = this;
-            bg = that.game.add.image('background', 0, 0, 'bg', 2800, 700);
+            bg = that.game.add.image('main', 0, 0, 'bg', 2800, 700);
             that.watersBlock = [];
             that.map = that.game.add.map('main', 'mapa', mapTab, 70,70, false);
             that.map.setElements(mapElements);

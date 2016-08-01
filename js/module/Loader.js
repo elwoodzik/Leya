@@ -41,8 +41,8 @@ define([
 
         onComplete: function(){    
             game = new Game(960, 540, false, true);
-            game.createBgCanvas();
-            game.createOnBgCanvas();
+           // game.createBgCanvas();
+            //game.createOnBgCanvas();
             
             game.scallable(true);
            
