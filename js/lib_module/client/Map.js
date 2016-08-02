@@ -4,8 +4,6 @@ define(['Class'], function(my){
         constructor: function(game, context, key, arr, width, height, scalled){
         	var Loader = require('module/Loader');
 
-        
-
             this.game = game;
             this.used = true;
             this.key = key;
@@ -17,11 +15,7 @@ define(['Class'], function(my){
             this.currentWidth = width;
             this.currentHeight = height;
 
-           
-
             this.scalled = scalled;
-
-            
 
             this.image = Loader.assetManager.get(this.key); 
 
@@ -29,16 +23,18 @@ define(['Class'], function(my){
             this.lastYScroll = null;
             
             this.contextType = context;
-           
         },
 
-        draw: function() { 
+        generate: function(){
+            var ctx = document.createElement("canvas").getContext("2d");        
+            ctx.canvas.width = this.b[0].length * 70 ;
+            ctx.canvas.height = this.b.length * 70;
          
             for(var i=0; i<this.b.length; i++){
                 // 
                 for(var j=0; j<this.b[i].length; j++){
                     // 
-                    this.context.drawImage(
+                    ctx.drawImage(
                         this.image,
                         this.b[i][j].x ,
                         this.b[i][j].y ,
@@ -51,6 +47,43 @@ define(['Class'], function(my){
                     ); 
                 }
             }
+ 
+            this.imageMap = new Image();
+            this.imageMap.src = ctx.canvas.toDataURL("image/png");   
+ 
+            ctx = null;  
+         },
+
+        draw: function(dt) {
+            this.context.drawImage(
+                this.imageMap,
+                this.game.camera.xScroll,
+                this.game.camera.yScroll,
+                this.game.canvas.width,
+                this.game.canvas.height,
+                0,
+                0,
+                this.game.canvas.width,
+                this.game.canvas.height
+            ); 
+        },
+
+        createObjOnMap: function(context){
+            for(var i=0; i<this.b.length; i++){
+                // 
+                for(var j=0; j<this.b[i].length; j++){
+                    if(this.b[i][j].obj){
+                        if(!this.game.ARR[this.b[i][j].obj.arr]){
+                            this.game.ARR[this.b[i][j].obj.arr] = [];
+                        }
+                        this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
+                        this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
+                        
+                        this.game.ARR[this.b[i][j].obj.arr].push(new this.b[i][j].obj.type(this.game, context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image));
+                    }
+                }
+            }
+            
         },
 
        	parse: function(arr){   
@@ -62,6 +95,8 @@ define(['Class'], function(my){
 				for(var j=0; j<arr[i].length; j++){
                    
 					this.b[i].push(this.elements[arr[i].charAt(j)==' ' ? 'floor' : arr[i].charAt(j)]);
+
+                   
 					// Jeśli miejsce jest puste i nie jest to podłoga w lewym górnym rogu (wykluczam trzypozycje) wstaw nowy obiekt z pozycją x i y do tablicy z pustymi miejscami
 					// if(this.b[i][j].type=='empty' && !(i==1 && j==1) && !(i==2 && j==1) && !(i==1 && j==2) && !(i==9 && j==13) && !(i==9 && j==12) && !(i==8 && j==13) && !(i==1 && j==12) && !(i==2 && j==13) && !(i==1 && j==13) && !(i==9 && j==1) && !(i==9 && j==2)  && !(i==8 && j==1)){
 					// 	this.emptySpaces.push({x:j, y:i});
@@ -80,6 +115,7 @@ define(['Class'], function(my){
             if(this.checkElements(elements)){
                 this.elements = elements;
                 this.parse(this.mapArray);
+                this.generate();
                 this.setContext(this.contextType);
             }
         },

@@ -34,8 +34,17 @@ define([
     
     var Game = my.Class({
         
+        STATIC: {
+            
+        },
+
         constructor: function(width, height, orientation){
             that = this;
+
+            this.VAR = {};
+
+            this.ARR = {};
+
             this.FRAMEDURATION = 1000/FPS;
             
             this.add = new GameObjectFactory(this);

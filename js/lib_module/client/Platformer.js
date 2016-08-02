@@ -69,8 +69,8 @@ define(['Class'], function(my){
           
             this.ddy = this.body.falling ? this.gravity : 0 ;
 
-            this.body.tolerance = this.sprite.currentHeight - this.game.map.currentHeight;
-            this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.game.map.currentWidth);
+            this.body.tolerance = this.sprite.currentHeight - this.tile;
+            this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
             
             var tx        = this.p2t(this.sprite.x ),
                 ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
@@ -112,7 +112,6 @@ define(['Class'], function(my){
                 if(this.checkmove(this.sprite.x-5, this.sprite.y)){
                     this.body.pushedLeft = false;
 
-                  
                     this.body.velocity.x = 0;
                     this.sprite.x = this.sprite.x +5
                 }
@@ -177,29 +176,29 @@ define(['Class'], function(my){
         },
 
         t2p: function(t){
-            return t*this.game.map.currentWidth;
+            return t*this.tile;
         },
 
         p2t: function(p){
-            return Math.floor(p/this.game.map.currentWidth);
+            return Math.floor(p/this.tile);
         },
         
         tcell: function(tx, ty) {
             return this.game.map.b[ty][tx]; 
         },
 
-         checkmove: function(x, y) {
-          var floorX = (x/70) >> 0;
-          var floorY = (y/70) >> 0;
-          var ceilX = ((x/70) + 1 - Number.EPSILON) >> 0;
-          var ceilY = ((y/70) + 1 - Number.EPSILON) >> 0;
+        checkmove: function(x, y) {
+            var floorX = (x/70) >> 0;
+            var floorY = (y/70) >> 0;
+            var ceilX = ((x/70) + 1 - Number.EPSILON) >> 0;
+            var ceilY = ((y/70) + 1 - Number.EPSILON) >> 0;
 
 
-          return this.game.map.b[floorY][floorX].type === 'solid' ||
-              this.game.map.b[ceilY][floorX].type === 'solid' ||
-              this.game.map.b[floorY][ceilX].type === 'solid' ||
-              this.game.map.b[ceilY][ceilX].type === 'solid';
-        }
+            return this.game.map.b[floorY][floorX].type === 'solid' ||
+                this.game.map.b[ceilY][floorX].type === 'solid' ||
+                this.game.map.b[floorY][ceilX].type === 'solid' ||
+                this.game.map.b[ceilY][ceilX].type === 'solid';
+            }
 
     });
 

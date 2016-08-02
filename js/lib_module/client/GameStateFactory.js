@@ -19,7 +19,7 @@ define(['Class'], function(my, game){
 	    	this.game.gameObjectStatic.length = 0;
 	    	this.game.gameObjectOnStatic.length = 0;
 	    	this.game.currentState = null;
-	    	this.game.currentState = new this.game.states[key]();
+	    	this.game.currentState = new this.game.states[key](this.game);
 			
 	    	if(this.game.currentState.create){
     			this.game.currentState.create.apply(this.game);
