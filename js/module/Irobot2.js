@@ -34,7 +34,7 @@ define([
             that.game.ARR.map.createObjOnMap('main','mapa');
 
             // tworzy gracza
-            that.game.VAR.player = new Player(that.game, 'main', 370, 90, 'player3');
+            that.game.VAR.player = new Player(that.game, 'main', 370, 90, 'player1');
             
             // dodaje obsluge kamery do gracza
             that.game.add.camera(that.game.VAR.player);

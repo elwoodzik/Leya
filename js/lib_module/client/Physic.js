@@ -194,7 +194,7 @@ define(['Class'], function(my){
                                //entity1.body.falling = false;
                                 //entity1.body.jumping = false;
                                 entity1.body.velocity.y = bounds ? entity1.body.velocity.y*-1 : 0;
-                                 entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
+                                entity2.body.velocity.y = bounds ? entity2.body.velocity.y*-1 : entity2.body.velocity.y;
                             }
                         } else {
                             if (vX > 0) {

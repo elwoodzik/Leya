@@ -11,6 +11,7 @@ define(['Class'], function(my){
 
             this.w = width;
             this.h = height;
+        
 
             this.currentWidth = width;
             this.currentHeight = height;

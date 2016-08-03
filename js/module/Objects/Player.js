@@ -20,7 +20,7 @@ define([
 			
             superUpdate.call(this, dt);
 
-            that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
+            that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b, dir, oy, ox){
                 if(dir === 'b'){
                     p.body.falling = false;
                     p.body.jumping = false;
@@ -31,22 +31,22 @@ define([
                 }
             })
 
-            that.game.physic.collide(this, that.game.ARR.lifts, function(p, b , dir, oy, ox){
+            that.game.physic.collide(this, that.game.ARR.lifts, function(p, b, dir, oy, ox){
                 if(dir === 'b'){
                     p.body.falling = false;
                     p.body.jumping = false;
                     
                     if(this.game.keyboard._pressed['D'] || this.game.keyboard._pressed['A']){
-                         p.body.platformer.onplatform = false;
+                        p.body.platformer.onplatform = false;
                         
                     }else{
-                       p.body.velocity.x = b.body.velocity.x ;
-                       p.body.platformer.onplatform = true;
-                       p.y = b.y - p.currentHeight+2;
+                        p.body.velocity.x = b.body.velocity.x ;
+                        p.body.platformer.onplatform = true;
+                        p.y = b.y - p.currentHeight+2;
                     }
                 }
                 if(dir === 't'){
-                    p.body.velocity.y = oy
+                    p.body.velocity.y = p.body.velocity.y/2
                 }
             });
 

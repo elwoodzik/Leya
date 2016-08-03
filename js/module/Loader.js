@@ -25,7 +25,7 @@ define([
         create: function(){
             this.assetManager.load({
                 "mapa": "images/mapa.png",
-               // "player1": "images/player1.png",
+                "player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
                 "ground": "images/ground.png",

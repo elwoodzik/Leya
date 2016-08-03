@@ -223,13 +223,13 @@ define([
         update: function(dt){  
             for(u=0, uMax=this.gameObject.length; u<uMax; u++){
                 entityUpdate = this.gameObject[u];
-                if(!entityUpdate.isOutOfScreen && entityUpdate.used){            
+                //if(!entityUpdate.isOutOfScreen && entityUpdate.used){            
                     if(entityUpdate && entityUpdate.update && entityUpdate.used){
                         //if(!entityUpdate.isOutOfScreen){   
                             entityUpdate.update(dt);
                         //}
                     }
-                }
+                //}
             } 
             if(this.currentState && typeof this.currentState.update === 'function'){
                 this.currentState.update.apply(this, arguments);
