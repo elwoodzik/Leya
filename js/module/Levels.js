@@ -17,7 +17,7 @@ define(['Class'], function(my){
 		},
 		
 		create: function(){
-			this.createBlockLevels(250, 150, 90, 6, 24);
+			this.createBlockLevels(240, 150, 90, 6, 24);
 		},
 
 		update: function(){
@@ -57,8 +57,6 @@ define(['Class'], function(my){
                     lvl.lvl = i;
                     lvl.icon = 'locked';
                 }
-
-				
 
 				lvl_x += margin;
 

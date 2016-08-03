@@ -83,7 +83,6 @@ define(['Class'], function(my){
                     }
                 }
             }
-            
         },
 
        	parse: function(arr){   
@@ -93,8 +92,7 @@ define(['Class'], function(my){
 			for(var i=0; i<arr.length; i++){
 				this.b.push([]);
 				for(var j=0; j<arr[i].length; j++){
-                   
-					this.b[i].push(this.elements[arr[i].charAt(j)==' ' ? 'floor' : arr[i].charAt(j)]);
+					this.b[i].push(this.elements[arr[i][j]]);
 
                    
 					// Jeśli miejsce jest puste i nie jest to podłoga w lewym górnym rogu (wykluczam trzypozycje) wstaw nowy obiekt z pozycją x i y do tablicy z pustymi miejscami

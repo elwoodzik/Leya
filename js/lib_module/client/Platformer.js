@@ -18,9 +18,9 @@ define(['Class'], function(my){
             this.gravity  = options.gravity || this.meter * 9.8 * 4 ;    // very exagerated gravity (6x)
             this.maxdx    = options.maxdx || this.meter * 3;         // max horizontal speed (20 tiles per second)
             this.maxdy    = options.maxdy || this.meter * 40;         // max vertical speed   (60 tiles per second)
-            this.accel    = options.accel || this.maxdx * 3;          // horizontal acceleration -  take 1/2 second to reach maxdx
-            this.friction = options.maxdx || this.maxdx * 136;          // horizontal friction     -  take 1/6 second to stop from maxdx
-            this.jump     = options.meter || this.meter * 800;     
+            this.accel    = options.accel || this.maxdx / (1 / 3);          // horizontal acceleration -  take 1/2 second to reach maxdx
+            this.friction = options.maxdx || this.maxdx / (1/6);          // horizontal friction     -  take 1/6 second to stop from maxdx
+            this.jump     = options.meter || this.meter * 850;     
               
             this.ddx = 0;
             this.ddy = 0;  
@@ -32,42 +32,52 @@ define(['Class'], function(my){
         },
 
         keys: function(dt){
-            this.wasleft  = this.ddx < 0;
-            this.wasright = this.ddx > 0;
+            this.wasleft  = !this.onplatform ? (this.body.velocity.x < 0) : 0;
+            this.wasright = !this.onplatform ? (this.body.velocity.x > 0) : 0;
             this.body.falling  = this.body.falling;
+
+            this.ddx = 0;
 
             if (this.game.keyboard._pressed['A'] || this.game.keyboard._pressed['left']){
                 this.ddx = this.ddx - this.accel;     // player wants to go left
                 this.sprite.animations.play('moveLeft')   
             }else if (this.wasleft){
                 this.ddx = this.ddx + this.friction;  // player was going left, but not any more 
-                this.sprite.animations.play('idle')   
+                this.sprite.animations.playOnce('idle')   
+            }else if(this.wasleft === 0){
+                 this.sprite.animations.playOnce('idle')   
             }
             if ( this.game.keyboard._pressed['D'] || this.game.keyboard._pressed['right']){
                 this.ddx = this.ddx + this.accel;
                 this.sprite.animations.play('moveRight')   
             }else if (this.wasright){
+               // console.log(this.ddx)
                 this.ddx = this.ddx - this.friction ;
-                this.sprite.animations.play('idle');
+                this.sprite.animations.playOnce('idle');
+            }else if(this.wasright === 0){
+                this.sprite.animations.playOnce('idle')   
             }
             if ((this.game.keyboard._pressed['SPACE'] || this.game.keyboard._pressed['up'] )&& !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
-                this.body.velocity.x = 0; 
+                this.onplatform = false;
             }
         },
 
         collision: function(dt){
+            
+
             this.body.velocity.x = this.bound(this.body.velocity.x + (dt * this.ddx), -this.maxdx, this.maxdx);
             this.body.velocity.y = this.bound(this.body.velocity.y + (dt * this.ddy), -this.maxdy, this.maxdy);
-
+            
             if ((this.wasleft  && (this.body.velocity.x > 0)) ||
                 (this.wasright && (this.body.velocity.x < 0))) {
-                   this.ddx = 0
+                    
+                   //this.ddx = 0
                    this.body.velocity.x = 0; 
             }
-          
-            this.ddy = this.body.falling ? this.gravity : 0 ;
+            
+            this.ddy = this.body.falling ? this.gravity : 0;
 
             this.body.tolerance = this.sprite.currentHeight - this.tile;
             this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
@@ -103,10 +113,10 @@ define(['Class'], function(my){
             if (this.body.velocity.x > 0 || this.body.pushedRight) {
                 if(this.checkmove(this.sprite.x +5, this.sprite.y)){
                      //this.body.pushedLeft = false;
-                      this.body.pushedRight = false;
+                    this.body.pushedRight = false;
                     this.body.velocity.x = 0;
 
-                   this.sprite.x = this.sprite.x -5;
+                    this.sprite.x = this.sprite.x -5;
                 }
             }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {  
                 if(this.checkmove(this.sprite.x-5, this.sprite.y)){
@@ -168,7 +178,7 @@ define(['Class'], function(my){
                 // }
                 
                 this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
-           
+                ///this.onplatform = false;
         },
 
         bound:function(x, min, max) {

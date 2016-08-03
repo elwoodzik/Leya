@@ -49,6 +49,9 @@ define(['Class'], function(my){
         },
 
         overLap: function(obj1, obj2, callback, bounds) {
+            if(!obj1 || !obj2 || (Array.isArray(obj1) && obj1.length <= 0) || (Array.isArray(obj2) && obj2.length <= 0)){
+                return false;
+            }
             if (!Array.isArray(obj1) && Array.isArray(obj2)){
                 if(typeof obj1 === 'object'){
                     for (var i = 0, max = obj2.length;  i < max; i++){
@@ -110,7 +113,7 @@ define(['Class'], function(my){
         },
         
         collide: function(obj1, obj2, callback, bounds) {
-            if(!obj1 || !obj2){
+            if(!obj1 || !obj2 || (Array.isArray(obj1) && obj1.length <= 0) || (Array.isArray(obj2) && obj2.length <= 0)){
                 return false;
             }
             if (!Array.isArray(obj1) && Array.isArray(obj2)){

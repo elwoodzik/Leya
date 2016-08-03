@@ -44,7 +44,7 @@ define(['Class'], function(my){
             if(this.position[0] != this.curPosition[0] || this.position[1] != this.curPosition[1]){
                 this.lerpAmount = 0.0;
                 this.curPosition = this.position;
-                this.game.physic.outOfScreen(this.game.gameObject)
+                
               
             }
             
@@ -71,7 +71,7 @@ define(['Class'], function(my){
                 this.yScroll = this.game.portViewHeight-this.game.canvas.height
             }
 
-                
+                this.game.physic.outOfScreen(this.game.gameObject)
         }
        
     });

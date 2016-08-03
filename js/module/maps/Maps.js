@@ -10,16 +10,16 @@ define([
         STATIC: {
             MAPS: {
                 LEVEL1 :[
-                    'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                    'xffffffffffffffffffffffffffffffffffffffx',
-                    'xffbffffggffffffffffffffffggfffffffffffx',
-                    'xfffffffffffffffffffggfffffffffffffffffx',
-                    'xfffffffffffffgggffffffffffffffffgggfffx',
-                    'xffbfgffffffffffffffffffgffffffffffffffx',
-                    'xfffffffggffffffffffffffffggfffffffffffx',
-                    'xfffffffffffffffgffffffffffffffffffffffx',
-                    'xgggcffffffffffffffffffgfffffffffffffffx',
-                    'xaaawwwgggggwwgggggggggggggggwwwgggggggx',
+                    ['20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20','20'],
+                    ['20','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','10','10','21','10','10','10','10','40','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','40','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','10','10','10','10','10','10','10','10','10','10','10','10','10','40','40','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','40','40','10','10','10','20'],
+                    ['20','10','10','21','10','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','10','10','10','10','10','10','10','40','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','40','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','40','40','40','42','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','40','10','10','10','10','10','10','10','10','10','10','10','10','10','10','10','20'],
+                    ['20','41','41','41','30','30','30','40','40','40','40','40','30','30','40','40','40','40','40','40','40','40','40','40','40','40','40','40','40','30','30','30','40','40','40','40','40','40','40','20']
                 ],
                 LEVEL2 :[
                     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
@@ -34,16 +34,23 @@ define([
                     'xaaafffggggggggggggggggggggggfffgggggggx',
                 ],
             },
-
+            /**
+             * '10' -> Puste miejsca (statyczna)
+             * '30' -> puste miejsce w ktore wstawiany jest Sprite Watter
+             * '20' -> wstawiony BOX (statyczna)
+             * '21' -> puste miejsce w ktore wstawiany jest Sprite BOX
+             * '40' -> wstawiona ziemia (statyczna)
+             * '41' -> wstawiona ziemia (statyczna)
+             * '42' -> wstawiona ziemia (statyczna)
+             */
             ELEMENTS:{
-                'f':{x:12*72, y:4*72, type:'empty', sub_type: 'board'},
-                'g':{x:7*72, y:8*72, type:'solid', sub_type: 'board'},
-                'w':{x:12*72, y:4*72, type:'empty', sub_type: 'board', obj: {type: Water, image: 'mapa', arr: 'waterBlocks', marignX: 0, marginY: 30 } },
-                'b':{x:12*72, y:4*72, type:'empty', sub_type: 'board', obj: {type: Box, image: 'mapa', arr: 'boxBlocks'} },
-                'x':{x:0, y:6*72, type:'solid', sub_type: 'board'},
-                't':{x:8*72, y:2*72, type:'solid', sub_type: 'board'},
-                'a':{x:8*72, y:12*72, type:'solid', sub_type: 'board'},
-                'c':{x:8*72, y:8*72, type:'solid', sub_type: 'board'},
+                '10':{x:12*72, y:4*72, type:'empty'}, 
+                '30':{x:12*72, y:4*72, type:'empty', obj: {type: Water, image: 'mapa', arr: 'waterBlocks', marignX: 0, marginY: 30 } },
+                '21':{x:12*72, y:4*72, type:'empty', obj: {type: Box, image: 'mapa', arr: 'boxBlocks'} },
+                '20':{x:0, y:6*72, type:'solid'},
+                '40':{x:7*72, y:8*72, type:'solid'},
+                '41':{x:8*72, y:12*72, type:'solid'},
+                '42':{x:8*72, y:8*72, type:'solid'},
             }
         },
 		

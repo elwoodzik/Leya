@@ -158,6 +158,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             //this.body.useGravity(this);
             this.worldBounce();
             this.moveToPointHandler();
+            this.useThereAndBack();
 
             this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
             this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
@@ -348,6 +349,74 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
         
+        thereAndBack: function(_dis, _dir, _speed, time){
+            this.thereAndBack_startX = this.x;
+            this.thereAndBack_startY = this.y;
+            if(_dir === 'right' || _dir === 'left'){
+                this.thereAndBack_dis = _dir === 'right' ? this.x + _dis : this.x - _dis;
+            }else{
+                this.thereAndBack_dis = _dir === 'down' ? this.y + _dis : this.y - _dis;
+           
+            }
+           
+            this.thereAndBack_dir = _dir;
+            this.thereAndBack_speed = _speed;
+            this.thereAndBack_site = true; 
+            this.thereAndBackUsed = true; 
+            
+        },
+
+        useThereAndBack: function(){
+            if(this.thereAndBackUsed){
+                if(this.thereAndBack_dir === 'right'){
+                    if(this.x < this.thereAndBack_dis && this.thereAndBack_site ){
+                        this.body.velocity.x = this.thereAndBack_speed;
+                    }else if(this.x > this.thereAndBack_startX){
+                        this.thereAndBack_site = false;
+                        this.body.velocity.x = -this.thereAndBack_speed/2;
+                    }else{
+                        this.thereAndBack_site = true;
+                        this.body.velocity.x = this.body.velocity.x * (-1);
+                    }
+                }else if(this.thereAndBack_dir === 'left'){
+                    if(this.x > this.thereAndBack_dis && this.thereAndBack_site ){
+                        this.body.velocity.x = -this.thereAndBack_speed/2;
+                    }else if(this.x < this.thereAndBack_startX){
+                        this.thereAndBack_site = false;
+                        this.body.velocity.x = this.thereAndBack_speed;
+                    }else{
+                        this.thereAndBack_site = true;
+                        this.body.velocity.x = this.body.velocity.x * (-1);
+                    }
+                }
+                else if(this.thereAndBack_dir === 'up'){
+                    if(this.y > this.thereAndBack_dis && this.thereAndBack_site ){
+                        this.body.velocity.y = -this.thereAndBack_speed/2; 
+                    }else if(this.y < this.thereAndBack_startY){
+                        this.thereAndBack_site = false;
+                        this.body.velocity.y = this.thereAndBack_speed;
+                    }else{
+                        this.thereAndBack_site = true;
+                        this.body.velocity.y = this.body.velocity.y * (-1);
+                    }
+                }
+                else if(this.thereAndBack_dir === 'down'){
+                    if(this.y < this.thereAndBack_dis && this.thereAndBack_site ){
+                        this.body.velocity.y = this.thereAndBack_speed;
+                    }else if(this.y > this.thereAndBack_startY){
+                        this.thereAndBack_site = false;
+                        this.body.velocity.y = -this.thereAndBack_speed/2;  
+                    }else{
+                        this.thereAndBack_site = true;
+                        this.body.velocity.y = this.body.velocity.y * (-1);
+                    }
+                }
+            }else{
+                return false;
+            }
+            
+        },
+
         moveByLine: function(_mouseX, _mouseY, _speed, _maxDistance, _callback){
             if(!_mouseX || !_mouseY){
 				return false;
