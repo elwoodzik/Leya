@@ -9,6 +9,7 @@ define([
     var that;
     var par;
 
+
 	var Irobot2 = my.Class(null, Maps, {
 
 		constructor: function(game){
@@ -61,7 +62,7 @@ define([
 		},
 
 		update: function(dt){
-            par.body.platformer.collision(dt);
+           // par.body.platformer.collision(dt);
 		}
 	});
 

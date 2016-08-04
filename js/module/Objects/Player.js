@@ -68,6 +68,10 @@ define([
                     p.body.velocity.y = p.body.velocity.y/2
                 }
 
+                if(dir === 'r'){
+                    p.body.velocity.x = -p.body.velocity.x/2
+                }
+
                 
             });
 
@@ -88,7 +92,7 @@ define([
         configure: function(){
             this.body.colideWorldSide = true;
             this.body.immoveable = true;
-            this.zIndex = 6;
+            
             this.life = 3;
             // dodaje obsluge kamery do gracza
             this.game.add.camera(this);

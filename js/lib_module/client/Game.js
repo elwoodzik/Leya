@@ -171,7 +171,6 @@ define([
         renderStatic: function(dt){
             if(this.renderer){
                  this.clearCanvas(this.bgctx);
-                console.log(this.gameObjectStatic.length)
                 for(i=0, iMax=this.gameObjectStatic.length; i<iMax; i++){
                     entityRenderStatic = this.gameObjectStatic[i];
                     if(entityRenderStatic && entityRenderStatic.contextType === 'background'){
@@ -405,6 +404,10 @@ define([
 
         sortByIndex: function(){
             this.gameObject.sort(function(obj1, obj2) {
+                if(!obj1.zIndex){
+                    obj1.zIndex = 1;
+                }
+               
                 if(obj1.zIndex > obj2.zIndex)
                     return 1;
                 else if(obj1.zIndex < obj2.zIndex) {

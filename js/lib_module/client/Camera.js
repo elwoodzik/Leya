@@ -17,6 +17,8 @@ define(['Class'], function(my){
             this.xScroll = 0;
             this.yScroll = 0;
 
+            this.zIndex = 1;
+
             this.position = [this.xScroll, this.yScroll];
             this.prevPosition = [this.xScroll, this.yScroll];
             this.curPosition = [this.xScroll, this.yScroll];

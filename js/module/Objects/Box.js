@@ -18,9 +18,7 @@ define([
 		update: function(dt){
 			superUpdate.call(this, dt);
 
-            if(this.body.immoveable){
-                 this.body.platformer.collision(dt);
-            }
+            
 
             if(this.body.immoveable){
                 this.game.physic.collide(this.game.ARR.waterBlocks, this, function(p, b , dir, oy, ox){
@@ -32,10 +30,14 @@ define([
             }
 
             this.game.physic.collide(this, this.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
-                 if(dir === 'b'){
+                if(dir === 'b'){
                     b.body.velocity.y = oy
                 }   
             })
+
+            if(this.body.immoveable){
+                 this.body.platformer.collision(dt);
+            }
 		},
 
         changeImage: function(key){

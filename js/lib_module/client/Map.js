@@ -1,8 +1,12 @@
 define(['Class'], function(my){
-    
+   
+   var that;
+
    var Map = my.Class({
         constructor: function(game, context, key, arr, width, height, scalled){
         	var Loader = require('module/Loader');
+
+            that = this;
 
             this.game = game;
             this.used = true;
@@ -11,6 +15,8 @@ define(['Class'], function(my){
 
             this.w = width;
             this.h = height;
+
+            this.zIndex = 1;
         
 
             this.currentWidth = width;
@@ -96,7 +102,10 @@ define(['Class'], function(my){
                     }
                 }
             }
-            this.game.sortByIndex()
+           
+            this.game.sortByIndex();
+            
+            
         },
 
        	parse: function(arr){   
