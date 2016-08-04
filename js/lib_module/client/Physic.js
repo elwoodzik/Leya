@@ -48,7 +48,7 @@ define(['Class'], function(my){
             }
         },
 
-        overLap: function(obj1, obj2, callback, bounds) {
+        overlap: function(obj1, obj2, callback, bounds) {
             if(!obj1 || !obj2 || (Array.isArray(obj1) && obj1.length <= 0) || (Array.isArray(obj2) && obj2.length <= 0)){
                 return false;
             }
@@ -58,7 +58,7 @@ define(['Class'], function(my){
                         this.collectedHandler(obj1, obj2[i], callback, bounds)
                     }
                 }else{
-                    throw 'overLap(): oczekiwano obiektu jako pierwszy parametr';
+                    throw 'overlap(): oczekiwano obiektu jako pierwszy parametr';
                 }
             }
             if (Array.isArray(obj1) && !Array.isArray(obj2)){
@@ -67,7 +67,7 @@ define(['Class'], function(my){
                         this.collectedHandler(obj1[i], obj2, callback, bounds)
                     }
                 }else{
-                    throw 'overLap(): oczekiwano obiektu jako drugi parametr';
+                    throw 'overlap(): oczekiwano obiektu jako drugi parametr';
                 }
             }
             if (Array.isArray(obj1) && Array.isArray(obj2)){

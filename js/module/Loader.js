@@ -25,12 +25,14 @@ define([
         create: function(){
             this.assetManager.load({
                 "mapa": "images/mapa.png",
-                "player1": "images/player1.png",
+                //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
                 "ground": "images/ground.png",
                 "bg": "images/bg.png",
                 "levels": "images/levels.png",
+                "exit": "images/exit.png",
+                "coin": "images/coin.png",
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
@@ -41,7 +43,7 @@ define([
 
         onComplete: function(){    
             game = new Game(960, 540, false, true);
-            //game.createBgCanvas();
+            game.createBgCanvas();
             //game.createOnBgCanvas();
             
             game.scallable(true);

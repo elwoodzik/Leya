@@ -5,6 +5,7 @@ define(['Class', 'require'], function(my, require){
 			
 			this.game = game; 
 			this.used = true;
+			
 			this.x = x || 1; 
 			this.y = y || 1;
 

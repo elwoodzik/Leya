@@ -29,6 +29,24 @@ define([
                         b.y -= oy;
                     }                 
                 }
+            });
+
+            that.game.physic.collide(this, that.game.ARR.boxDescBlocks, function(p, b, dir, oy, ox){
+                if(dir === 'b'){
+                    p.body.falling = false;
+                    p.body.jumping = false;
+                    
+                    if(b.body.immoveable){
+                        b.y -= oy;
+                    }                 
+                }
+                if(dir === 't'){
+                    p.body.velocity.y = p.body.velocity.y/2
+                    b.destroy(that.game.ARR.boxDescBlocks);
+                }
+                if(dir === 'l'){
+                    p.body.velocity.x = -p.body.velocity.x/2
+                }
             })
 
             that.game.physic.collide(this, that.game.ARR.lifts, function(p, b, dir, oy, ox){
@@ -44,10 +62,13 @@ define([
                         p.body.platformer.onplatform = true;
                         p.y = b.y - p.currentHeight+2;
                     }
+                    
                 }
                 if(dir === 't'){
                     p.body.velocity.y = p.body.velocity.y/2
                 }
+
+                
             });
 
             this.body.platformer.move(dt);
@@ -67,6 +88,10 @@ define([
         configure: function(){
             this.body.colideWorldSide = true;
             this.body.immoveable = true;
+            this.zIndex = 6;
+            this.life = 3;
+            // dodaje obsluge kamery do gracza
+            this.game.add.camera(this);
         }
 	})
 

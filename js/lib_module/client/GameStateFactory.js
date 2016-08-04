@@ -18,6 +18,10 @@ define(['Class'], function(my, game){
 	    	this.game.gameObject.length = 0;
 	    	this.game.gameObjectStatic.length = 0;
 	    	this.game.gameObjectOnStatic.length = 0;
+			this.game.camera.xScroll = 0;
+			this.game.camera.yScroll = 0;
+			this.game.VAR = {};
+			this.game.ARR = {};
 	    	this.game.currentState = null;
 	    	this.game.currentState = new this.game.states[key](this.game);
 			

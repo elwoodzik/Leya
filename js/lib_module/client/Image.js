@@ -90,12 +90,12 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	        )
 		},
 
-		update: function(){
+		update: function(dt){
 			this.worldBounce();
 			this.moveToPointHandler();
 
-			this.x += this.body.velocity.x;
-	        this.y += this.body.velocity.y;
+			this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
+            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
 		},
 
 		kill: function(){
@@ -158,7 +158,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			}else if(context === 'background'){
 				this.context = this.game.bgctx;
 				this.contextType = context;
-			
+				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
+				this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
 				this.redraw(); 
 			}
 			else if(context === 'onbackground'){

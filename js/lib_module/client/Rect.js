@@ -7,15 +7,18 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			this.used = true;
 			this.x = x || 0; 
 			this.y = y || 0; 
-		
-			this.body = new Body(this);
-			this.zIndex = 2;
-
+			
 			this.width = width || this.image.width;
 			this.height = height || this.image.height;
 
 			this.currentWidth = this.width;
 			this.currentHeight = this.height;
+
+			this.body = new Body(this.game, this);
+			this.zIndex = 2;
+
+			this.contextType = 'main';
+
             
             this.strokeStyle = strokeStyle;
             this.fillStyle = fillStyle;
@@ -49,10 +52,10 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             this.game.ctx.fillStyle = this.fillStyle;
             
 			if(this.strokeStyle === null){
-				this.game.ctx.fillRect(this.renderX, this.renderY, this.width, this.height);
+				this.game.ctx.fillRect(this.renderX - this.game.camera.xScroll, this.renderY - this.game.camera.yScroll, this.width, this.height);
 			}else{
 				this.game.ctx.beginPath();
-				this.game.ctx.rect(this.renderX, this.renderY, this.width, this.height);
+				this.game.ctx.rect(this.renderX - this.game.camera.xScroll, this.renderY - this.game.camera.yScroll, this.width, this.height);
 				this.game.ctx.stroke();
 				//this.game.ctx.fill();
 				this.game.ctx.closePath();
@@ -60,10 +63,10 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             
 		},
 
-		update: function(){
+		update: function(dt){
 			this.worldBounce();
-			this.x += this.body.velocity.x;
-	        this.y += this.body.velocity.y;
+			this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
+            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
 		},
 
 		 destroy: function(array){

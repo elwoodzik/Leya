@@ -11,26 +11,33 @@ define(['Class', 'require'], function(my, require){
 			this.x = x || 0; 
 			this.y = y || 0; 
 			
-			this.zIndex = 1;
+			this.zIndex = 5;
+
+			this.contextType = 'main';
             
             this.repeatX = x;
 			this.repeatY = y;
 		    //
-			this.speed = this.options.speed || {x: -1.5+Math.random()*3, y: -14+Math.random()*14};
+			this.speed = this.options.speed || {x: Math.random()*3, y: -4+Math.random()*4};
+
+			this.velocity ={
+				x: this.speed.x,
+				y: this.speed.y
+			}
             //
             if(this.options.radius){
                 this.radius = this.game.rand(this.options.radius.min, this.options.radius.max) + this.options.radius.static;
             }else{
-                 this.radius = this.game.rand(0,10)+80;
+                 this.radius = this.game.rand(0,10)+5;
             }
 		
             //
-            this.life = this.options.life || this.game.rand(0,15)+20;
+            this.life = this.options.life || this.game.rand(135,145);
             this.remaining_life = this.life;
             //
             this.colors = this.options.colors || {
-                r: this.game.rand(150,250),
-                g: this.game.rand(0,120),
+                r: this.game.rand(155,255),
+                g: this.game.rand(0,180),
                 b: 0
             }
             //
@@ -48,39 +55,37 @@ define(['Class', 'require'], function(my, require){
 			this.opacity = Math.round(this.remaining_life/this.life*100)/100;
 		
 			this.game.ctx.beginPath();
-			var gradient = this.game.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+			var gradient = this.game.ctx.createRadialGradient(this.x - this.game.camera.xScroll, this.y - this.game.camera.yScroll, 0, this.x- this.game.camera.xScroll, this.y- this.game.camera.yScroll, this.radius);
 			gradient.addColorStop(0, "rgba("+this.colors.r+", "+this.colors.g+", "+this.colors.b+", "+this.opacity+")");
 			gradient.addColorStop(0.5, "rgba("+this.colors.r+", "+this.colors.g+", "+this.colors.b+", "+this.opacity+")");
 			gradient.addColorStop(1, "rgba("+this.colors.r+", "+this.colors.g+", "+this.colors.b+", 0)");
 			this.game.ctx.fillStyle = gradient;
-			this.game.ctx.arc(this.x, this.y, this.radius, Math.PI*2, false);
+			this.game.ctx.arc(this.x - this.game.camera.xScroll, this.y - this.game.camera.yScroll, this.radius, Math.PI*2, false);
 			this.game.ctx.fill();
 			this.game.ctx.closePath();
 			
 			this.game.ctx.globalCompositeOperation = "source-over";
 		},
 
-		update: function(){
-			this.x += this.speed.x;
-			this.y += this.speed.y;
+		update: function(dt){
+			this.x =  Math.floor(this.x  + (dt * this.velocity.x));
+            this.y =  Math.floor(this.y  + (dt * this.velocity.y));
 			this.remaining_life--;
-			this.radius-=1;
+			this.radius-=0.5;
 			if(this.remaining_life < 0 || this.radius < 0){
 				//a brand new particle replacing the dead one
 				if(this.options.radius){
                     this.radius = this.game.rand(this.options.radius.min, this.options.radius.max) + this.options.radius.static;
                 }else{
-                    this.radius = this.game.rand(0,10)+25;
+                    this.radius = this.game.rand(0,10)+5;
                 }
-                this.speed = this.options.speed || {x: -1.5+Math.random()*3, y: -7+Math.random()*7};
+                this.speed = this.options.speed || {x: Math.random()*3, y: -3+Math.random()*3};
+				
 				this.remaining_life = this.life;
-                if(this.options.mouseFollow){
-                    this.x = this.game.mouse.mouseX - 50;
-				    this.y = this.game.mouse.mouseY - 40; 
-                }else{
-                    this.x = this.repeatX;
-				    this.y = this.repeatY;
-                }
+                
+				this.x = this.repeatX;
+				this.y = this.repeatY;
+                
 				
 			}
 		},

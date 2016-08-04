@@ -4,10 +4,10 @@ define([
 ], function(my, Sprite){
 	var that;
 
-	var Water = my.Class(Sprite, {
+	var BoxDesc = my.Class(Sprite, {
 
 		constructor: function(game, context, x, y, key, width, height){
-			Water.Super.apply(this, arguments);
+			BoxDesc.Super.apply(this, arguments);
             
             that = this;
 
@@ -24,16 +24,16 @@ define([
         },
 
         anims: function(){
-            this.animations.add('idle', 5*72, 8*75, 72, 70, [0,1]);
-            this.animations.play('idle',8);
+            this.animations.add('idle', 0*72, 2*72, 70, 70, [0]);
+            this.animations.play('idle');
         },
 
         configure: function(){
-           this.zIndex = 8;
+
         }
 	})
 
-    var superUpdate = Water.Super.prototype.update;
+    var superUpdate = BoxDesc.Super.prototype.update;
 	
-	return Water;
+	return BoxDesc;
 })

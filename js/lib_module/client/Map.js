@@ -69,21 +69,34 @@ define(['Class'], function(my){
             ); 
         },
 
-        createObjOnMap: function(context){
+        createObjOnMap: function(){
             for(var i=0; i<this.b.length; i++){
                 // 
                 for(var j=0; j<this.b[i].length; j++){
                     if(this.b[i][j].obj){
-                        if(!this.game.ARR[this.b[i][j].obj.arr]){
-                            this.game.ARR[this.b[i][j].obj.arr] = [];
-                        }
-                        this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
-                        this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
+                        if(this.b[i][j].obj.arr ){
+                            
+                            if(!this.game.ARR[this.b[i][j].obj.arr]){
+                                this.game.ARR[this.b[i][j].obj.arr] = [];
+                            }
+                            
+                            this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
+                            this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
                         
-                        this.game.ARR[this.b[i][j].obj.arr].push(new this.b[i][j].obj.type(this.game, context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image));
+                            this.game.ARR[this.b[i][j].obj.arr].push(new this.b[i][j].obj.type(this.game, this.b[i][j].obj.context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image));
+                        
+                        }else if(this.b[i][j].obj.varr){
+                            
+                            this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
+                            this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
+
+                            this.game.VAR[this.b[i][j].obj.varr] = new this.b[i][j].obj.type(this.game, this.b[i][j].obj.context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image);
+                        }
+                       
                     }
                 }
             }
+            this.game.sortByIndex()
         },
 
        	parse: function(arr){   
