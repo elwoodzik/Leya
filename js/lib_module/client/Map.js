@@ -62,6 +62,7 @@ define(['Class'], function(my){
          },
 
         draw: function(dt) {
+            
             this.context.drawImage(
                 this.imageMap,
                 this.game.camera.xScroll,

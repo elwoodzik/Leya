@@ -7,8 +7,6 @@ define([
     ], function(my, Maps, Levels, Player, Lift){
 	
     var that;
-    var par;
-
 
 	var Irobot2 = my.Class(null, Maps, {
 
@@ -37,32 +35,32 @@ define([
             // tworzy dynamiczne obiekty zdefinoiwane w maps/Maps.js
             that.game.ARR.map.createObjOnMap('main');
 
-            for (var i=0; i<20; i++){
-                that.game.add.particles(9*70+34,4*70+10);
+            
+            
+            if(Levels.LEVEL === 1){
+                for (var i=0; i<35; i++){
+                    that.game.add.particles(9*70+34,4*70+10);
+                }
+                var liftsCords = [
+                    { x:  70*10, y: 70*3, dis: 170, dir: 'down'},
+                ] 
+
+                for (var i=0; i<liftsCords.length; i++){
+                    let cords = liftsCords[i];
+                    var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
+                    lift.thereAndBack(cords.dis, cords.dir, 100);
+                    
+                    that.game.ARR.lifts.push(lift);
+                }
             }
 
-            par = that.game.add.rect(200,200, 20, 10, null, 'brown');
-            
-            par.body.platformer.ddy = -(70 * 440);    
-            
-
-            var liftsCords = [
-                { x:  70*10, y: 70*3, dis: 300, dir: 'down'},
-            ] 
-
-            for (var i=0; i<liftsCords.length; i++){
-                let cords = liftsCords[i];
-                var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
-                lift.thereAndBack(cords.dis, cords.dir, 100, 2000);
-                
-                that.game.ARR.lifts.push(lift);
-            }
+           
 
             that.game.world.setPortView(2800,700);
 		},
 
 		update: function(dt){
-           // par.body.platformer.collision(dt);
+    
 		}
 	});
 

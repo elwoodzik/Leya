@@ -46,7 +46,7 @@ define([
             game.createBgCanvas();
             //game.createOnBgCanvas();
             
-            game.scallable(true);
+            //game.scallable(true);
            
            // game.useFpsCounter = true;
             //game.add.multiplayer('http://localhost:3000');

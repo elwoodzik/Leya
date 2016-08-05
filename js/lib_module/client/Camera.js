@@ -73,7 +73,7 @@ define(['Class'], function(my){
                 this.yScroll = this.game.portViewHeight-this.game.canvas.height
             }
 
-                this.game.physic.outOfScreen(this.game.gameObject)
+            this.game.physic.outOfScreen(this.game.gameObject)
         }
        
     });

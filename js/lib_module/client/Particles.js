@@ -9,7 +9,8 @@ define(['Class', 'require'], function(my, require){
 			this.game = game; 
 			this.used = true;
 			this.x = x || 0; 
-			this.y = y || 0; 
+			this.y = y || 0;
+
 			
 			this.zIndex = 5;
 
@@ -18,7 +19,7 @@ define(['Class', 'require'], function(my, require){
             this.repeatX = x;
 			this.repeatY = y;
 		    //
-			this.speed = this.options.speed || {x: Math.random()*3, y: -4+Math.random()*4};
+			this.speed = this.options.speed || {x: -10+Math.random()*65, y: -14+Math.random()*14};
 
 			this.velocity ={
 				x: this.speed.x,
@@ -30,9 +31,12 @@ define(['Class', 'require'], function(my, require){
             }else{
                  this.radius = this.game.rand(0,10)+5;
             }
-		
+
+			this.currentWidth = this.radius/2;
+			this.currentHeight =  this.radius/2;
+			
             //
-            this.life = this.options.life || this.game.rand(135,145);
+            this.life = this.options.life || this.game.rand(10,35);
             this.remaining_life = this.life;
             //
             this.colors = this.options.colors || {
@@ -41,7 +45,7 @@ define(['Class', 'require'], function(my, require){
                 b: 0
             }
             //
-            this.composite = this.options.composite || "lighter"; //screen, lighter
+            this.composite = this.options.composite || "screen"; //screen, lighter
             //
 			//this.game.physic.outOfScreen(this)
 
@@ -68,25 +72,29 @@ define(['Class', 'require'], function(my, require){
 		},
 
 		update: function(dt){
-			this.x =  Math.floor(this.x  + (dt * this.velocity.x));
-            this.y =  Math.floor(this.y  + (dt * this.velocity.y));
+			this.x =  (this.x  + (dt * this.velocity.x));
+            this.y =  (this.y  + (dt * this.velocity.y));
 			this.remaining_life--;
-			this.radius-=0.5;
+			this.radius-=0.6;
+			
 			if(this.remaining_life < 0 || this.radius < 0){
 				//a brand new particle replacing the dead one
 				if(this.options.radius){
                     this.radius = this.game.rand(this.options.radius.min, this.options.radius.max) + this.options.radius.static;
                 }else{
-                    this.radius = this.game.rand(0,10)+5;
+                    this.radius = this.game.rand(0,10)+7;
                 }
-                this.speed = this.options.speed || {x: Math.random()*3, y: -3+Math.random()*3};
-				
+               
+			    this.speed = this.options.speed || {x: -40+Math.random()*85, y: -134};
+				this.velocity ={
+					x: this.speed.x,
+					y: this.speed.y
+				}
+
 				this.remaining_life = this.life;
                 
 				this.x = this.repeatX;
 				this.y = this.repeatY;
-                
-				
 			}
 		},
 

@@ -18,8 +18,6 @@ define([
 		update: function(dt){
 			superUpdate.call(this, dt);
 
-            
-
             if(this.body.immoveable){
                 this.game.physic.collide(this.game.ARR.waterBlocks, this, function(p, b , dir, oy, ox){
                     b.body.immoveable = false;

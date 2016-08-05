@@ -59,7 +59,7 @@ define(['Class'], function(my){
             }else if(this.wasright === 0){
                 this.sprite.animations.playOnce('idle')   
             }
-            if ((this.game.keyboard._pressed['SPACE'] || this.game.keyboard._pressed['up'] )&& !this.body.jumping && !this.body.falling) {
+            if ((this.game.keyboard._pressed['W'] || this.game.keyboard._pressed['up'] )&& !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
                 this.onplatform = false;

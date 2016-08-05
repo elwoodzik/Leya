@@ -54,9 +54,9 @@ define([
                     p.body.falling = false;
                     p.body.jumping = false;
                     
-                    if(this.game.keyboard._pressed['D'] || this.game.keyboard._pressed['A']){
+                    if(this.game.keyboard._pressed['D'] || this.game.keyboard._pressed['A'] || this.game.keyboard._pressed['left'] || this.game.keyboard._pressed['right']){
                         p.body.platformer.onplatform = false;
-                        
+                        console.log('ss')
                     }else{
                         p.body.velocity.x = b.body.velocity.x ;
                         p.body.platformer.onplatform = true;
@@ -93,6 +93,7 @@ define([
             this.body.colideWorldSide = true;
             this.body.immoveable = true;
             
+            this.zIndex = 6;
             this.life = 3;
             // dodaje obsluge kamery do gracza
             this.game.add.camera(this);

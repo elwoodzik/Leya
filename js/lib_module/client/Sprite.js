@@ -349,7 +349,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
         
-        thereAndBack: function(_dis, _dir, _speed, time){
+        thereAndBack: function(_dis, _dir, _speed){
             this.thereAndBack_startX = this.x;
             this.thereAndBack_startY = this.y;
             if(_dir === 'right' || _dir === 'left'){
