@@ -116,6 +116,7 @@ define(['Class'], function(my){
 			for(var i=0; i<arr.length; i++){
 				this.b.push([]);
 				for(var j=0; j<arr[i].length; j++){
+                    console.log(this.elements[arr[i][j]])
 					this.b[i].push(this.elements[arr[i][j]]);
 
                    
@@ -125,6 +126,7 @@ define(['Class'], function(my){
 					// }
 				}
 			}
+            console.log(this.b)
 
             this.currentWidth  = (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[0].length));
             this.currentHeight = (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length));
