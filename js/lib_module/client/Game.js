@@ -88,7 +88,7 @@ define([
 
         animationLoop : function() {
             
-            
+            requestAnimationFrame( this.animationLoop.bind(this) );
             now = this.timestamp();
            
 
@@ -97,13 +97,14 @@ define([
             while(dt > step) {
               dt = dt - step;
               this.capturePreviousPositions(this.gameObject);
+              console.log(step)
               this.update(step);
             }
 
             this.render(dt);
             last = now;
   
-            requestAnimationFrame( this.animationLoop.bind(this) );
+            
           
             // if (!timestamp) {
             //     timestamp = 0;
