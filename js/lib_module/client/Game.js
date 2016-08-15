@@ -86,19 +86,22 @@ define([
             return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
         },
 
-        animationLoop : function(timestamp) {
+        animationLoop : function() {
             
-            if(!timestamp){
-                timestamp = 0;
-            }
-            dt = (dt + Math.min(1, (timestamp - last) / 1000));
+            
+            now = this.timestamp();
            
+
+            dt = (dt + Math.min(1, (now - last) / 1000));
+          
             while(dt > step) {
               dt = dt - step;
+              this.capturePreviousPositions(this.gameObject);
               this.update(step);
             }
+
             this.render(dt);
-            last = timestamp;
+            last = now;
   
             requestAnimationFrame( this.animationLoop.bind(this) );
           
@@ -123,7 +126,7 @@ define([
             
             
             // while (LAG >= this.FRAMEDURATION) {  
-            //    //this.capturePreviousPositions(this.gameObject);
+            //    
             //    this.cTime += this.FRAMEDURATION;
                
             //    this.update(this.cTime);
@@ -196,10 +199,12 @@ define([
         renderOnStatic: function(dt){
             if(this.renderer){
                 this.clearCanvas(this.onbgctx);
-                
+               
                 for(i=0, iMax=this.gameObjectOnStatic.length; i<iMax; i++){
                     entityRenderOnStatic = this.gameObjectOnStatic[i];
+                 
                     if(entityRenderOnStatic && entityRenderOnStatic.contextType === 'onbackground'){
+                         
                         if(!entityRenderOnStatic.isOutOfScreen && entityRenderOnStatic.used){            
                             if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle != 0 ){
                                 this.onbgctx.save();
@@ -208,8 +213,8 @@ define([
                                 this.onbgctx.translate(-entityRenderOnStatic.x - entityRenderOnStatic.currentWidth * entityRenderOnStatic.body.anchorX, -entityRenderOnStatic.y - entityRenderOnStatic.currentHeight * entityRenderOnStatic.body.anchorY)
                             }
 
-                            entityRenderOnStatic.draw(dt);
-                            
+                            entityRenderOnStatic.redraw(dt);
+                        
                             if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle!=0 ){
                                 this.onbgctx.restore();
                             }

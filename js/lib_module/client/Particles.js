@@ -55,7 +55,9 @@ define(['Class', 'require'], function(my, require){
 		},
 
 		draw: function(){
+			
 			this.game.ctx.globalCompositeOperation = this.composite; 
+	
 			this.opacity = Math.round(this.remaining_life/this.life*100)/100;
 		
 			this.game.ctx.beginPath();
@@ -72,6 +74,7 @@ define(['Class', 'require'], function(my, require){
 		},
 
 		update: function(dt){
+	
 			this.x =  (this.x  + (dt * this.velocity.x));
             this.y =  (this.y  + (dt * this.velocity.y));
 			this.remaining_life--;

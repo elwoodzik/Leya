@@ -33,6 +33,8 @@ define([
                 "levels": "images/levels.png",
                 "exit": "images/exit.png",
                 "coin": "images/coin.png",
+                "life": "images/life.png",
+                "particleBox": "images/particleBox.png",
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
@@ -42,11 +44,11 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(960, 540, false, true);
+            game = new Game(1366, 768, false, true);
             game.createBgCanvas();
-            //game.createOnBgCanvas();
+           // game.createOnBgCanvas();
             
-            //game.scallable(true);
+            game.scallable(true);
            
            // game.useFpsCounter = true;
             //game.add.multiplayer('http://localhost:3000');

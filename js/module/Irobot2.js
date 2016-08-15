@@ -16,16 +16,19 @@ define([
            
             that.game.ARR.map = [];
             that.game.ARR.lifts = [];
+            this.game.ARR.coins = [];
 
             that.game.ARR.parti = [];
+
+            this.game.ARR.particleBoxYellow = [];
 		},
 
 		create: function(){
             that.game = this;
             
             // tworzy tlo
-            that.game.add.image('background', 0, 0, 'bg', 2800, 700);
-
+            that.game.add.image('background', 0, 0, 'bg', 3500, 840);
+            
             // tworzy mape
             that.game.ARR.map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
 
@@ -37,26 +40,24 @@ define([
 
             
             
-            if(Levels.LEVEL === 1){
-                for (var i=0; i<35; i++){
-                    that.game.add.particles(9*70+34,4*70+10);
-                }
-                var liftsCords = [
-                    { x:  70*10, y: 70*3, dis: 170, dir: 'down'},
-                ] 
+            // if(Levels.LEVEL === 1){
+            //     for (var i=0; i<35; i++){
+            //         that.game.add.particles(9*70+34,4*70+10);
+            //     }
+            //     var liftsCords = [
+            //         { x:  70*10, y: 70*3, dis: 170, dir: 'down'},
+            //     ] 
 
-                for (var i=0; i<liftsCords.length; i++){
-                    let cords = liftsCords[i];
-                    var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
-                    lift.thereAndBack(cords.dis, cords.dir, 100);
+            //     for (var i=0; i<liftsCords.length; i++){
+            //         let cords = liftsCords[i];
+            //         var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
+            //         lift.thereAndBack(cords.dis, cords.dir, 100);
                     
-                    that.game.ARR.lifts.push(lift);
-                }
-            }
+            //         that.game.ARR.lifts.push(lift);
+            //     }
+            // }
 
-           
-
-            that.game.world.setPortView(2800,700);
+            that.game.world.setPortView(3500,840);
 		},
 
 		update: function(dt){

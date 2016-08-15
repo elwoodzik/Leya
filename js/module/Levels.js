@@ -12,7 +12,7 @@ define(['Class'], function(my){
             that.game = game;
             that.lvls = [];
             that.savedLevels = that.game.loadData('levels');
-            console.log(that.game.camera.xScroll)
+           
             this.create();
 		},
 		

@@ -20,15 +20,31 @@ define([
 			superUpdate.call(this, dt);
 
             that.game.physic.overlap(that.game.VAR.player, this, this.collect);
+
+            if(this.body.immoveable){
+                 this.body.platformer.collision(dt);
+            }
+
+            if(this.body.immoveable){
+                that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
+                    if(dir === 'b'){
+                        b.y -= oy
+                        p.body.velocity.x = p.body.velocity.x * 0.009;
+                    }   
+                })
+            }
 		},
 
         anims: function(){
-            this.animations.add('idle', 0, 0, 37, 38, [0,1,2,3,4]);
+            this.animations.add('idle', 0, 0, 55, 57, [0,1,2,3,4]);
             this.animations.play('idle', 5);
         },
 
         configure: function(){
-           
+           this.body.immoveable = true;
+           this.body.platformer.configure({
+               gravity: 200
+           })
         },
 
         collect: function(player, coin){

@@ -10,7 +10,7 @@ define(['Class'], function(my){
         outOfScreen: function(item, callback){
             if(Array.isArray(item)){
                 for (var i = 0, max = item.length;  i < max; i++){
-                    if(item[i] && item[i].used){
+                    if(item[i] && item[i].used && !item[i].static){
                         this.outOfScreenHandler(item[i], callback)
                     }
                 }
@@ -164,7 +164,7 @@ define(['Class'], function(my){
         },
 
         collideHandler: function(entity1, entity2, callback, bounds){
-            if(entity1 != entity2){
+            if(entity1 && entity2 && entity1 != entity2){
                 
                 //if(!entity1.checked && !entity2.checked && entity1.useCollision && entity2.useCollision){
                 if(entity1.useCollision && entity2.useCollision){

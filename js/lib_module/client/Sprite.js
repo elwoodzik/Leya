@@ -32,6 +32,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
 
             this.scale = 1;
 
+            this.static = false;
+
             this.contextType = 'main';
             
             this.animations = new GameAnimationFactory(this);
@@ -74,12 +76,12 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             
             
             if (this.previousX) {
-                this.renderX = (this.x - this.previousX) * lag + this.previousX;
+                this.renderX = this.x + (this.body.velocity.x * dt);
             } else {
                 this.renderX = this.x;
             }
             if (this.previousY) {
-                this.renderY = (this.y - this.previousY) * lag + this.previousY;
+                this.renderY = this.y + (this.body.velocity.y * dt);
             } else {
                 this.renderY = this.y;
             }
@@ -94,8 +96,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].sy,
                this.states[this.state].fW,
                this.states[this.state].fH,
-               this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + this.game.camera.xScroll) : Math.floor(this.renderX  - this.game.camera.xScroll), // * this.scale
-               this.renderY - this.game.camera.yScroll,// * this.scale
+               Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + (!this.static ? this.game.camera.xScroll : 0)) : Math.floor(this.renderX  - (!this.static ? this.game.camera.xScroll : 0))), // * this.scale
+               Math.floor(this.renderY - (!this.static ? this.game.camera.yScroll : 0)),// * this.scale
                this.states[this.state].fW ,
                this.states[this.state].fH 
             )
@@ -107,20 +109,19 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
-
+            this.frameUpdate();
             //this.inRange();
             //this.collide();
         },
-        redraw: function(lag){
+        redraw: function(dt){
 
-            if (this.previousX) {
-                this.renderX = (this.x - this.previousX) * lag + this.previousX;
+           if (this.previousX) {
+                this.renderX = this.x + (this.body.velocity.x * dt);
             } else {
                 this.renderX = this.x;
             }
-
             if (this.previousY) {
-                this.renderY = (this.y - this.previousY) * lag + this.previousY;
+                this.renderY = this.y + (this.body.velocity.y * dt);
             } else {
                 this.renderY = this.y;
             }
@@ -130,7 +131,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 this.game.ctx.scale(-1,1);
             }
 
-            this.context.clearRect(this.renderX, this.renderY, this.image.width, this.image.height);
+            //this.context.clearRect(this.renderX, this.renderY, this.image.width, this.image.height);
             this.frameUpdate();
 
             this.context.drawImage(
@@ -159,10 +160,10 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.worldBounce();
             this.moveToPointHandler();
             this.useThereAndBack();
-
-            this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
-            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
-            this.frameUpdate();
+            
+            this.x =  (this.x  + (dt * this.body.velocity.x));
+            this.y =  (this.y  + (dt * this.body.velocity.y));
+          
         },
 
         frameUpdate: function(){

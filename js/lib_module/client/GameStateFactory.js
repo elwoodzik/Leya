@@ -30,6 +30,9 @@ define(['Class'], function(my, game){
 				if(this.game.bgctx){
 					this.game.renderStatic();
 				}
+				if(this.game.onbgctx){
+					this.game.renderOnStatic();
+				}
     			
 	    	}else{
 	    		throw "Brakuje metody create w scenie " + key;

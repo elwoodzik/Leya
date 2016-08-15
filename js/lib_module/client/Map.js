@@ -11,12 +11,14 @@ define(['Class'], function(my){
             this.game = game;
             this.used = true;
             this.key = key;
-            this.mapArray = arr;
+
+            this.mapObj = arr;
+            this.mapArray = arr.map;
 
             this.w = width;
             this.h = height;
 
-            this.zIndex = 1;
+            this.zIndex = 4;
         
 
             this.currentWidth = width;
@@ -47,7 +49,7 @@ define(['Class'], function(my){
                         this.b[i][j].y ,
                         this.w,
                         this.h,
-                        Math.floor(( j * this.currentWidth) - this.game.camera.xScroll),
+                        Math.floor((j * this.currentWidth) - this.game.camera.xScroll),
                         Math.floor((i * this.currentHeight) - this.game.camera.yScroll),
                         (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
                         (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
@@ -62,11 +64,10 @@ define(['Class'], function(my){
          },
 
         draw: function(dt) {
-            
             this.context.drawImage(
                 this.imageMap,
-                this.game.camera.xScroll,
-                this.game.camera.yScroll,
+                Math.floor(this.game.camera.xScroll ), // + (this.game.camera.lerpAmount * dt)
+                Math.floor(this.game.camera.yScroll ), // + (this.game.camera.lerpAmount * dt)
                 this.game.canvas.width,
                 this.game.canvas.height,
                 0,
@@ -77,56 +78,82 @@ define(['Class'], function(my){
         },
 
         createObjOnMap: function(){
-            for(var i=0; i<this.b.length; i++){
-                // 
-                for(var j=0; j<this.b[i].length; j++){
-                    if(this.b[i][j].obj){
-                        if(this.b[i][j].obj.arr ){
-                            
-                            if(!this.game.ARR[this.b[i][j].obj.arr]){
-                                this.game.ARR[this.b[i][j].obj.arr] = [];
-                            }
-                            
-                            this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
-                            this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
-                        
-                            this.game.ARR[this.b[i][j].obj.arr].push(new this.b[i][j].obj.type(this.game, this.b[i][j].obj.context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image));
-                        
-                        }else if(this.b[i][j].obj.varr){
-                            
-                            this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
-                            this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
-
-                            this.game.VAR[this.b[i][j].obj.varr] = new this.b[i][j].obj.type(this.game, this.b[i][j].obj.context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image);
-                        }
-                       
+            var obj;
+            for(var i=0; i<this.objects.length; i++){
+                obj = this.objects[i];
+                if(obj.arr ){
+                    if(!this.game.ARR[obj.arr]){
+                        this.game.ARR[obj.arr] = [];
                     }
+                    obj.marginX = obj.marginX ? obj.marginX : 0;
+                    obj.marginY = obj.marginY ? obj.marginY : 0;
+
+                    this.game.ARR[obj.arr].push(new obj.name(this.game, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image));
+                }else if(obj.varr){
+                    obj.marginX = obj.marginX ? obj.marginX : 0;
+                    obj.marginY = obj.marginY ? obj.marginY : 0;
+
+                    this.game.VAR[obj.varr] = new obj.name(this.game, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image);
                 }
             }
+            // for(var i=0; i<this.b.length; i++){
+            //     // 
+            //     for(var j=0; j<this.b[i].length; j++){
+            //         if(this.b[i][j].obj){
+            //             if(this.b[i][j].obj.arr ){
+                            
+            //                 if(!this.game.ARR[this.b[i][j].obj.arr]){
+            //                     this.game.ARR[this.b[i][j].obj.arr] = [];
+            //                 }
+                            
+            //                 this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
+            //                 this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
+                        
+            //                 this.game.ARR[this.b[i][j].obj.arr].push(new this.b[i][j].obj.name(this.game, this.b[i][j].obj.context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image));
+                        
+            //             }else if(this.b[i][j].obj.varr){
+                            
+            //                 this.b[i][j].obj.marginX = this.b[i][j].obj.marginX ? this.b[i][j].obj.marginX : 0;
+            //                 this.b[i][j].obj.marginY = this.b[i][j].obj.marginY ? this.b[i][j].obj.marginY : 0;
+
+            //                 this.game.VAR[this.b[i][j].obj.varr] = new this.b[i][j].obj.name(this.game, this.b[i][j].obj.context , (j*70)+this.b[i][j].obj.marginX, (i*70)+this.b[i][j].obj.marginY, this.b[i][j].obj.image);
+            //             }
+            //         }
+            //     }
+            // }
            
             this.game.sortByIndex();
-            
-            
         },
 
        	parse: function(arr){   
 			this.b = [];
 			this.emptySpaces = [];
+           
 			//
 			for(var i=0; i<arr.length; i++){
 				this.b.push([]);
 				for(var j=0; j<arr[i].length; j++){
-                    console.log(this.elements[arr[i][j]])
-					this.b[i].push(this.elements[arr[i][j]]);
+                    var tile = {};
+                    tile.x = ((arr[i][j]-1) % 13) * 72;
+                    tile.y = (Math.floor((arr[i][j]-1) / 13)) * 72;
+                    
+                    if(this.tiles[arr[i][j]-1]){
+                        tile.type = !this.tiles[arr[i][j]-1].type ? 'empty' : this.tiles[arr[i][j]-1].type;
+                    }else{
+                        tile.type = 'empty';
+                    }
+                    
+                    
+					this.b[i].push(tile);
 
                    
 					// Jeśli miejsce jest puste i nie jest to podłoga w lewym górnym rogu (wykluczam trzypozycje) wstaw nowy obiekt z pozycją x i y do tablicy z pustymi miejscami
-					// if(this.b[i][j].type=='empty' && !(i==1 && j==1) && !(i==2 && j==1) && !(i==1 && j==2) && !(i==9 && j==13) && !(i==9 && j==12) && !(i==8 && j==13) && !(i==1 && j==12) && !(i==2 && j==13) && !(i==1 && j==13) && !(i==9 && j==1) && !(i==9 && j==2)  && !(i==8 && j==1)){
+					// if(this.b[i][j].name=='empty' && !(i==1 && j==1) && !(i==2 && j==1) && !(i==1 && j==2) && !(i==9 && j==13) && !(i==9 && j==12) && !(i==8 && j==13) && !(i==1 && j==12) && !(i==2 && j==13) && !(i==1 && j==13) && !(i==9 && j==1) && !(i==9 && j==2)  && !(i==8 && j==1)){
 					// 	this.emptySpaces.push({x:j, y:i});
 					// }
 				}
 			}
-            console.log(this.b)
+            
 
             this.currentWidth  = (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[0].length));
             this.currentHeight = (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length));
@@ -135,13 +162,32 @@ define(['Class'], function(my){
             this.currentHalfHeight = this.currentHeight / 2;
 		},
 
+        parser: function(arr, w, h){
+            this.newTab = [];
+            var index = 0;
+
+            for (var i = 0; i < h; i++) {
+                this.newTab[i] = [];
+                for (var j = 0; j <w; j++) {
+                    this.newTab[i][j]=arr[j+index];
+                }
+                index+=w;
+            };
+
+            
+        },
+
         setElements: function(elements){
-            if(this.checkElements(elements)){
-                this.elements = elements;
-                this.parse(this.mapArray);
+            
+                this.parser(this.mapArray, this.mapObj.w, this.mapObj.h)
+                this.tiles = elements.tiles;
+                if(this.checkElements(elements.objects)){
+                    this.objects = elements.objects;
+                }
+                this.parse(this.newTab);
                 this.generate();
                 this.setContext(this.contextType);
-            }
+            
         },
 
         checkElements:function(elements){
@@ -154,8 +200,8 @@ define(['Class'], function(my){
                     console.error("Musisz podać wlaściwość y dla każdego obiektu");
                     return false;
                 }
-                else if(elements[i].type === undefined){
-                    console.error("Musisz podać wlaściwość type dla każdego obiektu");
+                else if(elements[i].name === undefined){
+                    console.error("Musisz podać wlaściwość name dla każdego obiektu");
                     return false;
                 }
             }

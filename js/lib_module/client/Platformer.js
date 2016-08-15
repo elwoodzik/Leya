@@ -15,8 +15,8 @@ define(['Class'], function(my){
         configure: function(options){
             this.tile     = options.tile || 70;              // the size of each tile (in game pixels)
             this.meter    = this.tile;            // abitrary choice for 1m
-            this.gravity  = options.gravity || this.meter * 9.8 * 4 ;    // very exagerated gravity (6x)
-            this.maxdx    = options.maxdx || this.meter * 3;         // max horizontal speed (20 tiles per second)
+            this.gravity  = options.gravity * 9.8 || this.meter * 9.8 * 4 ;    // very exagerated gravity (6x)
+            this.maxdx    = options.maxdx || this.meter * 3 - 30;         // max horizontal speed (20 tiles per second)
             this.maxdy    = options.maxdy || this.meter * 40;         // max vertical speed   (60 tiles per second)
             this.accel    = options.accel || this.maxdx / (1 / 3);          // horizontal acceleration -  take 1/2 second to reach maxdx
             this.friction = options.maxdx || this.maxdx / (1/6);          // horizontal friction     -  take 1/6 second to stop from maxdx
@@ -42,10 +42,12 @@ define(['Class'], function(my){
 
             if (this.game.keyboard._pressed['A'] || this.game.keyboard._pressed['left']){
                 this.ddx = this.ddx - this.accel;     // player wants to go left
-                this.sprite.animations.play('moveLeft')   
+                this.sprite.animations.play('moveLeft') 
+               
             }else if (this.wasleft){
                 this.ddx = this.ddx + this.friction;  // player was going left, but not any more 
-                this.sprite.animations.playOnce('idle')   
+                this.sprite.animations.playOnce('idle') 
+
             }else if(this.wasleft === 0){
                  this.sprite.animations.playOnce('idle')   
             }
@@ -80,7 +82,7 @@ define(['Class'], function(my){
             }
             
             this.ddy = this.body.falling ? this.gravity : 0;
-
+           
             this.body.tolerance = this.sprite.currentHeight - this.tile;
             this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
             
@@ -103,7 +105,7 @@ define(['Class'], function(my){
                     this.body.falling = false;   // no longer falling
                     this.body.jumping = false;
                     this.sprite.y = this.t2p(ty) - this.body.tolerance-1;
-
+                    
                 }
             }else if(this.body.velocity.y < 0){
                 if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
@@ -180,6 +182,7 @@ define(['Class'], function(my){
                 // }
                 
                 this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
+
                 ///this.onplatform = false;
         },
 
@@ -202,8 +205,8 @@ define(['Class'], function(my){
         checkmove: function(x, y) {
             var floorX = (x/70) >> 0;
             var floorY = (y/70) >> 0;
-            var ceilX = ((x/70) + 1 - Number.EPSILON) >> 0;
-            var ceilY = ((y/70) + 1 - Number.EPSILON) >> 0;
+            var ceilX = ((x/70) + 1 ) >> 0;
+            var ceilY = ((y/70) + 1 ) >> 0;
 
 
             return this.game.map.b[floorY][floorX].type === 'solid' ||
