@@ -75,13 +75,13 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         draw: function(dt){
             
             
-            if (this.previousX) {
-                this.renderX = this.x + (this.body.velocity.x * dt);
+            if (this.previousX) { 
+                this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
             } else {
                 this.renderX = this.x;
             }
             if (this.previousY) {
-                this.renderY = this.y + (this.body.velocity.y * dt);
+                this.renderY = (this.previousY + (this.y - this.previousY) * dt); //this.y + (this.body.velocity.y * dt);
             } else {
                 this.renderY = this.y;
             }
@@ -109,7 +109,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
-            this.frameUpdate();
+            
             //this.inRange();
             //this.collide();
         },
@@ -160,7 +160,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.worldBounce();
             this.moveToPointHandler();
             this.useThereAndBack();
-            
+            this.frameUpdate();
             this.x =  (this.x  + (dt * this.body.velocity.x));
             this.y =  (this.y  + (dt * this.body.velocity.y));
           

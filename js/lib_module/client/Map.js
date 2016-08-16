@@ -78,17 +78,25 @@ define(['Class'], function(my){
         },
 
         createObjOnMap: function(){
-            var obj;
+            var obj,
+                newObj;
+                
             for(var i=0; i<this.objects.length; i++){
                 obj = this.objects[i];
                 if(obj.arr ){
-                    if(!this.game.ARR[obj.arr]){
-                        this.game.ARR[obj.arr] = [];
-                    }
-                    obj.marginX = obj.marginX ? obj.marginX : 0;
-                    obj.marginY = obj.marginY ? obj.marginY : 0;
+                    newObj = this.game.ARR["Tab_"+obj.arr].pop();
+                    newObj.x = obj.x + (obj.marginX || 0);
+                    newObj.y = obj.y + (obj.marginY || 0);
+                    newObj.used = true;
 
-                    this.game.ARR[obj.arr].push(new obj.name(this.game, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image));
+                    this.game.ARR[obj.arr].push(newObj);
+                    // if(!this.game.ARR[obj.arr]){
+                    //     this.game.ARR[obj.arr] = [];
+                    // }
+                    // obj.marginX = obj.marginX ? obj.marginX : 0;
+                    // obj.marginY = obj.marginY ? obj.marginY : 0;
+
+                    // this.game.ARR[obj.arr].push(new obj.name(this.game, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image));
                 }else if(obj.varr){
                     obj.marginX = obj.marginX ? obj.marginX : 0;
                     obj.marginY = obj.marginY ? obj.marginY : 0;

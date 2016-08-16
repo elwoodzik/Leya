@@ -70,66 +70,68 @@ define(['Class'], function(my){
 
         collision: function(dt){
             
+            if(this.sprite.used){
 
-            this.body.velocity.x = this.bound(this.body.velocity.x + (dt * this.ddx), -this.maxdx, this.maxdx);
-            this.body.velocity.y = this.bound(this.body.velocity.y + (dt * this.ddy), -this.maxdy, this.maxdy);
             
-            if ((this.wasleft  && (this.body.velocity.x > 0)) ||
-                (this.wasright && (this.body.velocity.x < 0))) {
-                    
-                   //this.ddx = 0
-                   this.body.velocity.x = 0; 
-            }
-            
-            this.ddy = this.body.falling ? this.gravity : 0;
-           
-            this.body.tolerance = this.sprite.currentHeight - this.tile;
-            this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
-            
-            var tx        = this.p2t(this.sprite.x ),
-                ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
-                nx        = this.sprite.x % this.tile,         // true if player overlaps right
-                ny        = this.sprite.y % this.tile,         // true if player overlaps below
-               // cell      = this.tcell(tx,     ty),
-                //cellright = this.tcell(tx + 1, ty),
-                celldown  = this.tcell(tx,     ty + 1),
-                celldiag  = this.tcell(tx + 1, ty + 1);
-                // this.game.ctx.fillStyle="red"
-                // this.game.ctx.fillRect(this.sprite.x, this.sprite.y, 170,170)
+                this.body.velocity.x = this.bound(this.body.velocity.x + (dt * this.ddx), -this.maxdx, this.maxdx);
+                this.body.velocity.y = this.bound(this.body.velocity.y + (dt * this.ddy), -this.maxdy, this.maxdy);
                 
-           //console.log(this.checkmove(this.sprite.x, this.sprite.y))
-           
-            if(this.body.velocity.y > 0){
-                if(this.checkmove(this.sprite.x, this.sprite.y + this.body.tolerance)){
-                    this.body.velocity.y = 0;
-                    this.body.falling = false;   // no longer falling
-                    this.body.jumping = false;
-                    this.sprite.y = this.t2p(ty) - this.body.tolerance-1;
+                if ((this.wasleft  && (this.body.velocity.x > 0)) ||
+                    (this.wasright && (this.body.velocity.x < 0))) {
+                        
+                    //this.ddx = 0
+                    this.body.velocity.x = 0; 
+                }
+                
+                this.ddy = this.body.falling ? this.gravity : 0;
+            
+                this.body.tolerance = this.sprite.currentHeight - this.tile;
+                this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
+                
+                var tx        = this.p2t(this.sprite.x ),
+                    ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
+                    nx        = this.sprite.x % this.tile,         // true if player overlaps right
+                    ny        = this.sprite.y % this.tile,         // true if player overlaps below
+                // cell      = this.tcell(tx,     ty),
+                    //cellright = this.tcell(tx + 1, ty),
+                    celldown  = this.tcell(tx,     ty + 1),
+                    celldiag  = this.tcell(tx + 1, ty + 1);
+                    // this.game.ctx.fillStyle="red"
+                    // this.game.ctx.fillRect(this.sprite.x, this.sprite.y, 170,170)
                     
-                }
-            }else if(this.body.velocity.y < 0){
-                if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
-                    this.sprite.y = this.t2p(ty) + 3
-                    this.body.velocity.y = 0;   
+            //console.log(this.checkmove(this.sprite.x, this.sprite.y))
+            
+                if(this.body.velocity.y > 0){
+                    if(this.checkmove(this.sprite.x, this.sprite.y + this.body.tolerance)){
+                        this.body.velocity.y = 0;
+                        this.body.falling = false;   // no longer falling
+                        this.body.jumping = false;
+                        this.sprite.y = this.t2p(ty) - this.body.tolerance-1;
+                        
+                    }
+                }else if(this.body.velocity.y < 0){
+                    if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
+                        this.sprite.y = this.t2p(ty) + 3
+                        this.body.velocity.y = 0;   
 
+                    }
                 }
-            }
-            if (this.body.velocity.x > 0 || this.body.pushedRight) {
-                if(this.checkmove(this.sprite.x +5, this.sprite.y)){
-                     //this.body.pushedLeft = false;
-                    this.body.pushedRight = false;
-                    this.body.velocity.x = 0;
+                if (this.body.velocity.x > 0 || this.body.pushedRight) {
+                    if(this.checkmove(this.sprite.x +5, this.sprite.y)){
+                        //this.body.pushedLeft = false;
+                        this.body.pushedRight = false;
+                        this.body.velocity.x = 0;
 
-                    this.sprite.x = this.sprite.x -5;
-                }
-            }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {  
-                if(this.checkmove(this.sprite.x-5, this.sprite.y)){
-                    this.body.pushedLeft = false;
+                        this.sprite.x = this.sprite.x -5;
+                    }
+                }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {  
+                    if(this.checkmove(this.sprite.x-5, this.sprite.y)){
+                        this.body.pushedLeft = false;
 
-                    this.body.velocity.x = 0;
-                    this.sprite.x = this.sprite.x +5
+                        this.body.velocity.x = 0;
+                        this.sprite.x = this.sprite.x +5
+                    }
                 }
-            }
            
 
            
@@ -181,8 +183,8 @@ define(['Class'], function(my){
                 //     }
                 // }
                 
-                this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
-
+                    this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
+                }
                 ///this.onplatform = false;
         },
 

@@ -75,6 +75,7 @@ define([
             this.gameObjectStatic = [];
             this.gameObjectOnStatic = [];
             //
+            this.fpsmeter = new FPSMeter({ decimals: 0, graph: true, theme: 'dark', left: '5px' });
             this.createCanvas(width, height, orientation);
 
             this.useFpsCounter = false;
@@ -87,8 +88,9 @@ define([
         },
 
         animationLoop : function() {
-            
+           
             requestAnimationFrame( this.animationLoop.bind(this) );
+            this.fpsmeter.tickStart();
             now = this.timestamp();
            
 
@@ -97,12 +99,13 @@ define([
             while(dt > step) {
               dt = dt - step;
               this.capturePreviousPositions(this.gameObject);
-              console.log(step)
+              
               this.update(step);
             }
 
             this.render(dt);
             last = now;
+           this.fpsmeter.tick();
   
             
           
@@ -142,7 +145,41 @@ define([
             // this.showFPS(elapsed);
             
             // PREVIOUS = timestamp;
-          
+
+               // Throttle the frame rate.    
+
+            // if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
+            //     requestAnimationFrame(mainLoop);
+            //     return;
+            // }
+            // delta += timestamp - lastFrameTimeMs;
+            // lastFrameTimeMs = timestamp;
+
+            // begin(timestamp, delta);
+
+            // if (timestamp > lastFpsUpdate + 1000) {
+            //     fps = 0.25 * framesThisSecond + 0.75 * fps;
+
+            //     lastFpsUpdate = timestamp;
+            //     framesThisSecond = 0;
+            // }
+            // framesThisSecond++;
+
+            // var numUpdateSteps = 0;
+            // while (delta >= timestep) {
+            //     update(timestep);
+            //     delta -= timestep;
+            //     if (++numUpdateSteps >= 240) {
+            //         panic();
+            //         break;
+            //     }
+            // }
+
+            // draw(delta / timestep);
+
+            // end(fps);
+
+            // requestAnimationFrame(mainLoop);
         },
         
         render: function(dt){

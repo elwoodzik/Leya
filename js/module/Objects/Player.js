@@ -63,7 +63,6 @@ define([
             }
             if(dir === 't'){
                 p.body.velocity.y = p.body.velocity.y/2;
-                console.log('a')
                 b.destroy(that.game.ARR.boxDescBlocks);
             }
             if(dir === 'l'){

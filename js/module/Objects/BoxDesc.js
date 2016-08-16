@@ -1,9 +1,8 @@
 define([
 	'Class',
 	'lib_module/client/Sprite',
-    'module/Objects/Coin',
-    'module/Objects/ParticleBox'
-], function(my, Sprite, Coin, ParticleBox){
+    'module/Objects/Coin'
+], function(my, Sprite, Coin){
 	var that;
 
 	var BoxDesc = my.Class(Sprite, {
@@ -30,31 +29,45 @@ define([
             this.animations.play('idle');
         },
 
-        destroy:function(){
+        destroy:function(arr){
             var rand = this.game.rand(3,5);
+            var coin;
+            var i=0;
+            var randVelocityY = 0;
+            var randVelocityX = 0;
+
+            this.used = false;
 
             for(var i=0; i<rand; i++){
-                var randVelocityY = this.game.rand(-580,-100);
-                var randVelocityX = this.game.rand(-100,200);
-                var coin = new Coin(this.game ,'main',this.x, this.y, 'coin');
+                coin = this.game.ARR['Tab_coins'].pop();
+                randVelocityY = this.game.rand(-580,-100);
+                randVelocityX = this.game.rand(-100,200);
+                
+                coin.x = this.x;
+                coin.y = this.y;
                 coin.body.velocity.y = randVelocityY;
                 coin.body.velocity.x = randVelocityX;
-                coin.body.immoveable = true;
-                this.game.ARR.coins.push(coin);
-                
+                coin.body.immoveable = true; 
+                coin.used = true;
+                this.game.ARR['coins'].push(coin);
             }
 
-            for(var i=0; i<6; i++){
-                var randVelocityY = this.game.rand(-730,-600);
-                var randVelocityX = this.game.rand(-230,400);
-                var particle = new ParticleBox(this.game ,'main',this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
-                particle.body.velocity.y = randVelocityY;
-                particle.body.velocity.x = randVelocityX;
-                particle.body.immoveable = true;
-                this.game.ARR.particleBoxYellow.push(particle);
-            }
+            this.kill(arr);
+            this.game.ARR['Tab_boxDescBlocks'].push(this);
+            
+
+            
+            // for(var i=0; i<6; i++){
+            //     var randVelocityY = this.game.rand(-730,-600);
+            //     var randVelocityX = this.game.rand(-230,400);
+            //     var particle = new ParticleBox(this.game ,'main',this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
+            //     particle.body.velocity.y = randVelocityY;
+            //     particle.body.velocity.x = randVelocityX;
+            //     particle.body.immoveable = true;
+            //     this.game.ARR.particleBoxYellow.push(particle);
+            // }
            
-            superDestroy.apply(this, arguments)
+            //superDestroy.apply(this, arguments)
         },
 
         configure: function(){
