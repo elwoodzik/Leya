@@ -4,9 +4,9 @@ define(['Class'], function(my){
         constructor: function(game){
             this.game = game;
 
-            this._pressed = false;
+            this._pressed = {};
 
-            this.lastEvent = null;
+            this.lastKeyCode = null;
 
             this.keys = {
                 '37': 'left',
@@ -34,15 +34,13 @@ define(['Class'], function(my){
             var code = e.which || e.keyCode;
             var key = this.getKeyByCode(e, code);
 
-            if(this.lastEvent && this.lastEvent.keyCode === code){
+            if(this.lastKeyCode === code){
                 return;
             }
 
-            if(!this._pressed){
-                this._pressed = {};
-            }
             
-            this.lastEvent = e;
+            
+            this.lastKeyCode = code;
 
             if(!this._pressed[key]){
                 this._pressed[key] = {
@@ -50,29 +48,36 @@ define(['Class'], function(my){
                     pressed: true,
                     name: key
                 };
+            }else{
+                this._pressed[key].hold = true;
+                this._pressed[key].pressed = true;
+                this._pressed[key].name = key;
             }
         },
         
         keyUp: function(e){
             var code = e.which || e.keyCode;
             this.hold = false;
-            this.lastEvent = null;
-            delete this._pressed[this.getKeyByCode(e, code)];
+            this.lastKeyCode = null;
+           
+            this._pressed[this.getKeyByCode(e, code)].pressed = false;
+            this._pressed[this.getKeyByCode(e, code)].hold = false;
             
-            if(Object.keys(this._pressed).length <= 0){
-                return this._pressed = false;
-            }
+            // if(Object.keys(this._pressed).length <= 0){
+            //     return this._pressed = false;
+            // }
             
         },
 
         trigger: function(currentKey, hold){
             var key = this._pressed[currentKey] ;
-            
-            if(key){
+           
+            if(this._pressed[currentKey]){
+
                 if(key.pressed || key.hold){
                    
                     key.hold = hold ? true : false;
-              	    key.pressed = false;
+              	    //key.pressed = false;
                      
                     return true;
                 }

@@ -47,8 +47,8 @@ define(['Class'], function(my){
             //     }
             // }
             b.used = false;
-            b.x = -100;
-            b.y = -100;
+            b.x = -1100;
+            b.y = -1100;
             b.kill(arr);
             this.pool.unshift(b);
             b = null;

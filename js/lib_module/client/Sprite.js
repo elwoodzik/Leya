@@ -163,8 +163,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.moveToPointHandler();
             this.useThereAndBack();
             this.frameUpdate();
-            this.x =  (this.x  + (dt * this.body.velocity.x));
-            this.y =  (this.y  + (dt * this.body.velocity.y));
+            this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
+            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
           
         },
 

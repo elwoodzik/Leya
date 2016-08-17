@@ -19,7 +19,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
 	var Irobot2 = my.Class(null, Maps, {
 
         STATIC: {
-            COINS: 110,
+            COINS: 2510,
             DESCBOX: 41,
             WATER: 30,
             LIFTS: 5,
@@ -52,13 +52,13 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
            
 
             that.game.poolCoin = that.game.add.pool(Coin, Irobot2.COINS);
-            that.game.poolCoin.createSprite(that.game,'main', -100, -100, 'coin');
+            that.game.poolCoin.createSprite(that.game,'main', -1100, -1100, 'coin');
 
             that.game.poolWater = that.game.add.pool(Water, Irobot2.WATER);
-            that.game.poolWater.createSprite(that.game,'main', -100, -100, 'mapa');
+            that.game.poolWater.createSprite(that.game,'main', -1100, -1100, 'mapa');
 
             that.game.poolBoxDesc = that.game.add.pool(BoxDesc, Irobot2.DESCBOX);
-            that.game.poolBoxDesc.createSprite(that.game,'main', -100, -100, 'mapa');
+            that.game.poolBoxDesc.createSprite(that.game,'main', -1100, -1100, 'mapa');
            
             
 

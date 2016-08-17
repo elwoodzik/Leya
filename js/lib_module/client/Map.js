@@ -69,12 +69,19 @@ define(['Class'], function(my){
         },
 
         update: function(dt){
-            this.x = ( this.game.camera.xScroll  + (dt * this.game.camera.lerpAmount));
-            this.y = ( this.game.camera.yScroll  + (dt * this.game.camera.lerpAmount));
+            if(this.game.camera.xScroll !== 0 || this.game.camera.yScroll !== 0){
+
+                this.x = ( this.game.camera.xScroll  + (dt * (this.game.camera.lerpAmount*2))) ;
+                this.y = ( this.game.camera.yScroll  + (dt * (this.game.camera.lerpAmount*2))) ;
+            }else{
+                this.x = 0;
+                this.y = 0;
+            }
+           
         },
 
         draw: function(dt) {
-   
+            
             if (this.previousX) { 
                 this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
             } else {
@@ -85,6 +92,7 @@ define(['Class'], function(my){
             } else {
                 this.renderY = this.y;
             }
+           
             this.context.drawImage(
                 this.imageMap,
                 this.renderX, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
@@ -106,7 +114,7 @@ define(['Class'], function(my){
                 obj = this.objects[i];
                 if(obj.arr ){
 
-                    this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x,obj.y));
+                    this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x + (obj.marginX || 0),obj.y+ (obj.marginY || 0)));
                     // newObj = this.game.ARR["Tab_"+obj.arr].pop();
                     // newObj.x = obj.x + (obj.marginX || 0);
                     // newObj.y = obj.y + (obj.marginY || 0);

@@ -13,7 +13,7 @@ define([
     var that,
         PREVIOUS = 0,
         FPS = 60,
-        step = 1/FPS,
+        step = 1000/FPS,
         LAG = 0,
         loop = null,
         elapsed = 0,
@@ -40,6 +40,10 @@ define([
 
         constructor: function(width, height, orientation){
             that = this;
+
+            this.width = width;
+
+            this.height = height;
 
             this.VAR = {};
 
@@ -88,35 +92,39 @@ define([
             return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
         },
 
-        animationLoop : function() {
+        animationLoop : function(now) {
            
-            now = this.timestamp();
+            if(!now){
+                now = 0 
+            }
             
             
-            this.fpsmeter.tickStart();
+            
+            that.fpsmeter.tickStart();
             
            
-            dt = dt + Math.min(1, (now - last) / 1000);
+            dt += (now - last) ;
             //dt = (dt + Math.min(0, (now - last) ));
-            var numUpdateSteps = 0;
+            var numUpdateSteps = 0 ;
             while(dt >= step) {
               
-                this.capturePreviousPositions(this.gameObject);
+                that.capturePreviousPositions(that.gameObject);
                 
-                this.update(step);
+                that.update(step/1000);
                 dt -= step;
+             
                 if (++numUpdateSteps >= 240) {
-                    this.panic();
-
+                    that.panic();
+                    console.log('z')
                     break;
                 }
             }
 
-            this.render(dt / step);
+            that.render(dt / step);
             last = now;
-            this.fpsmeter.tick();
+            that.fpsmeter.tick();
   
-            requestAnimationFrame( this.animationLoop.bind(this) );
+            requestAnimationFrame( that.animationLoop );
           
             // if (!timestamp) {
             //     timestamp = 0;
@@ -198,7 +206,7 @@ define([
         render: function(dt){
             if(this.renderer){
                 this.clearCanvas(this.ctx);
-                
+                iMax=this.gameObject.length;
                 for(i=0, iMax=this.gameObject.length; i<iMax; i++){
                     entityRender = this.gameObject[i];
                     if(entityRender && entityRender.contextType === 'main'){
@@ -357,7 +365,7 @@ define([
             this.canvas.width = ((this.screenWidth));
             this.canvas.height = ((this.screenHeight));
 
-             this.canvas.style.width = this.canvas.width + "px";
+            this.canvas.style.width = this.canvas.width + "px";
             this.canvas.style.height = this.canvas.height + "px";
             this.canvas.style.position = 'absolute';
             this.canvas.style.left = '50%';
@@ -475,7 +483,7 @@ define([
         },
         
         clearCanvas: function(context) {
-            context.clearRect(0, 0,  this.canvas.width, this.canvas.height);
+            context.clearRect(0, 0,  this.width, this.height);
         },
 
         rand: function(min,max){
@@ -513,8 +521,9 @@ define([
         },
 
         capturePreviousPositions: function(entities){
+            var entity;
             for(u=0, uMax=entities.length; u<uMax; u++){
-                var entity = entities[u];
+                entity = entities[u];
                 entity.previousX = entity.x;
                 entity.previousY = entity.y;
             }

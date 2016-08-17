@@ -30,25 +30,28 @@ define([
         },
 
         destroy:function(arr){
-            var rand = this.game.rand(3,5);
+            var rand = this.game.rand(411,490);
             
             var i=0;
             
 
-            this.used = false;
-
-            for(var i=0; i<rand; i++){
+            
+            var coin;
+            for( i=0; i<rand; i++){
                 randVelocityY = this.game.rand(-580,-100);
                 randVelocityX = this.game.rand(-100,200);
                 
-                var coin = that.game['poolCoin'].get(this.x, this.y)
+                coin =  that.game['poolCoin'].get(this.x, this.y)
+                // new Coin(this.game, 'main', this.x, this.y, 'coin');
                 // 
-                
                 coin.body.velocity.y = randVelocityY;
                 coin.body.velocity.x = randVelocityX;
                 coin.body.immoveable = true; 
+                coin = null;
                 //this.game.ARR['coins'].push(coin);
             }
+
+            console.log(this.game.gameObject.length)
 
             this.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
             

@@ -4,10 +4,10 @@ define([
 ], function(my, Sprite){
 	var that;
 
-	var Coin = my.Class(Sprite, {
+	var ParticleBox = my.Class(Sprite, {
 
 		constructor: function(game, context, x, y, key, width, height){
-			Coin.Super.apply(this, arguments);
+			ParticleBox.Super.apply(this, arguments);
             
             that = this;
             that.game = game;
@@ -18,11 +18,9 @@ define([
 		
 		update: function(dt){
 			superUpdate.call(this, dt);
-
-            that.game.physic.overlap(that.game.VAR.player, this, this.collect);
-
+            
             if(this.body.immoveable){
-                this.body.platformer.collision(dt);
+                 this.body.platformer.collision(dt);
             }
 
             if(this.body.immoveable){
@@ -33,26 +31,42 @@ define([
                     }   
                 })
             }
+            
+            this.alfa -= this.alfaSpeed
+            if(this.alfa <= 0){
+                this.destroy(this.game.ARR.particleBoxYellow);
+            }
 		},
 
+        draw: function(dt){
+           
+            this.game.ctx.globalAlpha = this.alfa;
+            superDraw.call(this, dt);
+            this.game.ctx.globalAlpha = 1;
+
+            
+
+        },
+
         anims: function(){
-            this.animations.add('idle', 0, 0, 55, 57, [0,1,2,3,4]);
-            this.animations.play('idle', 5);
+            this.animations.add('idle', 0, 0, 29, 25, [0,1,2,3]);
+            this.animations.play('idle', 3);
         },
 
         configure: function(){
            this.body.immoveable = true;
+           this.alfa = 1;
+           this.alfaSpeed = 0.019;
            this.body.platformer.configure({
                gravity: 200
            })
-        },
 
-        collect: function(player, coin){
-            this.game.poolBoxDesc.free(coin, that.game.ARR.coins);
-        }
+           
+        },
 	})
 
-    var superUpdate = Coin.Super.prototype.update;
+    var superUpdate = ParticleBox.Super.prototype.update;
+    var superDraw = ParticleBox.Super.prototype.draw;
 	
-	return Coin;
+	return ParticleBox;
 })
