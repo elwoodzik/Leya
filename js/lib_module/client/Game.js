@@ -21,7 +21,7 @@ define([
         actualFps = 0,
         dts = 0,
         i = 0,
-        last = 0,
+        last = window.performance && window.performance.now ? window.performance.now() : new Date().getTime(),
         now = 0,
         u = 0,
         dt = 0,
@@ -72,6 +72,7 @@ define([
 
             this.states = {};
             this.gameObject = [];
+            this.gameSpritesPoolObject = [];
             this.gameObjectStatic = [];
             this.gameObjectOnStatic = [];
             //
@@ -89,25 +90,33 @@ define([
 
         animationLoop : function() {
            
-            requestAnimationFrame( this.animationLoop.bind(this) );
-            this.fpsmeter.tickStart();
             now = this.timestamp();
+            
+            
+            this.fpsmeter.tickStart();
+            
            
-
-            dt = (dt + Math.min(1, (now - last) / 1000));
-          
-            while(dt > step) {
-              dt = dt - step;
-              this.capturePreviousPositions(this.gameObject);
+            dt = dt + Math.min(1, (now - last) / 1000);
+            //dt = (dt + Math.min(0, (now - last) ));
+            var numUpdateSteps = 0;
+            while(dt >= step) {
               
-              this.update(step);
+                this.capturePreviousPositions(this.gameObject);
+                
+                this.update(step);
+                dt -= step;
+                if (++numUpdateSteps >= 240) {
+                    this.panic();
+
+                    break;
+                }
             }
 
-            this.render(dt);
+            this.render(dt / step);
             last = now;
-           this.fpsmeter.tick();
+            this.fpsmeter.tick();
   
-            
+            requestAnimationFrame( this.animationLoop.bind(this) );
           
             // if (!timestamp) {
             //     timestamp = 0;
@@ -180,6 +189,10 @@ define([
             // end(fps);
 
             // requestAnimationFrame(mainLoop);
+        },
+
+        panic: function(){
+            dt = 0;
         },
         
         render: function(dt){

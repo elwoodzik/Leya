@@ -12,8 +12,9 @@ define([
 	'lib_module/client/Camera',
 	'lib_module/client/Map',
 	'lib_module/client/Bar',
-	'lib_module/client/Multiplayer'
-	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map, Bar, Multiplayer){
+	'lib_module/client/Multiplayer',
+	'lib_module/client/Pool'
+	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map, Bar, Multiplayer, Pool){
 
 	var GameObjectFactory = my.Class( {
 		
@@ -74,7 +75,11 @@ define([
 
 	    sounds: function(sounds){
 	    	return this.game.sounds = sounds;
-	    }
+	    },
+
+		pool: function(obj, count){
+			return new Pool(this.game, obj, count);
+	    },
 	});
 
 	return GameObjectFactory;

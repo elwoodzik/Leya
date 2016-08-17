@@ -48,11 +48,11 @@ define([
         },
 
         collect: function(player, coin){
-            coin.used = false;
-            coin.x = -200;
-            coin.kill(that.game.ARR.coins);
+            // coin.used = false;
+            // coin.x = -200;
+            // coin.kill(that.game.ARR.coins);
             
-            coin.game.ARR['Tab_coins'].push(coin);
+            // coin.game.ARR['Tab_coins'].push(coin);
         }
 	})
 

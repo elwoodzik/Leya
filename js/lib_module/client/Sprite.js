@@ -77,8 +77,10 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             
             if (this.previousX) { 
                 this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
+
             } else {
                 this.renderX = this.x;
+                
             }
             if (this.previousY) {
                 this.renderY = (this.previousY + (this.y - this.previousY) * dt); //this.y + (this.body.velocity.y * dt);

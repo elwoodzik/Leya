@@ -31,29 +31,26 @@ define([
 
         destroy:function(arr){
             var rand = this.game.rand(3,5);
-            var coin;
+            
             var i=0;
-            var randVelocityY = 0;
-            var randVelocityX = 0;
+            
 
             this.used = false;
 
             for(var i=0; i<rand; i++){
-                coin = this.game.ARR['Tab_coins'].pop();
                 randVelocityY = this.game.rand(-580,-100);
                 randVelocityX = this.game.rand(-100,200);
                 
-                coin.x = this.x;
-                coin.y = this.y;
+                var coin = that.game['poolCoin'].get(this.x, this.y)
+                // 
+                
                 coin.body.velocity.y = randVelocityY;
                 coin.body.velocity.x = randVelocityX;
                 coin.body.immoveable = true; 
-                coin.used = true;
-                this.game.ARR['coins'].push(coin);
+                //this.game.ARR['coins'].push(coin);
             }
 
-            this.kill(arr);
-            this.game.ARR['Tab_boxDescBlocks'].push(this);
+            this.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
             
 
             

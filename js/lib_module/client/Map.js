@@ -19,6 +19,11 @@ define(['Class'], function(my){
             this.h = height;
 
             this.zIndex = 4;
+
+            this.x = 0;
+            this.y = 0;
+
+            this.static = true;
         
 
             this.currentWidth = width;
@@ -61,13 +66,29 @@ define(['Class'], function(my){
             this.imageMap.src = ctx.canvas.toDataURL("image/png");   
  
             ctx = null;  
-         },
+        },
+
+        update: function(dt){
+            this.x = ( this.game.camera.xScroll  + (dt * this.game.camera.lerpAmount));
+            this.y = ( this.game.camera.yScroll  + (dt * this.game.camera.lerpAmount));
+        },
 
         draw: function(dt) {
+   
+            if (this.previousX) { 
+                this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
+            } else {
+                this.renderX = this.x;
+            }
+            if (this.previousY) {
+                this.renderY = (this.previousY + (this.y - this.previousY) * dt); //this.y + (this.body.velocity.y * dt);
+            } else {
+                this.renderY = this.y;
+            }
             this.context.drawImage(
                 this.imageMap,
-                Math.floor(this.game.camera.xScroll ), // + (this.game.camera.lerpAmount * dt)
-                Math.floor(this.game.camera.yScroll ), // + (this.game.camera.lerpAmount * dt)
+                this.renderX, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
+                this.renderY, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
                 this.game.canvas.width,
                 this.game.canvas.height,
                 0,
@@ -84,12 +105,14 @@ define(['Class'], function(my){
             for(var i=0; i<this.objects.length; i++){
                 obj = this.objects[i];
                 if(obj.arr ){
-                    newObj = this.game.ARR["Tab_"+obj.arr].pop();
-                    newObj.x = obj.x + (obj.marginX || 0);
-                    newObj.y = obj.y + (obj.marginY || 0);
-                    newObj.used = true;
 
-                    this.game.ARR[obj.arr].push(newObj);
+                    this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x,obj.y));
+                    // newObj = this.game.ARR["Tab_"+obj.arr].pop();
+                    // newObj.x = obj.x + (obj.marginX || 0);
+                    // newObj.y = obj.y + (obj.marginY || 0);
+                    // newObj.used = true;
+
+                   // this.game.ARR[obj.arr].push(newObj);
                     // if(!this.game.ARR[obj.arr]){
                     //     this.game.ARR[obj.arr] = [];
                     // }

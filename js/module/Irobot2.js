@@ -11,15 +11,19 @@ define([
 function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
 	
     var that;
+    var ct = 0;
+    var time= 200;
+    var count = 1000;
+    var cc = 0;
 
 	var Irobot2 = my.Class(null, Maps, {
 
         STATIC: {
-            COINS: 8250,
-            DESCBOX: 20,
-            WATER: 40,
+            COINS: 110,
+            DESCBOX: 41,
+            WATER: 30,
             LIFTS: 5,
-            PARTICLEBOX: 60
+            PARTICLEBOX: 3
         },
 
 		constructor: function(game){
@@ -45,12 +49,33 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
 		},
 
 		create: function(){
-            that.game = this;
+           
+
+            that.game.poolCoin = that.game.add.pool(Coin, Irobot2.COINS);
+            that.game.poolCoin.createSprite(that.game,'main', -100, -100, 'coin');
+
+            that.game.poolWater = that.game.add.pool(Water, Irobot2.WATER);
+            that.game.poolWater.createSprite(that.game,'main', -100, -100, 'mapa');
+
+            that.game.poolBoxDesc = that.game.add.pool(BoxDesc, Irobot2.DESCBOX);
+            that.game.poolBoxDesc.createSprite(that.game,'main', -100, -100, 'mapa');
+           
             
-            that.createCoins();
-            that.createDescBox();
-            that.createWater();
-            that.createLifts();
+
+           
+             //console.log(coin)
+            // for(var i=0; i<count; i++){
+                
+           
+            //     var r = this.rand( 100, 500);
+            //     var y = this.rand( 100, 500);
+            //     new Coin(that.game ,'main', r, y, 'coin');
+            
+            // }
+            // that.createCoins();
+            // that.createDescBox();
+            // that.createWater();
+            // that.createLifts();
             // tworzy tlo
             that.game.add.image('background', 0, 0, 'bg', 3500, 840);
             
@@ -86,61 +111,61 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
 		},
 
 		update: function(dt){
-    
+        
 		},
 
-        createCoins: function(){
-            var coin, i=0;
-            //
-            for(i=0; i<Irobot2.COINS; i++){
-                coin = new Coin(that.game ,'main', -100, -200, 'coin');
-                coin.body.immoveable = true;
-                coin.used = false;
-                that.game.ARR.Tab_coins.push(coin);
-            }
-        },
+        // createCoins: function(){
+        //     var coin, i=0;
+        //     //
+        //     for(i=0; i<Irobot2.COINS; i++){
+        //         coin = new Coin(that.game ,'main', -100, -200, 'coin');
+        //         coin.body.immoveable = true;
+        //         coin.used = false;
+        //         that.game.ARR.Tab_coins.push(coin);
+        //     }
+        // },
 
-        createDescBox: function(){
-            var box, i=0;
-            //
-            for(i=0; i<Irobot2.DESCBOX; i++){
-                box = new BoxDesc(that.game ,'main', -100, -200, 'mapa');
+        // createDescBox: function(){
+        //     var box, i=0;
+        //     //
+        //     for(i=0; i<Irobot2.DESCBOX; i++){
+        //         box = new BoxDesc(that.game ,'main', -100, -200, 'mapa');
                 
-                box.used = false;
-                that.game.ARR.Tab_boxDescBlocks.push(box);
-            }
-        },
+        //         box.used = false;
+        //         that.game.ARR.Tab_boxDescBlocks.push(box);
+        //     }
+        // },
 
-        createWater: function(){
-            var water, i=0;
-            //
-            for(i=0; i<Irobot2.WATER; i++){
-                water = new Water(that.game ,'main', -100, -200, 'mapa');
+        // createWater: function(){
+        //     var water, i=0;
+        //     //
+        //     for(i=0; i<Irobot2.WATER; i++){
+        //         water = new Water(that.game ,'main', -100, -200, 'mapa');
                
-                water.used = false;
-                that.game.ARR.Tab_waterBlocks.push(water);
-            }
-        },
+        //         water.used = false;
+        //         that.game.ARR.Tab_waterBlocks.push(water);
+        //     }
+        // },
 
-        createLifts: function(){
-            var lift, i=0;
-            //
-            for(i=0; i<Irobot2.LIFTS; i++){
-                lift = new Lift(that.game ,'main', -100, -200, 'mapa');
-                lift.used = false;
-                that.game.ARR.Tab_lifts.push(lift);
-            }
-        },
+        // createLifts: function(){
+        //     var lift, i=0;
+        //     //
+        //     for(i=0; i<Irobot2.LIFTS; i++){
+        //         lift = new Lift(that.game ,'main', -100, -200, 'mapa');
+        //         lift.used = false;
+        //         that.game.ARR.Tab_lifts.push(lift);
+        //     }
+        // },
         
-        createParticleBox: function(){
-            var particle, i=0;
-            //
-            for(i=0; i < Irobot2.PARTICLEBOX; i++){
-                particle = new ParticleBox(that.game ,'main', -100, -200, 'mapa');
-                particle.used = false;
-                that.game.ARR.Tab_particleBox.push(particle);
-            }
-        }
+        // createParticleBox: function(){
+        //     var particle, i=0;
+        //     //
+        //     for(i=0; i < Irobot2.PARTICLEBOX; i++){
+        //         particle = new ParticleBox(that.game ,'main', -100, -200, 'mapa');
+        //         particle.used = false;
+        //         that.game.ARR.Tab_particleBox.push(particle);
+        //     }
+        // }
 	});
 
 	return Irobot2;

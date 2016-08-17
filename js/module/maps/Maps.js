@@ -111,6 +111,7 @@ define([
                 objects:[
                     {
                         "name":Player,
+                        
                         "context":"main",
                         "image":"player3",
                         "varr":"player",
@@ -119,6 +120,7 @@ define([
                     },
                     {
                      "name":Water,
+                     "pool": "poolWater",
                      "arr":"waterBlocks",
                      "context":"main",
                      "image":"mapa",
@@ -128,6 +130,7 @@ define([
                     },
                     {
                      "name":Water,
+                     "pool": "poolWater",
                      "arr":"waterBlocks",
                      "context":"main",
                      "image":"mapa",
@@ -137,6 +140,7 @@ define([
                     },
                     {
                      "name":Water,
+                     "pool": "poolWater",
                      "arr":"waterBlocks",
                      "context":"main",
                      "image":"mapa",
@@ -146,6 +150,7 @@ define([
                     },
                     {
                      "name":BoxDesc,
+                     "pool": "poolBoxDesc",
                      "arr":"boxDescBlocks",
                      "context":"main",
                      "image":"mapa",
@@ -154,6 +159,7 @@ define([
                     },
                     {
                      "name":BoxDesc,
+                     "pool": "poolBoxDesc",
                      "arr":"boxDescBlocks",
                      "context":"main",
                      "image":"mapa",
