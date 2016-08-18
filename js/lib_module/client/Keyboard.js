@@ -38,8 +38,6 @@ define(['Class'], function(my){
                 return;
             }
 
-            
-            
             this.lastKeyCode = code;
 
             if(!this._pressed[key]){
@@ -81,7 +79,6 @@ define(['Class'], function(my){
                      
                     return true;
                 }
-                   
            }else{
                return false;
            }

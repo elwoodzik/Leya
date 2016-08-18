@@ -33,7 +33,7 @@ define([
         },
 
         destroy:function(arr){
-            var rand = that.game.rand(111,190);
+            var rand = that.game.rand(2,3);
             
             var i=0;
             

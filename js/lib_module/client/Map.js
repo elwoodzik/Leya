@@ -34,6 +34,8 @@ define(['Class'], function(my){
 
             this.scalled = scalled;
 
+            
+
             this.image = Loader.assetManager.get(this.key); 
 
             this.lastXScroll = null;
@@ -97,8 +99,8 @@ define(['Class'], function(my){
            
             this.context.drawImage(
                 this.imageMap,
-                this.renderX, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
-                this.renderY, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
+                this.camera.xScroll, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
+                this.camera.yScroll, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
                 this.cw,
                 this.ch,
                 0,
@@ -116,7 +118,7 @@ define(['Class'], function(my){
                 obj = this.objects[i];
                 if(obj.arr ){
 
-                    this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x + (obj.marginX || 0),obj.y+ (obj.marginY || 0)));
+                    this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x + (obj.marginX || 0),obj.y - this.offsetY+ (obj.marginY || 0)));
                     // newObj = this.game.ARR["Tab_"+obj.arr].pop();
                     // newObj.x = obj.x + (obj.marginX || 0);
                     // newObj.y = obj.y + (obj.marginY || 0);
@@ -227,6 +229,7 @@ define(['Class'], function(my){
                 if(this.checkElements(elements.objects)){
                     this.objects = elements.objects;
                 }
+                this.offsetY = elements.offsety
                 this.parse(this.newTab);
                 this.generate();
                 this.setContext(this.contextType);

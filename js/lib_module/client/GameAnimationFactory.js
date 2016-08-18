@@ -21,6 +21,7 @@ define(['Class'], function(my){
 
         play: function (key, delay, callback, callbackDellay ) {
             if(key != this.sprite.state){
+                
                 this.sprite.current_f = 0;
                 this.sprite.once = false;
                 this.sprite.state = key;

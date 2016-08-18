@@ -26,34 +26,37 @@ define(['Class'], function(my){
 
             this.lerpAmount = 1.0; 
 
+            this.contextType = 'main';
+
             this.game.gameObjectLength = Object.keys(this.game.gameObject).length;
             this.game.gameObject[this.game.gameObjectLength] = this; 
         },
 
-        draw: function(){
-
-        },
+        
 
         lerp: function(A, B, t){
-            return Math.floor((A * t) + ((1.0 - t) * B));
+            return ((A * t) + ((1 - t) * B));
         },
 
         update: function(dt){
+         
             if(this.player.body.velocity.x !== 0 || this.player.body.velocity.y !== 0){
                 this.dx = (this.player.x + this.player.currentWidth/8 - this.x);
                 this.dy = (this.player.y + this.player.currentHeight/2 - this.y);
             
-                this.position = [this.xScroll, this.yScroll];
-            
-                if(this.position[0] != this.curPosition[0] || this.position[1] != this.curPosition[1]){
-                    this.lerpAmount = 0.0;
-                    this.curPosition = this.position;
-                  
+                this.position[0] = this.xScroll; 
+                this.position[1] = this.yScroll;
+               
+                if(this.position[0] != this.curPosition[0] || this.position[1] != this.curPosition[1] || this.lerpAmount < 0.1){
+                    this.lerpAmount = 0;
+                    this.curPosition[0] = this.position[0];
+                    this.curPosition[1] = this.position[1];
+                      
                     this.physic.outOfScreen(this.game.gameObject)
                 }
                 
-                if(this.lerpAmount < 1.0){
-                    this.lerpAmount += 0.1;
+                if(this.lerpAmount < 1){
+                    this.lerpAmount += 0.2;
                 } else {
                     this.prevPosition = this.curPosition;
                 }

@@ -81,7 +81,7 @@ define([
             this.gameObjectStatic = [];
             this.gameObjectOnStatic = [];
             //
-            this.fpsmeter = new FPSMeter({ decimals: 0, graph: true, theme: 'dark', left: '5px' });
+            
             this.createCanvas(width, height, orientation);
 
             this.useFpsCounter = false;
@@ -96,7 +96,7 @@ define([
         animationLoop : function(now) {
            
             if(!now){
-                now = 0 
+                now = that.timestamp();
             }
             
             
@@ -210,7 +210,7 @@ define([
                 
                 for(i=0, iMax=this.gameObject.length; i<iMax; i++){
                     entityRender = this.gameObject[i];
-                    if(entityRender && entityRender.contextType === 'main' && entityRender.used){
+                    if(entityRender && entityRender.draw && entityRender.contextType === 'main' && entityRender.used){
                        
                         if(!entityRender.isOutOfScreen ){            
                             if(entityRender.body && entityRender.body.angle != 0 ){
@@ -552,14 +552,9 @@ define([
             return arr;
         },
 
-        showFPS: function(_elapse){
-            if(this.useFpsCounter){
-                actualFps = Math.floor(1000 / _elapse);
-
-                this.ctx.fillStyle = "red";
-                this.ctx.font = 16 + "px Arial";
-                this.ctx.fillText(actualFps, this.canvas.width- 50, this.canvas.height- 50);
-            }
+        showFPS: function(){
+            this.fpsmeter = new FPSMeter({ decimals: 0, graph: false, theme: 'dark', left: '5px' });
+            this.useFpsCounter = true;
         }
     })
     
