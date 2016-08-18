@@ -11,6 +11,9 @@ define([
 			BoxDesc.Super.apply(this, arguments);
             
             that = this;
+            that.game = game;
+
+            this.coinsPool = that.game['poolCoin'];
 
             this.anims();
             this.configure();
@@ -30,7 +33,7 @@ define([
         },
 
         destroy:function(arr){
-            var rand = this.game.rand(411,490);
+            var rand = that.game.rand(111,190);
             
             var i=0;
             
@@ -38,22 +41,22 @@ define([
             
             var coin;
             for( i=0; i<rand; i++){
-                randVelocityY = this.game.rand(-580,-100);
-                randVelocityX = this.game.rand(-100,200);
+                randVelocityY = that.game.rand(-580,-100);
+                randVelocityX = that.game.rand(-100,200);
                 
-                coin =  that.game['poolCoin'].get(this.x, this.y)
+                coin =  that.coinsPool.get(this.x, this.y);
                 // new Coin(this.game, 'main', this.x, this.y, 'coin');
                 // 
                 coin.body.velocity.y = randVelocityY;
                 coin.body.velocity.x = randVelocityX;
                 coin.body.immoveable = true; 
                 coin = null;
-                //this.game.ARR['coins'].push(coin);
+                this.game.ARR['coins'].push(coin);
             }
 
-            console.log(this.game.gameObject.length)
+           // console.log(this.game.gameObject.length)
 
-            this.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
+            that.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
             
 
             

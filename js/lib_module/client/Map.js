@@ -24,6 +24,9 @@ define(['Class'], function(my){
             this.y = 0;
 
             this.static = true;
+
+            this.cw = this.game.canvas.width;
+            this.ch = this.game.canvas.height;
         
 
             this.currentWidth = width;
@@ -69,10 +72,9 @@ define(['Class'], function(my){
         },
 
         update: function(dt){
-            if(this.game.camera.xScroll !== 0 || this.game.camera.yScroll !== 0){
-
-                this.x = ( this.game.camera.xScroll  + (dt * (this.game.camera.lerpAmount*2))) ;
-                this.y = ( this.game.camera.yScroll  + (dt * (this.game.camera.lerpAmount*2))) ;
+            if(this.camera.xScroll !== 0 || this.camera.yScroll !== 0){
+                this.x = ( this.camera.xScroll  + (dt * (this.camera.lerpAmount*2))) ;
+                this.y = ( this.camera.yScroll  + (dt * (this.camera.lerpAmount*2))) ;
             }else{
                 this.x = 0;
                 this.y = 0;
@@ -97,12 +99,12 @@ define(['Class'], function(my){
                 this.imageMap,
                 this.renderX, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
                 this.renderY, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
-                this.game.canvas.width,
-                this.game.canvas.height,
+                this.cw,
+                this.ch,
                 0,
                 0,
-                this.game.canvas.width,
-                this.game.canvas.height
+                this.cw,
+                this.ch
             ); 
         },
 
@@ -135,6 +137,8 @@ define(['Class'], function(my){
                     this.game.VAR[obj.varr] = new obj.name(this.game, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image);
                 }
             }
+
+            this.camera = this.game.camera;
             // for(var i=0; i<this.b.length; i++){
             //     // 
             //     for(var j=0; j<this.b[i].length; j++){
@@ -194,8 +198,8 @@ define(['Class'], function(my){
 			}
             
 
-            this.currentWidth  = (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[0].length));
-            this.currentHeight = (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length));
+            this.currentWidth  = (!this.scalled ? this.currentWidth : Math.ceil(this.cw / this.b[0].length));
+            this.currentHeight = (!this.scalled ? this.currentHeight : Math.ceil(this.ch / this.b.length));
 
             this.currentHalfWidth = this.currentWidth / 2;
             this.currentHalfHeight = this.currentHeight / 2;

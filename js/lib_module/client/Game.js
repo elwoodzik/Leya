@@ -23,6 +23,7 @@ define([
         i = 0,
         last = window.performance && window.performance.now ? window.performance.now() : new Date().getTime(),
         now = 0,
+        numUpdateSteps = 0,
         u = 0,
         dt = 0,
         iMax,
@@ -99,13 +100,13 @@ define([
             }
             
             
-            
-            that.fpsmeter.tickStart();
-            
+            if(that.useFpsCounter){
+                that.fpsmeter.tickStart();
+            }
            
             dt += (now - last) ;
             //dt = (dt + Math.min(0, (now - last) ));
-            var numUpdateSteps = 0 ;
+            numUpdateSteps = 0 ;
             while(dt >= step) {
               
                 that.capturePreviousPositions(that.gameObject);
@@ -115,15 +116,15 @@ define([
              
                 if (++numUpdateSteps >= 240) {
                     that.panic();
-                    console.log('z')
                     break;
                 }
             }
 
-            that.render(dt / step);
+            that.render((dt / step)/1000);
             last = now;
-            that.fpsmeter.tick();
-  
+            if(that.useFpsCounter){
+                that.fpsmeter.tick();
+            }
             requestAnimationFrame( that.animationLoop );
           
             // if (!timestamp) {
@@ -206,12 +207,12 @@ define([
         render: function(dt){
             if(this.renderer){
                 this.clearCanvas(this.ctx);
-                iMax=this.gameObject.length;
+                
                 for(i=0, iMax=this.gameObject.length; i<iMax; i++){
                     entityRender = this.gameObject[i];
-                    if(entityRender && entityRender.contextType === 'main'){
+                    if(entityRender && entityRender.contextType === 'main' && entityRender.used){
                        
-                        if(!entityRender.isOutOfScreen && entityRender.used){            
+                        if(!entityRender.isOutOfScreen ){            
                             if(entityRender.body && entityRender.body.angle != 0 ){
                                 this.ctx.save();
                                 this.ctx.translate(entityRender.x + entityRender.currentWidth * entityRender.body.anchorX, entityRender.y + entityRender.currentHeight * entityRender.body.anchorY);
@@ -226,6 +227,7 @@ define([
                             }
                         }
                     }
+                    entityRender = null;
                 } 
             }
         },
@@ -292,10 +294,11 @@ define([
                             entityUpdate.update(dt);
                         //}
                     }
+                    entityUpdate = null;
                 //}
             } 
             if(this.currentState && typeof this.currentState.update === 'function'){
-                this.currentState.update.apply(this, arguments);
+                this.currentState.update.call(this, dt);
             }
         },
         
@@ -524,8 +527,11 @@ define([
             var entity;
             for(u=0, uMax=entities.length; u<uMax; u++){
                 entity = entities[u];
-                entity.previousX = entity.x;
-                entity.previousY = entity.y;
+                if(entity.used){
+                    entity.previousX = entity.x;
+                    entity.previousY = entity.y;
+                }
+                entity = null;
             }
         },
 

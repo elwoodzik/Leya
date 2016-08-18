@@ -25,14 +25,14 @@ define(['Class'], function(my){
                   
                 if(!item.isOutOfScreen){
              
-                    if(item.y  >= this.game.canvas.height+this.game.camera.yScroll || item.y + item.currentHeight <= 0+this.game.camera.yScroll){
+                    if(item.y  >= this.game.height+this.game.camera.yScroll || item.y + item.currentHeight <= 0+this.game.camera.yScroll){
                         item.isOutOfScreen = true;
                       
                         if(typeof callback === 'function'){
                             return callback.call(this, item)
                         }
                     }
-                    else if(item.x >= this.game.canvas.width+this.game.camera.xScroll || item.x + item.currentWidth  <= 0+this.game.camera.xScroll){
+                    else if(item.x >= this.game.width+this.game.camera.xScroll || item.x + item.currentWidth  <= 0+this.game.camera.xScroll){
                         item.isOutOfScreen = true;
                         if(typeof callback === 'function'){
                             return callback.call(this, item)
@@ -40,8 +40,8 @@ define(['Class'], function(my){
                     }
                 }
                 else if(item.isOutOfScreen){
-                    if(item.x   < this.game.canvas.width+this.game.camera.xScroll && item.x+ item.currentWidth > 0 +this.game.camera.xScroll
-                        && item.y  < this.game.canvas.height+this.game.camera.yScroll && item.y + item.currentHeight > 0+this.game.camera.yScroll){
+                    if(item.x   < this.game.width+this.game.camera.xScroll && item.x+ item.currentWidth > 0 +this.game.camera.xScroll
+                        && item.y  < this.game.height+this.game.camera.yScroll && item.y + item.currentHeight > 0+this.game.camera.yScroll){
                             return item.isOutOfScreen = false;
                     }
                 }

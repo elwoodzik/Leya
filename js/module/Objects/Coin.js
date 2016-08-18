@@ -28,7 +28,7 @@ define([
             if(this.body.immoveable){
                 that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
                     if(dir === 'b'){
-                        b.y -= oy
+                        b.y -= oy;
                         p.body.velocity.x = p.body.velocity.x * 0.009;
                     }   
                 })
@@ -48,7 +48,7 @@ define([
         },
 
         collect: function(player, coin){
-            this.game.poolBoxDesc.free(coin, that.game.ARR.coins);
+            this.game.poolCoin.free(coin, that.game.ARR.coins);
         }
 	})
 

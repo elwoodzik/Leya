@@ -51,7 +51,7 @@ define(['Class'], function(my){
             }else if(this.wasleft === 0){
                  this.sprite.animations.playOnce('idle')   
             }
-            if ( this.game.keyboard.trigger('D') || this.game.keyboard.trigger('right')){
+            else if ( this.game.keyboard.trigger('D') || this.game.keyboard.trigger('right')){
                 this.ddx = this.ddx + this.accel;
                 this.sprite.animations.play('moveRight')   
             }else if (this.wasright){
@@ -86,7 +86,7 @@ define(['Class'], function(my){
                 this.ddy = this.body.falling ? this.gravity : 0;
             
                 this.body.tolerance = this.sprite.currentHeight - this.tile;
-                this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
+                //this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
                 
                 var tx        = this.p2t(this.sprite.x ),
                     ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,

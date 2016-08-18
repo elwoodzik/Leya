@@ -7,12 +7,13 @@ define(['Class'], function(my){
             this.used = true;
 
             this.player = player;
+            this.physic = this.game.physic;
 
             this.oldPlayerX = this.player.x 
             this.oldPlayerY = this.player.y 
 
-            this.x = this.game.canvas.width * 0.5;
-            this.y = this.game.canvas.height * 0.5;
+            this.x = this.game.width * 0.5;
+            this.y = this.game.height * 0.5;
 
             this.xScroll = 0;
             this.yScroll = 0;
@@ -48,7 +49,7 @@ define(['Class'], function(my){
                     this.lerpAmount = 0.0;
                     this.curPosition = this.position;
                   
-                    this.game.physic.outOfScreen(this.game.gameObject)
+                    this.physic.outOfScreen(this.game.gameObject)
                 }
                 
                 if(this.lerpAmount < 1.0){
@@ -66,12 +67,12 @@ define(['Class'], function(my){
                 if(this.xScroll <= 0 ){
                     this.xScroll = 0;
                 }
-                if(this.xScroll >= this.game.portViewWidth-this.game.canvas.width ){
-                    this.xScroll = this.game.portViewWidth-this.game.canvas.width
+                if(this.xScroll >= this.game.portViewWidth-this.game.width ){
+                    this.xScroll = this.game.portViewWidth-this.game.width
                 }
 
-                if(this.yScroll >= this.game.portViewHeight-this.game.canvas.height ){
-                    this.yScroll = this.game.portViewHeight-this.game.canvas.height
+                if(this.yScroll >= this.game.portViewHeight-this.game.height ){
+                    this.yScroll = this.game.portViewHeight-this.game.height
                 }
             }
             //
