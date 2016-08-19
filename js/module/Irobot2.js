@@ -49,7 +49,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
 		},
 
 		create: function(){
-           
+            that.game.world.setPortView(3500,840);
 
             that.game.poolCoin = that.game.add.pool(Coin, Irobot2.COINS);
             that.game.poolCoin.createSprite(that.game,'main', -1100, -1100, 'coin');
@@ -107,7 +107,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
     //     }
     // }
 
-            that.game.world.setPortView(3500,840);
+
 		},
 
 		update: function(dt){

@@ -99,8 +99,8 @@ define(['Class'], function(my){
            
             this.context.drawImage(
                 this.imageMap,
-                this.camera.xScroll, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
-                this.camera.yScroll, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
+                this.camera.xView, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
+                this.camera.yView, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
                 this.cw,
                 this.ch,
                 0,

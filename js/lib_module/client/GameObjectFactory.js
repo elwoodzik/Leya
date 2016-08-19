@@ -54,9 +54,9 @@ define([
 	        return new Rect(this.game, x, y, w, h, s, f);
 	    },
 
-	    camera: function(player){
-	    	this.game.camera = new Camera(this.game, player)
-	    	return this.game.camera
+	    camera: function( xView, yView, canvasWidth, canvasHeight, worldWidth, worldHeight){
+	    	this.game.camera = new Camera(this.game,  xView, yView, canvasWidth, canvasHeight, worldWidth, worldHeight)
+	    	return this.game.camera;
 	    },
 
 	    map: function (context, key, arr, width, height, scalled) {

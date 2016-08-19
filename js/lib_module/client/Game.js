@@ -65,8 +65,8 @@ define([
             this.physic = new Physic(this);
 
             this.camera = {
-                xScroll : 0,
-                yScroll : 0
+                xView : 0,
+                yView : 0
             };
 
             this.map = null;

@@ -4,7 +4,54 @@ define(['Class'], function(my){
         constructor: function(game){
             this.game = game;
 
-            this._pressed = {};
+            this.use = {
+                'left': {
+                    hold: false,
+                    pressed: false,
+                    name:"left"
+                },
+                'up': {
+                    hold: false,
+                    pressed: false,
+                    name:"up"
+                },
+                'down':{
+                    hold: false,
+                    pressed: false,
+                    name:"down"
+                },
+                'right': {
+                    hold: false,
+                    pressed: false,
+                    name:"right"
+                },
+                'W': {
+                    hold: false,
+                    pressed: false,
+                    name:"W"
+                },
+                'S': {
+                    hold: false,
+                    pressed: false,
+                    name:"S"
+                },
+                'A': {
+                    hold: false,
+                    pressed: false,
+                    name:"A"
+                },
+                'D': {
+                    hold: false,
+                    pressed: false,
+                    name:"D"
+                },
+
+                'SPACE': {
+                    hold: false,
+                    pressed: false,
+                    name:"SPACE"
+                },
+            }
 
             this.lastKeyCode = null;
 
@@ -33,33 +80,35 @@ define(['Class'], function(my){
         keyDown: function(e){
             var code = e.which || e.keyCode;
             var key = this.getKeyByCode(e, code);
-
-            if(this.lastKeyCode === code){
-                return;
+            
+            if(!this.use[key]){
+                return false;
             }
 
+            if(this.lastKeyCode === code){
+                this.use[key].hold =  true;
+                return;
+            }
+            
             this.lastKeyCode = code;
-
-            if(!this._pressed[key]){
-                this._pressed[key] = {
-                    hold: true,
-                    pressed: true,
-                    name: key
-                };
+          
+            if(!this.use[key].pressed){
+                this.use[key].pressed =  true;
             }else{
-                this._pressed[key].hold = true;
-                this._pressed[key].pressed = true;
-                this._pressed[key].name = key;
+               return;
             }
         },
         
         keyUp: function(e){
             var code = e.which || e.keyCode;
+            var key = this.getKeyByCode(e, code);
             this.hold = false;
             this.lastKeyCode = null;
-           
-            this._pressed[this.getKeyByCode(e, code)].pressed = false;
-            this._pressed[this.getKeyByCode(e, code)].hold = false;
+            
+            if(this.use[key] && this.use[key].pressed){
+                this.use[key].pressed = false;
+                this.use[key].hold = false;
+            }
             
             // if(Object.keys(this._pressed).length <= 0){
             //     return this._pressed = false;
@@ -68,20 +117,20 @@ define(['Class'], function(my){
         },
 
         trigger: function(currentKey, hold){
-            var key = this._pressed[currentKey] ;
+        //     var key = this._pressed[currentKey] ;
            
-            if(this._pressed[currentKey]){
+        //     if(this._pressed[currentKey]){
 
-                if(key.pressed || key.hold){
+        //         if(key.pressed || key.hold){
                    
-                    key.hold = hold ? true : false;
-              	    //key.pressed = false;
+        //             key.hold = hold ? true : false;
+        //       	    //key.pressed = false;
                      
-                    return true;
-                }
-           }else{
-               return false;
-           }
+        //             return true;
+        //         }
+        //    }else{
+        //        return false;
+        //    }
             
             
            

@@ -137,7 +137,11 @@ define([
             }
             
             // dodaje obsluge kamery do gracza
-            this.game.add.camera(this);
+
+            var camera = this.game.add.camera(0, 0, this.game.width, this.game.height, this.game.portViewWidth, this.game.portViewHeight);
+            camera.follow(this, this.game.width/2, this.game.height/2);
+
+            
         }
 	})
 

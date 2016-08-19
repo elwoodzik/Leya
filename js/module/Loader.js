@@ -50,7 +50,7 @@ define([
             
             game.scallable(true);
            
-            game.showFPS();
+            //game.showFPS();
             //game.add.multiplayer('http://localhost:3000');
 
             //game.multiplayer.onSocket('message', that.getMessage);
