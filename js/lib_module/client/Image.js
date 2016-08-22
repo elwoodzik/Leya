@@ -1,11 +1,14 @@
 define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Body){
 	
 	var Image = my.Class({
-		constructor: function(game, context, x, y, key, width, height, fullscreen){
+		constructor: function(game, pooled, context, x, y, key, width, height, fullscreen){
 			var Loader = require('module/Loader');
 			
 			this.game = game; 
 			this.used = true;
+
+			this.pooled = pooled;
+
 			this.x = x || 0; 
 			this.y = y || 0; 
 			this.key = key;
@@ -28,7 +31,10 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 
 	        this.isOutOfScreen = false;
 
-			this.setContext(context);
+	        if(!this.pooled){
+	        	this.setContext(context);
+	        }
+			
 		},
 
 		draw: function(lag){

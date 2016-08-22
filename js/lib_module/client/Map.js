@@ -117,8 +117,9 @@ define(['Class'], function(my){
             for(var i=0; i<this.objects.length; i++){
                 obj = this.objects[i];
                 if(obj.arr ){
-
-                    this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x + (obj.marginX || 0),obj.y - this.offsetY+ (obj.marginY || 0)));
+                    console.log(obj.name)
+                    this.game.CLASS[obj.name].pnew(that.game, true, 'main', obj.x + (obj.marginX || 0), obj.y - this.offsetY+ (obj.marginY || 0), 'mapa');
+                    //this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x + (obj.marginX || 0),obj.y - this.offsetY+ (obj.marginY || 0)));
                     // newObj = this.game.ARR["Tab_"+obj.arr].pop();
                     // newObj.x = obj.x + (obj.marginX || 0);
                     // newObj.y = obj.y + (obj.marginY || 0);
@@ -136,7 +137,7 @@ define(['Class'], function(my){
                     obj.marginX = obj.marginX ? obj.marginX : 0;
                     obj.marginY = obj.marginY ? obj.marginY : 0;
 
-                    this.game.VAR[obj.varr] = new obj.name(this.game, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image);
+                    this.game.VAR[obj.varr] = new obj.name(this.game, false, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image);
                 }
             }
 

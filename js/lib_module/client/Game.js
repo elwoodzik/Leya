@@ -50,6 +50,8 @@ define([
 
             this.ARR = {};
 
+            this.CLASS = {};
+
             this.FRAMEDURATION = 1000/FPS;
             
             this.add = new GameObjectFactory(this);
@@ -560,41 +562,76 @@ define([
 
     Object.defineProperty(Function.prototype,'setupPool', { value : setupPool });
 
-    function setupPool(initialPoolSize) {
+    function setupPool(initialPoolSize, context) {
         if (!initialPoolSize || !isFinite(initialPoolSize)) throw('setupPool takes a size > 0 as argument.');
         this.pool                = []          ;
+        this.pollActive = [];
         this.poolSize            = 0           ;
+        this.poolActiveSize      = 0           ;
         this.pnew                = pnew        ;
+        this.getActivePool       = getActivePool;
+        this.getId = getId;
         Object.defineProperty(this.prototype, 'pdispose', { value : pdispose } ) ; 
         // pre-fill the pool.
-        console.log(this)
-        while (initialPoolSize-- >0) { (new this(that)).pdispose(); }
+       
+        while (initialPoolSize-- >0) {
+            (new this(that, false, context)).pdispose(); 
+        }
         return this.pool;
+    }
+
+    function getActivePool(){
+        return this.pollActive;
     }
 
     function  pnew () {
         
-        var pnewObj  = null     ; 
+        var pnewObj  = null  ; 
         if (this.poolSize !== 0 ) {              
     // the pool contains objects : grab one
-            this.poolSize--  ;
+            this.poolSize--;
             pnewObj = this.pool[this.poolSize];
-            this.pool[this.poolSize] = null   ; 
+        
+            this.pool[this.poolSize] = null; 
+            this.poolActiveSize++;
+            console.log(this.getId())
+            this.pollActive[this.getId()] = pnewObj;
         } else {
     // the pool is empty : create new object
-            pnewObj = new this() ;             
+            pnewObj = new this() ;   
+            this.pollActive[this.poolSize] = pnewObj;          
         }
-        
+
         this.apply(pnewObj, arguments);           // initialize object
         return pnewObj;
+    }
+
+    function getId(){
+        for(var i=0; i<this.pollActive.length; i++){
+            if(this.pollActive[i] === null){
+                return i;
+            }
+        }
+        return this.pollActive.length
     }
 
     function pdispose() {
         var thisCttr = this.constructor  ;
         this.used = false;
+        this.pooled = true;
+
         if (this.dispose) this.dispose() ; // Call dispose if defined
         // throw the object back in the pool
-        thisCttr.pool[thisCttr.poolSize++] = this ;   
+        if (thisCttr.poolActiveSize !== 0 ) {  
+            var id = thisCttr.pollActive.indexOf(this)
+            thisCttr.poolActiveSize--;
+            thisCttr.pollActive[id] = null;
+            console.log(thisCttr.pollActive)
+        }
+        thisCttr.pool[thisCttr.poolSize++] = this ;  
+
+
+        
     }
     
   

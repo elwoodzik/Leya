@@ -128,7 +128,7 @@ define([
                         "y":297.5
                     },
                     {
-                     "name":Water,
+                     "name":"Water",
                      "pool": "poolWater",
                      "arr":"waterBlocks",
                      "context":"main",
@@ -138,7 +138,7 @@ define([
                      "marginY": 30
                     },
                     {
-                     "name":Water,
+                     "name":"Water",
                      "pool": "poolWater",
                      "arr":"waterBlocks",
                      "context":"main",
@@ -148,7 +148,7 @@ define([
                      "marginY": 30
                     },
                     {
-                     "name":Water,
+                     "name":"Water",
                      "pool": "poolWater",
                      "arr":"waterBlocks",
                      "context":"main",
@@ -158,7 +158,7 @@ define([
                      "marginY": 30
                     },
                     {
-                     "name":BoxDesc,
+                     "name":"BoxDesc",
                      "pool": "poolBoxDesc",
                      "arr":"boxDescBlocks",
                      "context":"main",
@@ -167,7 +167,7 @@ define([
                      "y":420,
                     },
                     {
-                     "name":BoxDesc,
+                     "name":"BoxDesc",
                      "pool": "poolBoxDesc",
                      "arr":"boxDescBlocks",
                      "context":"main",
@@ -176,7 +176,7 @@ define([
                      "y":420,
                     },
                     {
-                     "name":BoxDesc,
+                     "name":"BoxDesc",
                      "pool": "poolBoxDesc",
                      "arr":"boxDescBlocks",
                      "context":"main",
@@ -185,7 +185,7 @@ define([
                      "y":420,
                     },
                     {
-                     "name":BoxDesc,
+                     "name":"BoxDesc",
                      "pool": "poolBoxDesc",
                      "arr":"boxDescBlocks",
                      "context":"main",

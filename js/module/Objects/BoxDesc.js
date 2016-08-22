@@ -11,19 +11,15 @@ define([
 			BoxDesc.Super.apply(this, arguments);
             
             that = this;
-            that.game = game;
-
-            this.coinsPool = that.game['poolCoin'];
-            this.poolParticleBoxDesc = that.game['poolParticleBoxDesc'];
-            
+            that.game = game;            
 
             this.anims();
             this.configure();
 		},
 		
-		update: function(dt){
-			superUpdate.call(this, dt);
-		},
+		// update: function(dt){
+		// 	superUpdate.call(this, dt);
+		// },
 
         changeImage: function(key){
             return this.image = this.loader.assetManager.get(key); 
@@ -35,15 +31,15 @@ define([
         },
 
         destroy:function(arr){
-            var rand = that.game.rand(2,3);
+            // var rand = that.game.rand(2,3);
             
-            var i=0;
+            // var i=0;
             
-            for(var i =0; i<300; i++){
-                Coin.pnew(that.game, 'main', 133, 111, 'coin');
+            // for(var i =0; i<300; i++){
+            //     Coin.pnew(that.game, 'main', 133, 111, 'coin');
                
-            }
-            this.used = false;
+            // }
+            // this.used = false;
         //     var coin;
         //     for( i=0; i<rand; i++){
         //         randVelocityY = that.game.rand(-580,-100);

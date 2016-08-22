@@ -120,7 +120,8 @@ define(['Class'], function(my){
 
                 if(typeof obj1 === 'object'){
                     for (var i = 0, max = obj2.length;  i < max; i++){
-                        this.collideHandler(obj1, obj2[i], callback, bounds)
+                        if(obj2[i] !== null)
+                            this.collideHandler(obj1, obj2[i], callback, bounds)
                     }
                 }else{
                     throw 'oczekiwano obiektu jako pierwszy parametr';

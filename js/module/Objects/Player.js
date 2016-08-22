@@ -1,7 +1,8 @@
 define([
 	'Class',
-	'lib_module/client/Sprite'
-], function(my, Sprite){
+	'lib_module/client/Sprite',
+
+], function(my, Sprite, Coin){
 	var that;
 
 	var Player = my.Class(Sprite, {
@@ -12,6 +13,12 @@ define([
             that = this;
             that.game = game;
 
+            this.Coin = that.game.CLASS.Coin.getActivePool();
+            this.BoxDesc = that.game.CLASS.BoxDesc.getActivePool();
+            this.Water = that.game.CLASS.Water.getActivePool();
+
+            
+            console.log(this.BoxDesc)
             this.startX = x;
             this.startY = y;
 
@@ -23,23 +30,23 @@ define([
 			
             superUpdate.call(this, dt);
 
-            that.game.physic.collide(this, that.game.ARR.boxBlocks, this.collideMoveBox);
+            // that.game.physic.collide(this, that.game.ARR.boxBlocks, this.collideMoveBox);
 
-            that.game.physic.collide(this, that.game.ARR.boxDescBlocks, this.collideDestroyBox)
+             that.game.physic.collide(this, this.BoxDesc, this.collideDestroyBox)
 
-            that.game.physic.collide(this, that.game.ARR.lifts, this.collideLifts);
+            // that.game.physic.collide(this, that.game.ARR.lifts, this.collideLifts);
 
-            that.game.physic.overlap(this, that.game.ARR.waterBlocks, this.overlapWater);
+            // that.game.physic.overlap(this, that.game.ARR.waterBlocks, this.overlapWater);
+
+            that.game.physic.overlap(this, this.Coin, this.overlapWater);
 
             this.body.platformer.move(dt);
 		},
 
 
         overlapWater: function(p, w, dir, oy, ox){
-            p.x = p.startX;
-            p.y = p.startY;
-            p.checkLife();
-           
+             w.pdispose();
+           //console.log(this.coins)
         },
 
         collideMoveBox: function(p, b, dir, oy, ox){
@@ -64,7 +71,8 @@ define([
             }
             if(dir === 't'){
                 p.body.velocity.y = p.body.velocity.y/2;
-                b.destroy(that.game.ARR.boxDescBlocks);
+                b.pdispose();
+
             }
             if(dir === 'l'){
                 p.body.velocity.x = -p.body.velocity.x/2

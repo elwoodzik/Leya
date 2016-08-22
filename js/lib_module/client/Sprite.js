@@ -1,10 +1,12 @@
 define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAnimationFactory', 'lib_module/client/Map',], function(my, require, Body, GameAnimationFactory, Map){
    var id = 0; 
    var Sprite = my.Class({
-        constructor: function(game, context, x, y, key, width, height){
+        constructor: function(game, pooled, context, x, y, key, width, height){
             this.loader = require('module/Loader');
 
             this.used = true;
+            this.pooled = pooled;
+
             this.game = game; 
             this.x = x || 0; 
             this.y = y || 0; 
@@ -34,7 +36,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
 
             this.static = false;
 
-            this.contextType = context || 'main';
+            this.contextType = context;
             
             this.animations = new GameAnimationFactory(this);
             
@@ -56,8 +58,10 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             // this.game.gameObject.push(this); 
             
             // this.sortByIndex();
-            this.setContext(this.contextType);
 
+            if(!this.pooled){
+                this.setContext(this.contextType);
+            }
         },
 
         sortByIndex: function(){
@@ -516,7 +520,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
 
         setContext: function(context){
-            if(context){
+            if( context){
                 if(context === 'main'){
                     this.context = this.game.ctx;
                     this.contextType = context;

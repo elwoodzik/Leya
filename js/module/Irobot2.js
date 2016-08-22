@@ -20,28 +20,32 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
 	var Irobot2 = my.Class(null, Maps, {
 
         STATIC: {
-            COINS: 90,
-            DESCBOX: 15,
-            WATER: 30,
-            LIFTS: 5,
-            PARTICLEBOX: 60
+            COINS: 0,
+            DESCBOX: 0,
+            WATER: 0,
+            LIFTS: 0,
+            PARTICLEBOX: 0
         },
 
 		constructor: function(game){
             that = this;
             that.game = game; 
 
-            that.game.ARR.Tab_coins = [];
-            that.game.ARR.Tab_boxDescBlocks = [];
-            that.game.ARR.Tab_waterBlocks = [];
-            that.game.ARR.Tab_lifts = [];
+            that.game.CLASS.Coin = Coin;
+            that.game.CLASS.BoxDesc = BoxDesc;
+            that.game.CLASS.Water = Water;
+
+            // that.game.ARR.Tab_coins = [];
+            // that.game.ARR.Tab_boxDescBlocks = [];
+            // that.game.ARR.Tab_waterBlocks = [];
+            // that.game.ARR.Tab_lifts = [];
 
 
-            that.game.ARR.coins = [];
-            that.game.ARR.boxDescBlocks = [];
-            that.game.ARR.waterBlocks = [];
-            that.game.ARR.lifts = [];
-            that.game.ARR.particleBox = [];
+            // that.game.ARR.coins = [];
+            // that.game.ARR.boxDescBlocks = [];
+            // that.game.ARR.waterBlocks = [];
+            // that.game.ARR.lifts = [];
+            // that.game.ARR.particleBox = [];
 
             that.game.ARR.map = [];
            
@@ -54,21 +58,28 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
 		create: function(){
             that.game.world.setPortView(3500,840);
 
-            that.game.poolParticleBoxDesc = that.game.add.pool(ParticleBox, Irobot2.PARTICLEBOX);
-            that.game.poolParticleBoxDesc.createSprite(that.game, 'main', -1100, -1100, 'particleBox');
+            // that.game.poolParticleBoxDesc = that.game.add.pool(ParticleBox, Irobot2.PARTICLEBOX);
+            // that.game.poolParticleBoxDesc.createSprite(that.game, 'main', -1100, -1100, 'particleBox');
 
-            that.game.poolCoin = that.game.add.pool(Coin, Irobot2.COINS);
-            that.game.poolCoin.createSprite(that.game,'main', -1100, -1100, 'coin');
+            // that.game.poolCoin = that.game.add.pool(Coin, Irobot2.COINS);
+            // that.game.poolCoin.createSprite(that.game,'main', -1100, -1100, 'coin');
 
-            that.game.poolWater = that.game.add.pool(Water, Irobot2.WATER);
-            that.game.poolWater.createSprite(that.game,'main', -1100, -1100, 'mapa');
+            // that.game.poolWater = that.game.add.pool(Water, Irobot2.WATER);
+            // that.game.poolWater.createSprite(that.game,'main', -1100, -1100, 'mapa');
 
-            that.game.poolBoxDesc = that.game.add.pool(BoxDesc, Irobot2.DESCBOX);
-            that.game.poolBoxDesc.createSprite(that.game,'main', -1100, -1100, 'mapa');
+            // that.game.poolBoxDesc = that.game.add.pool(BoxDesc, Irobot2.DESCBOX);
+            // that.game.poolBoxDesc.createSprite(that.game,'main', -1100, -1100, 'mapa');
            
-             var b = Coin.setupPool(2000);
-            console.log(that.game.gameObject.length)
+            that.game.CLASS.Coin.setupPool(30, 'main');
+            that.game.CLASS.BoxDesc.setupPool(20, 'main');
+            that.game.CLASS.Water.setupPool(40, 'main');
 
+           
+
+            // for(var i =0; i<10; i++){
+            //     Coin.pnew(that.game, true, 'main', 133, 111, 'coin');
+            // }
+            // console.log(Coin.getActivePool())
            
              //console.log(coin)
             // for(var i=0; i<count; i++){

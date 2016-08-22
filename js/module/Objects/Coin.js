@@ -19,7 +19,7 @@ define([
 		update: function(dt){
 			superUpdate.call(this, dt);
 
-            that.game.physic.overlap(that.game.VAR.player, this, this.collect);
+            //that.game.physic.overlap(that.game.VAR.player, this, this.collect);
 
             if(this.body.immoveable){
                 this.body.platformer.collision(dt);
@@ -48,7 +48,8 @@ define([
         },
 
         collect: function(player, coin){
-            this.game.poolCoin.free(coin, that.game.ARR.coins);
+           // this.game.poolCoin.free(coin, that.game.ARR.coins);
+           coin.pdispose();
         }
 	})
 

@@ -23,7 +23,7 @@ define([
 		},
 
 	  	image: function (context, x, y, key, w, h, f) {
-	        return new Image(this.game, context, x, y, key, w, h, f);
+	        return new Image(this.game, false, context, x, y, key, w, h, f);
 	    },
 
 	    tileSprite: function(x, y, key, w, h){
@@ -31,7 +31,7 @@ define([
 	    },
 
 	    sprite: function(context, x, y, key, w, h){
-	    	return new Sprite(this.game, context, x, y, key, w, h);
+	    	return new Sprite(this.game, false, context, x, y, key, w, h);
 	    },
 
 	    button: function (text, x, y, width, height,background, backgroundHover, textColor, action) {
@@ -39,7 +39,7 @@ define([
 	    },
 		
 		buttonImg: function (context, key, keyHover, x, y, width, height, action) {
-	        return new ButtonImg(this.game, context, key, keyHover, x, y, width, height, action);
+	        return new ButtonImg(this.game, false, context, key, keyHover, x, y, width, height, action);
 	    },
 
 	    text: function (context, text, x, y, size, color, action) {
