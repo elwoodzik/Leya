@@ -46,11 +46,11 @@ define([
         onComplete: function(){    
             game = new Game(1366, 768, false, true);
             game.createBgCanvas();
-           // game.createOnBgCanvas();
+            game.createOnBgCanvas(6);
             
             game.scallable(true);
            
-            //game.showFPS();
+            game.showFPS();
             //game.add.multiplayer('http://localhost:3000');
 
             //game.multiplayer.onSocket('message', that.getMessage);

@@ -6,9 +6,10 @@ define([
     'module/Objects/Lift',
     'module/Objects/Coin',
     'module/Objects/BoxDesc',
-    'module/Objects/Water'
+    'module/Objects/Water',
+    'module/Objects/ParticleBox',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
 	
     var that;
     var ct = 0;
@@ -19,11 +20,11 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
 	var Irobot2 = my.Class(null, Maps, {
 
         STATIC: {
-            COINS: 2510,
-            DESCBOX: 41,
+            COINS: 90,
+            DESCBOX: 15,
             WATER: 30,
             LIFTS: 5,
-            PARTICLEBOX: 3
+            PARTICLEBOX: 60
         },
 
 		constructor: function(game){
@@ -34,7 +35,6 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
             that.game.ARR.Tab_boxDescBlocks = [];
             that.game.ARR.Tab_waterBlocks = [];
             that.game.ARR.Tab_lifts = [];
-            that.game.ARR.Tab_particleBox = [];
 
 
             that.game.ARR.coins = [];
@@ -44,12 +44,18 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
             that.game.ARR.particleBox = [];
 
             that.game.ARR.map = [];
+           
+            // to create an instance :
+            
             
            // that.game.ARR.particleBoxYellow = [];  
 		},
 
 		create: function(){
             that.game.world.setPortView(3500,840);
+
+            that.game.poolParticleBoxDesc = that.game.add.pool(ParticleBox, Irobot2.PARTICLEBOX);
+            that.game.poolParticleBoxDesc.createSprite(that.game, 'main', -1100, -1100, 'particleBox');
 
             that.game.poolCoin = that.game.add.pool(Coin, Irobot2.COINS);
             that.game.poolCoin.createSprite(that.game,'main', -1100, -1100, 'coin');
@@ -60,7 +66,8 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water){
             that.game.poolBoxDesc = that.game.add.pool(BoxDesc, Irobot2.DESCBOX);
             that.game.poolBoxDesc.createSprite(that.game,'main', -1100, -1100, 'mapa');
            
-            
+             var b = Coin.setupPool(2000);
+            console.log(that.game.gameObject.length)
 
            
              //console.log(coin)

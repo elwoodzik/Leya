@@ -1,8 +1,8 @@
 define([
 	'Class',
 	'lib_module/client/Sprite',
-    'module/Objects/Coin'
-], function(my, Sprite, Coin){
+    'module/Objects/Coin',
+], function(my, Sprite,Coin){
 	var that;
 
 	var BoxDesc = my.Class(Sprite, {
@@ -14,6 +14,8 @@ define([
             that.game = game;
 
             this.coinsPool = that.game['poolCoin'];
+            this.poolParticleBoxDesc = that.game['poolParticleBoxDesc'];
+            
 
             this.anims();
             this.configure();
@@ -37,38 +39,41 @@ define([
             
             var i=0;
             
-
-            
-            var coin;
-            for( i=0; i<rand; i++){
-                randVelocityY = that.game.rand(-580,-100);
-                randVelocityX = that.game.rand(-100,200);
-                
-                coin =  that.coinsPool.get(this.x, this.y);
-                // new Coin(this.game, 'main', this.x, this.y, 'coin');
-                // 
-                coin.body.velocity.y = randVelocityY;
-                coin.body.velocity.x = randVelocityX;
-                coin.body.immoveable = true; 
-                coin = null;
-                this.game.ARR['coins'].push(coin);
+            for(var i =0; i<300; i++){
+                Coin.pnew(that.game, 'main', 133, 111, 'coin');
+               
             }
+            this.used = false;
+        //     var coin;
+        //     for( i=0; i<rand; i++){
+        //         randVelocityY = that.game.rand(-580,-100);
+        //         randVelocityX = that.game.rand(-100,200);
+                
+        //         coin =  that.coinsPool.get(this.x, this.y);
+        //         // new Coin(this.game, 'main', this.x, this.y, 'coin');
+        //         // 
+        //         coin.body.velocity.y = randVelocityY;
+        //         coin.body.velocity.x = randVelocityX;
+        //         coin.body.immoveable = true; 
+        //         coin = null;
+        //         this.game.ARR['coins'].push(coin);
+        //     }
 
-           // console.log(this.game.gameObject.length)
-
-            that.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
+        //    // console.log(this.game.gameObject.length)
+        //    for(var i=0; i<6; i++){
+        //         var randVelocityY = this.game.rand(-730,-650);
+        //         var randVelocityX = this.game.rand(-160,440);
+        //         particle = that.poolParticleBoxDesc.get(this.x+this.currentHalfWidth, this.y+this.currentHeight);
+        //         particle.body.velocity.y = randVelocityY;
+        //         particle.body.velocity.x = randVelocityX;
+        //         particle.body.immoveable = true;
+        //        // this.game.ARR.particleBoxYellow.push(particle);
+        //     }
+            //that.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
             
 
             
-            // for(var i=0; i<6; i++){
-            //     var randVelocityY = this.game.rand(-730,-600);
-            //     var randVelocityX = this.game.rand(-230,400);
-            //     var particle = new ParticleBox(this.game ,'main',this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
-            //     particle.body.velocity.y = randVelocityY;
-            //     particle.body.velocity.x = randVelocityX;
-            //     particle.body.immoveable = true;
-            //     this.game.ARR.particleBoxYellow.push(particle);
-            // }
+            
            
             //superDestroy.apply(this, arguments)
         },

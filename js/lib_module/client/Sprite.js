@@ -10,7 +10,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.y = y || 0; 
             this.key = key;
             this.zIndex = 3;
-            this.image = this.loader.assetManager.get(this.key); 
+            this.image = this.loader.assetManager.get(this.key) || {}; 
 
             this.fW = this.image.width || 500;
             this.fH = this.image.height || 500; 
@@ -34,7 +34,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
 
             this.static = false;
 
-            this.contextType = 'main';
+            this.contextType = context || 'main';
             
             this.animations = new GameAnimationFactory(this);
             
@@ -56,7 +56,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             // this.game.gameObject.push(this); 
             
             // this.sortByIndex();
-            this.setContext(context);
+            this.setContext(this.contextType);
 
         },
 
@@ -98,8 +98,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].sy,
                this.states[this.state].fW,
                this.states[this.state].fH,
-               Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + (!this.static ? this.game.camera.xView : 0)) : Math.floor(this.renderX  - (!this.static ? this.game.camera.xView : 0))), // * this.scale
-               Math.floor(this.renderY - (!this.static ? this.game.camera.yView : 0)),// * this.scale
+               Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + (!this.static ? this.game.camera.xScroll : 0)) : Math.floor(this.renderX  - (!this.static ? this.game.camera.xScroll : 0))), // * this.scale
+               Math.floor(this.renderY - (!this.static ? this.game.camera.yScroll : 0)),// * this.scale
                this.states[this.state].fW ,
                this.states[this.state].fH 
             )
@@ -142,8 +142,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].sy,
                this.states[this.state].fW,
                this.states[this.state].fH,
-               this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + this.game.camera.xView) : Math.floor(this.renderX  - this.game.camera.xView), // * this.scale
-               this.renderY - this.game.camera.yView,// * this.scale
+               Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + (!this.static ? this.game.camera.xScroll : 0)) : Math.floor(this.renderX  - (!this.static ? this.game.camera.xScroll : 0))), // * this.scale
+               Math.floor(this.renderY - (!this.static ? this.game.camera.yScroll : 0)),// * this.scale
                this.states[this.state].fW * this.scale,
                this.states[this.state].fH * this.scale
             )
@@ -254,7 +254,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             //     this.body.ground = true;
             //     console.log('a')
             // }
-            // this.game.ctx.fillRect(this.column*this.game.map.currentWidth - this.game.camera.xView, (this.row)*this.game.map.currentWidth - this.game.camera.yView, 70, 70)
+            // this.game.ctx.fillRect(this.column*this.game.map.currentWidth - this.game.camera.xScroll, (this.row)*this.game.map.currentWidth - this.game.camera.yScroll, 70, 70)
                 // if()
                  
                      
@@ -516,27 +516,28 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
 
         setContext: function(context){
-        
-            if(context === 'main'){
-                this.context = this.game.ctx;
-                this.contextType = context;
-                this.gameObjectLength = this.game.gameObject.length;
-                this.game.gameObject[this.gameObjectLength] = this; 
-            }else if(context === 'background'){
-                this.context = this.game.bgctx;
-                this.contextType = context;
-                this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-                this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
-                //this.redraw(); 
-            }
-            else if(context === 'onbackground'){
-                this.context = this.game.onbgctx;
-                this.contextType = context;
-                this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
-                this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-                //this.redraw();
-            }else{
-                return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
+            if(context){
+                if(context === 'main'){
+                    this.context = this.game.ctx;
+                    this.contextType = context;
+                    this.gameObjectLength = this.game.gameObject.length;
+                    this.game.gameObject[this.gameObjectLength] = this; 
+                }else if(context === 'background'){
+                    this.context = this.game.bgctx;
+                    this.contextType = context;
+                    this.gameObjectStaticLength = this.game.gameObjectStatic.length;
+                    this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
+                    //this.redraw(); 
+                }
+                else if(context === 'onbackground'){
+                    this.context = this.game.onbgctx;
+                    this.contextType = context;
+                    this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
+                    this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
+                    //this.redraw();
+                }else{
+                    return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
+                }
             }
         },
 
@@ -554,5 +555,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         },
         
     });  
+   
     return Sprite;    
 });

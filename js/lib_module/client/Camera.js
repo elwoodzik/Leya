@@ -23,8 +23,8 @@ function(my, Rectangle){
 
             this.static = true;
 
-            this.xView = xView || 0;
-            this.yView = yView || 0;
+            this.xScroll = xView || 0;
+            this.yScroll = yView || 0;
 
             // distance from followed object to border before camera starts move
             this.xDeadZone = 0; // min distance to horizontal borders
@@ -34,8 +34,7 @@ function(my, Rectangle){
             this.wView = canvasWidth;
             this.hView = canvasHeight;	
             
-            this.xScroll = 0;
-            this.yScroll = 0;		
+           	
 
             // allow camera to move in vertical and horizontal axis
             this.axis = Camera.AXIS.BOTH;	
@@ -44,7 +43,7 @@ function(my, Rectangle){
             this.followed = null;
 
             // rectangle that represents the viewport
-            this.viewportRect = new Rectangle(this.xView, this.yView, this.wView, this.hView);				
+            this.viewportRect = new Rectangle(this.xScroll, this.yScroll, this.wView, this.hView);				
                             
             // rectangle that represents the world's boundary (room's boundary)
             this.worldRect = new Rectangle(0, 0, worldWidth, worldHeight);
@@ -60,35 +59,35 @@ function(my, Rectangle){
             if(this.followed != null){		
 				if(this.axis === Camera.AXIS.HORIZONTAL || this.axis === Camera.AXIS.BOTH){		
 					// moves camera on horizontal axis based on followed object position
-					if(this.followed.x - this.xView  + this.xDeadZone > this.wView)
-						this.xView = this.followed.x - (this.wView - this.xDeadZone);
-					else if(this.followed.x  - this.xDeadZone < this.xView)
-						this.xView = this.followed.x  - this.xDeadZone;
+					if(this.followed.x - this.xScroll  + this.xDeadZone > this.wView)
+						this.xScroll = this.followed.x - (this.wView - this.xDeadZone);
+					else if(this.followed.x  - this.xDeadZone < this.xScroll)
+						this.xScroll = this.followed.x  - this.xDeadZone;
 				}
 
 				if(this.axis === Camera.AXIS.VERTICAL || this.axis === Camera.AXIS.BOTH){
 					// moves camera on vertical axis based on followed object position
-					if(this.followed.y - this.yView + this.yDeadZone > this.hView)
-						this.yView = this.followed.y - (this.hView - this.yDeadZone);
-					else if(this.followed.y - this.yDeadZone < this.yView)
-						this.yView = this.followed.y - this.yDeadZone;
+					if(this.followed.y - this.yScroll + this.yDeadZone > this.hView)
+						this.yScroll = this.followed.y - (this.hView - this.yDeadZone);
+					else if(this.followed.y - this.yDeadZone < this.yScroll)
+						this.yScroll = this.followed.y - this.yDeadZone;
 				}
             }
            
-             this.viewportRect.set(this.xView, this.yView);						
+             this.viewportRect.set(this.xScroll, this.yScroll);						
 
             if(!this.viewportRect.within(this.worldRect)){
                 
                 if(this.viewportRect.left < this.worldRect.left)
-                    this.xView = this.worldRect.left;
+                    this.xScroll = this.worldRect.left;
                 // if(this.viewportRect.top < this.worldRect.top)					
-                //     this.yView = this.worldRect.top;
-                if(this.xView >= this.game.portViewWidth-this.game.width )
-                    this.xView = this.game.portViewWidth-this.game.width
-                if( this.yView < 0)					
-                    this.yView =  0;
-                if( this.yView > this.game.portViewHeight-this.game.height)					
-                    this.yView =  this.game.portViewHeight-this.game.height;
+                //     this.yScroll = this.worldRect.top;
+                if(this.xScroll >= this.game.portViewWidth-this.game.width )
+                    this.xScroll = this.game.portViewWidth-this.game.width
+                if( this.yScroll < 0)					
+                    this.yScroll =  0;
+                if( this.yScroll > this.game.portViewHeight-this.game.height)					
+                    this.yScroll =  this.game.portViewHeight-this.game.height;
                
             }	
         },

@@ -96,11 +96,11 @@ define(['Class'], function(my){
             } else {
                 this.renderY = this.y;
             }
-           
+            
             this.context.drawImage(
                 this.imageMap,
-                this.camera.xView, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
-                this.camera.yView, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
+                this.camera.xScroll, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
+                this.camera.yScroll, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
                 this.cw,
                 this.ch,
                 0,

@@ -16,12 +16,12 @@ define(['Class'], function(my){
         initialize: function(){
             var that = this;
 
-            this.game.canvas.addEventListener("mousemove", function(e){that.mouseMove(e)});
-            this.game.canvas.addEventListener("mousedown", function(e){that.mouseDown(e)});
-            this.game.canvas.addEventListener("touchstart", function(e){that.touchDown(e)});
-            this.game.canvas.addEventListener("touchmove", function(e){that.touchMove(e)});
-            this.game.canvas.addEventListener("touchend", function(e){that.mouseUp(e)});
-            this.game.canvas.addEventListener("mouseup", function(e){that.mouseUp(e)});
+            window.document.addEventListener("mousemove", function(e){that.mouseMove(e)});
+            window.document.addEventListener("mousedown", function(e){that.mouseDown(e)});
+            window.document.addEventListener("touchstart", function(e){that.touchDown(e)});
+            window.document.addEventListener("touchmove", function(e){that.touchMove(e)});
+            window.document.addEventListener("touchend", function(e){that.mouseUp(e)});
+            window.document.addEventListener("mouseup", function(e){that.mouseUp(e)});
         },
 
         mouseMove: function(e){ 

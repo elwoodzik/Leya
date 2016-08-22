@@ -39,6 +39,7 @@ define([
             p.x = p.startX;
             p.y = p.startY;
             p.checkLife();
+           
         },
 
         collideMoveBox: function(p, b, dir, oy, ox){
@@ -97,6 +98,7 @@ define([
             if(this.life > 1 ){
                 this.life--;
                	that.game.ARR.playerLifes[this.life].animations.play('empty')
+                    that.game.renderOnStatic(0.16);
             }else{
                 that.game.ARR.playerLifes[0].animations.play('empty')
                 that.game.state.start('Menu');
@@ -125,7 +127,7 @@ define([
             that.game.ARR.playerLifes = [];
 
             for(var i=0; i<this.life; i++){
-                this.lifeSprite = that.game.add.sprite('main', lifeX, 20, 'life');
+                this.lifeSprite = that.game.add.sprite('onbackground', lifeX, 20, 'life');
                 this.lifeSprite.animations.add('full', 0,0, 53, 45, [0]);
                 this.lifeSprite.animations.add('empty', 53,0, 53, 45, [0]);
                 this.lifeSprite.animations.play('full')

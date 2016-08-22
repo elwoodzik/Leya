@@ -32,9 +32,9 @@ define([
                 })
             }
             
-            this.alfa -= this.alfaSpeed
+            this.alfa -= this.alfaSpeed;
             if(this.alfa <= 0){
-                this.destroy(this.game.ARR.particleBoxYellow);
+                that.game.poolParticleBoxDesc.free(this);
             }
 		},
 
@@ -56,7 +56,7 @@ define([
         configure: function(){
            this.body.immoveable = true;
            this.alfa = 1;
-           this.alfaSpeed = 0.019;
+           this.alfaSpeed = 0.015;
            this.body.platformer.configure({
                gravity: 200
            })

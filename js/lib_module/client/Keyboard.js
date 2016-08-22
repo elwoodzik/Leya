@@ -91,12 +91,8 @@ define(['Class'], function(my){
             }
             
             this.lastKeyCode = code;
-          
-            if(!this.use[key].pressed){
-                this.use[key].pressed =  true;
-            }else{
-               return;
-            }
+            this.use[key].pressed =  true;
+       
         },
         
         keyUp: function(e){

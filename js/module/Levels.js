@@ -35,7 +35,7 @@ define(['Class'], function(my){
             var lvl;
 
             for(var i = 0; i < count; i++){
-				lvl = that.game.add.sprite('main', lvl_x, lvl_y, 'levels') 
+				lvl = that.game.add.sprite('onbackground', lvl_x, lvl_y, 'levels') 
                 
 				lvl.animations.add('stars0', 0, 0, 64, 64, [0]);
 				lvl.animations.add('stars1', 64, 0, 64, 64, [0]);
@@ -50,7 +50,7 @@ define(['Class'], function(my){
                         lvl.lvl = i+1;
                         lvl.stars = 0;
                         lvl.icon = 'stars'+ lvl.stars;
-                        that.game.add.text('main', lvl.lvl, lvl_x+5, lvl_y+22, 22, "black", null);
+                        that.game.add.text('onbackground', lvl.lvl, lvl_x+5, lvl_y+22, 22, "black", null);
                     }else{
                         lvl.animations.play('locked');
                         lvl.playable = false;
@@ -65,7 +65,7 @@ define(['Class'], function(my){
                     lvl.stars = that.savedLevels[i].stars;
                     lvl.icon = that.savedLevels[i].icon;
                     if(lvl.playable){
-                        that.game.add.text('main', that.savedLevels[i].lvl, lvl_x+5, lvl_y+22, 22, "black", null);
+                        that.game.add.text('onbackground', that.savedLevels[i].lvl, lvl_x+5, lvl_y+22, 22, "black", null);
                     }
                 }
 

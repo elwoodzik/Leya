@@ -65,8 +65,8 @@ define([
             this.physic = new Physic(this);
 
             this.camera = {
-                xView : 0,
-                yView : 0
+                xScroll : 0,
+                yScroll : 0
             };
 
             this.map = null;
@@ -125,7 +125,7 @@ define([
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
             }
-            requestAnimationFrame( that.animationLoop );
+            requestAnimationFrame( that.animationLoop, that.canvas );
           
             // if (!timestamp) {
             //     timestamp = 0;
@@ -263,9 +263,9 @@ define([
                
                 for(i=0, iMax=this.gameObjectOnStatic.length; i<iMax; i++){
                     entityRenderOnStatic = this.gameObjectOnStatic[i];
-                 
+                    
                     if(entityRenderOnStatic && entityRenderOnStatic.contextType === 'onbackground'){
-                         
+                        
                         if(!entityRenderOnStatic.isOutOfScreen && entityRenderOnStatic.used){            
                             if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle != 0 ){
                                 this.onbgctx.save();
@@ -273,8 +273,8 @@ define([
                                 this.onbgctx.rotate( entityRenderOnStatic.body.angle*Math.PI/180 ); 
                                 this.onbgctx.translate(-entityRenderOnStatic.x - entityRenderOnStatic.currentWidth * entityRenderOnStatic.body.anchorX, -entityRenderOnStatic.y - entityRenderOnStatic.currentHeight * entityRenderOnStatic.body.anchorY)
                             }
-
-                            entityRenderOnStatic.redraw(dt);
+                    
+                            entityRenderOnStatic.redraw(0);
                         
                             if(entityRenderOnStatic.body && entityRenderOnStatic.body.angle!=0 ){
                                 this.onbgctx.restore();
@@ -302,13 +302,13 @@ define([
             }
         },
         
-        createBgCanvas: function(){
+        createBgCanvas: function(index){
             var that = this;
             //
             this.bgcanvas = document.createElement('canvas');
             this.bgctx = this.bgcanvas.getContext("2d");
          
-            this.bgcanvas.style.zIndex = 3;
+            this.bgcanvas.style.zIndex = index || 3;
             this.bgcanvas.id = "background";
             this.bgcanvas.width = ((this.screenWidth));
             this.bgcanvas.height = ((this.screenHeight));
@@ -326,13 +326,13 @@ define([
             // }, false);
         },
 
-        createOnBgCanvas: function(){
+        createOnBgCanvas: function(index){
             var that = this;
             //
             this.onbgcanvas = document.createElement('canvas');
             this.onbgctx = this.onbgcanvas.getContext("2d");
           
-            this.onbgcanvas.style.zIndex = 4;
+            this.onbgcanvas.style.zIndex = index || 4;
             this.onbgcanvas.id = "onbackground";
             this.onbgcanvas.width = ((this.screenWidth));
             this.onbgcanvas.height = ((this.screenHeight));
@@ -557,6 +557,46 @@ define([
             this.useFpsCounter = true;
         }
     })
+
+    Object.defineProperty(Function.prototype,'setupPool', { value : setupPool });
+
+    function setupPool(initialPoolSize) {
+        if (!initialPoolSize || !isFinite(initialPoolSize)) throw('setupPool takes a size > 0 as argument.');
+        this.pool                = []          ;
+        this.poolSize            = 0           ;
+        this.pnew                = pnew        ;
+        Object.defineProperty(this.prototype, 'pdispose', { value : pdispose } ) ; 
+        // pre-fill the pool.
+        console.log(this)
+        while (initialPoolSize-- >0) { (new this(that)).pdispose(); }
+        return this.pool;
+    }
+
+    function  pnew () {
+        
+        var pnewObj  = null     ; 
+        if (this.poolSize !== 0 ) {              
+    // the pool contains objects : grab one
+            this.poolSize--  ;
+            pnewObj = this.pool[this.poolSize];
+            this.pool[this.poolSize] = null   ; 
+        } else {
+    // the pool is empty : create new object
+            pnewObj = new this() ;             
+        }
+        
+        this.apply(pnewObj, arguments);           // initialize object
+        return pnewObj;
+    }
+
+    function pdispose() {
+        var thisCttr = this.constructor  ;
+        this.used = false;
+        if (this.dispose) this.dispose() ; // Call dispose if defined
+        // throw the object back in the pool
+        thisCttr.pool[thisCttr.poolSize++] = this ;   
+    }
     
+  
     return Game;
 })
