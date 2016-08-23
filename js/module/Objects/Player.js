@@ -7,7 +7,7 @@ define([
 
 	var Player = my.Class(Sprite, {
 
-		constructor: function(game, context, x, y, key, width, height){
+		constructor: function(game, polled, context, x, y, key, width, height){
 			Player.Super.apply(this, arguments);
             
             that = this;
@@ -16,9 +16,8 @@ define([
             this.Coin = that.game.CLASS.Coin.getActivePool();
             this.BoxDesc = that.game.CLASS.BoxDesc.getActivePool();
             this.Water = that.game.CLASS.Water.getActivePool();
-
             
-            console.log(this.BoxDesc)
+
             this.startX = x;
             this.startY = y;
 
@@ -36,17 +35,18 @@ define([
 
             // that.game.physic.collide(this, that.game.ARR.lifts, this.collideLifts);
 
-            // that.game.physic.overlap(this, that.game.ARR.waterBlocks, this.overlapWater);
+            that.game.physic.overlap(this, this.Water, this.overlapWater);
 
-            that.game.physic.overlap(this, this.Coin, this.overlapWater);
+            //that.game.physic.overlap(this, this.Coin, this.overlapWater);
 
             this.body.platformer.move(dt);
 		},
 
 
         overlapWater: function(p, w, dir, oy, ox){
-             w.pdispose();
-           //console.log(this.coins)
+            p.checkLife();
+            p.x = p.startX;
+            p.y = p.startY;
         },
 
         collideMoveBox: function(p, b, dir, oy, ox){
@@ -71,7 +71,7 @@ define([
             }
             if(dir === 't'){
                 p.body.velocity.y = p.body.velocity.y/2;
-                b.pdispose();
+                b.destroy();
 
             }
             if(dir === 'l'){
@@ -106,7 +106,7 @@ define([
             if(this.life > 1 ){
                 this.life--;
                	that.game.ARR.playerLifes[this.life].animations.play('empty')
-                    that.game.renderOnStatic(0.16);
+                that.game.renderOnStatic();
             }else{
                 that.game.ARR.playerLifes[0].animations.play('empty')
                 that.game.state.start('Menu');

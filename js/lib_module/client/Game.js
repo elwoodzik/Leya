@@ -576,7 +576,9 @@ define([
        
         while (initialPoolSize-- >0) {
             (new this(that, false, context)).pdispose(); 
+            this.pollActive[initialPoolSize] = null;
         }
+        console.log(this.pollActive)
         return this.pool;
     }
 

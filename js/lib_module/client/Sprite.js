@@ -14,8 +14,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.zIndex = 3;
             this.image = this.loader.assetManager.get(this.key) || {}; 
 
-            this.fW = this.image.width || 500;
-            this.fH = this.image.height || 500; 
+            this.fW = this.image.width || -500;
+            this.fH = this.image.height || -500; 
 
             this.currentWidth = null;
             this.currentHeight = null;

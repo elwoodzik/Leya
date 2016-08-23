@@ -23,19 +23,19 @@ define([
                  this.body.platformer.collision(dt);
             }
 
-            if(this.body.immoveable){
-                that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
-                    if(dir === 'b'){
-                        b.y -= oy
-                        p.body.velocity.x = p.body.velocity.x * 0.009;
-                    }   
-                })
-            }
+            // if(this.body.immoveable){
+            //     that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
+            //         if(dir === 'b'){
+            //             b.y -= oy
+            //             p.body.velocity.x = p.body.velocity.x * 0.009;
+            //         }   
+            //     })
+            // }
             
-            this.alfa -= this.alfaSpeed;
-            if(this.alfa <= 0){
-                that.game.poolParticleBoxDesc.free(this);
-            }
+            // this.alfa -= this.alfaSpeed;
+            // if(this.alfa <= 0){
+            //     that.game.poolParticleBoxDesc.free(this);
+            // }
 		},
 
         draw: function(dt){
