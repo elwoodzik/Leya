@@ -96,7 +96,7 @@ define([
         },
 
         animationLoop : function(now) {
-           
+          
             if(!now){
                 now = that.timestamp();
             }
@@ -578,7 +578,7 @@ define([
             (new this(that, false, context)).pdispose(); 
             this.pollActive[initialPoolSize] = null;
         }
-        console.log(this.pollActive)
+        //console.log(this.pollActive)
         return this.pool;
     }
 
@@ -596,7 +596,7 @@ define([
         
             this.pool[this.poolSize] = null; 
             this.poolActiveSize++;
-            console.log(this.getId())
+            
             this.pollActive[this.getId()] = pnewObj;
         } else {
     // the pool is empty : create new object
@@ -621,18 +621,24 @@ define([
         var thisCttr = this.constructor  ;
         this.used = false;
         this.pooled = true;
-
+        
+        //console.log(thisCttr.poolActiveSize)
         if (this.dispose) this.dispose() ; // Call dispose if defined
         // throw the object back in the pool
         if (thisCttr.poolActiveSize !== 0 ) {  
             var id = thisCttr.pollActive.indexOf(this)
             thisCttr.poolActiveSize--;
             thisCttr.pollActive[id] = null;
-            console.log(thisCttr.pollActive)
+           // console.log(thisCttr.pool)
         }
         thisCttr.pool[thisCttr.poolSize++] = this ;  
-
-
+        this.x = -1000;
+        this.y = -1000;
+        this.renderX = -1000;
+        this.renderY = -1000;
+        this.previousX = -1000;
+        this.previousY = -1000;
+        //console.log(thisCttr.pool)
         
     }
     

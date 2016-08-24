@@ -37,8 +37,8 @@ define([
         },
 
         destroy:function(arr){
-            this.pdispose();
-            console.log(this)
+           
+            
             var rand = that.game.rand(2,3);
             for( i=0; i<rand; i++){
                 randVelocityY = that.game.rand(-580,-100);
@@ -60,7 +60,7 @@ define([
                 particle.body.immoveable = true;
                // this.game.ARR.particleBoxYellow.push(particle);
             }
-
+             this.pdispose();
             // var i=0;
             
             // for(var i =0; i<300; i++){

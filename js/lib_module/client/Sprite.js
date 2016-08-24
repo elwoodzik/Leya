@@ -4,12 +4,12 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         constructor: function(game, pooled, context, x, y, key, width, height){
             this.loader = require('module/Loader');
 
-            this.used = true;
+            
             this.pooled = pooled;
 
             this.game = game; 
-            this.x = x || 0; 
-            this.y = y || 0; 
+            this.x = x || -500; 
+            this.y = y || -500; 
             this.key = key;
             this.zIndex = 3;
             this.image = this.loader.assetManager.get(this.key) || {}; 
@@ -58,6 +58,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             // this.game.gameObject.push(this); 
             
             // this.sortByIndex();
+            this.used = true;
 
             if(!this.pooled){
                 this.setContext(this.contextType);

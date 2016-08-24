@@ -20,9 +20,12 @@ define([
 			superUpdate.call(this, dt);
             
             if(this.body.immoveable){
-                 this.body.platformer.collision(dt);
+                 //this.body.platformer.collision(dt);
+                this.body.velocity.x = this.body.platformer.bound(this.body.velocity.x + (dt * this.ddx), -this.maxdx, this.maxdx);
+                this.body.velocity.y = this.body.platformer.bound(this.body.velocity.y + (dt * this.ddy), -this.maxdy, this.maxdy);
             }
 
+            this.ddy = this.gravity;
             // if(this.body.immoveable){
             //     that.game.physic.collide(this, that.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
             //         if(dir === 'b'){
@@ -32,20 +35,16 @@ define([
             //     })
             // }
             
-            // this.alfa -= this.alfaSpeed;
-            // if(this.alfa <= 0){
-            //     that.game.poolParticleBoxDesc.free(this);
-            // }
+            this.alfa -= this.alfaSpeed;
+            if(this.alfa <= 0.2){
+                this.destroy();
+            }
 		},
 
         draw: function(dt){
-           
             this.game.ctx.globalAlpha = this.alfa;
             superDraw.call(this, dt);
             this.game.ctx.globalAlpha = 1;
-
-            
-
         },
 
         anims: function(){
@@ -54,15 +53,25 @@ define([
         },
 
         configure: function(){
-           this.body.immoveable = true;
-           this.alfa = 1;
-           this.alfaSpeed = 0.015;
-           this.body.platformer.configure({
-               gravity: 200
-           })
-
+            this.body.immoveable = true;
+            this.alfa = 1;
+            this.alfaSpeed = 0.004;
+            this.tile     = 70;              // the size of each tile (in game pixels)
+            this.meter    = this.tile;            // abitrary choice for 1m
+            this.gravity  = this.meter * 9.8 * 2 ;    // very exagerated gravity (6x)
+            this.maxdx    = this.meter * 3 - 30;         // max horizontal speed (20 tiles per second)
+            this.maxdy    = this.meter * 40;         // max vertical speed   (60 tiles per second)
+            this.ddx = 0;
+            this.ddy = 0;  
+           
+              
+           
            
         },
+
+        destroy: function(){
+            this.pdispose();
+        }
 	})
 
     var superUpdate = ParticleBox.Super.prototype.update;

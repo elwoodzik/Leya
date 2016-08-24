@@ -69,7 +69,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
             // that.createWater();
             // that.createLifts();
             // tworzy tlo
-            that.game.add.image('background', 0, 0, 'bg', 3500, 840);
+            that.game.add.image('main', 0, 0, 'bg', 3500, 840);
             
             // tworzy mape
             that.game.ARR.map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);

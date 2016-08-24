@@ -11,7 +11,7 @@ define([
 		},
 		
 		create: function(){
-			this.add.text('onbackground', "test", (this.canvas.width/2)-50, 100, 99, "white", null);
+			this.add.text('main', "test", (this.canvas.width/2)-50, 100, 99, "white", null);
 			
 			that.levels = new Levels(this);
 		},
