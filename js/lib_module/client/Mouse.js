@@ -45,7 +45,7 @@ define(['Class'], function(my){
         },
 
         touchMove: function(e){ 
-            e.preventDefault();
+            //e.preventDefault();
             //
             this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 + this.game.camera.xScroll;
             this.mouseY = e.touches[0].clientY / this.game.scale1 + this.game.camera.yScroll;

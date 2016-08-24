@@ -59,8 +59,8 @@ define(['Class'], function(my){
                         this.b[i][j].y ,
                         this.w,
                         this.h,
-                        Math.floor((j * this.currentWidth) - this.game.camera.xScroll),
-                        Math.floor((i * this.currentHeight) - this.game.camera.yScroll),
+                        Math.floor((j * (this.currentWidth) )- this.game.camera.xScroll),
+                        Math.floor((i * (this.currentHeight)) - this.game.camera.yScroll),
                         (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
                         (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
                     ); 
@@ -73,29 +73,29 @@ define(['Class'], function(my){
             ctx = null;  
         },
 
-        update: function(dt){
-            if(this.camera.xScroll !== 0 || this.camera.yScroll !== 0){
-                this.x = ( this.camera.xScroll  + (dt * (this.camera.lerpAmount*2))) ;
-                this.y = ( this.camera.yScroll  + (dt * (this.camera.lerpAmount*2))) ;
-            }else{
-                this.x = 0;
-                this.y = 0;
-            }
+        // update: function(dt){
+        //     // if(this.camera.xScroll !== 0 || this.camera.yScroll !== 0){
+        //     //     this.x = ( this.camera.xScroll  + (dt * (this.camera.lerpAmount*2))) ;
+        //     //     this.y = ( this.camera.yScroll  + (dt * (this.camera.lerpAmount*2))) ;
+        //     // }else{
+        //     //     this.x = 0;
+        //     //     this.y = 0;
+        //     // }
            
-        },
+        // },
 
         draw: function(dt) {
             
-            if (this.previousX) { 
-                this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
-            } else {
-                this.renderX = this.x;
-            }
-            if (this.previousY) {
-                this.renderY = (this.previousY + (this.y - this.previousY) * dt); //this.y + (this.body.velocity.y * dt);
-            } else {
-                this.renderY = this.y;
-            }
+            // if (this.previousX) { 
+            //     this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
+            // } else {
+            //     this.renderX = this.x;
+            // }
+            // if (this.previousY) {
+            //     this.renderY = (this.previousY + (this.y - this.previousY) * dt); //this.y + (this.body.velocity.y * dt);
+            // } else {
+            //     this.renderY = this.y;
+            // }
             
             this.context.drawImage(
                 this.imageMap,
