@@ -35,6 +35,9 @@ define([
                 "coin": "images/coin.png",
                 "life": "images/life.png",
                 "particleBox": "images/particleBox.png",
+                "left": "images/left.png",
+                "right": "images/right.png",
+                "jump": "images/jump.png",
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },

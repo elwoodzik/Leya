@@ -95,39 +95,78 @@ define([
             return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
         },
 
-        animationLoop : function(now) {
-          
-            if(!now){
-                now = that.timestamp();
-            }
-            
-            
+        animationLoop : function(timestamp) {
+            if (!timestamp) {
+                timestamp = 0;
+            } 
+           
             if(that.useFpsCounter){
                 that.fpsmeter.tickStart();
             }
+            
+            
+            elapsed = timestamp - PREVIOUS;
+            
+            if (elapsed > 1000 || elapsed < 0) {
+                elapsed = that.FRAMEDURATION;
+                LAG = 0;
+            }
            
-            dt += (now - last) ;
-            //dt = (dt + Math.min(0, (now - last) ));
-            numUpdateSteps = 0 ;
-            while(dt >= step) {
+            LAG += elapsed;
+        
+            while (LAG >= that.FRAMEDURATION) {  
+               that.capturePreviousPositions(that.gameObject);
+               //that.cTime += that.FRAMEDURATION;
               
-                that.capturePreviousPositions(that.gameObject);
+               that.update(that.FRAMEDURATION/1000);
+               LAG -= that.FRAMEDURATION;
                 
-                that.update(step/1000);
-                dt -= step;
-             
-                if (++numUpdateSteps >= 240) {
-                    that.panic();
-                    break;
-                }
             }
 
-            that.render((dt / step)/1000);
-            last = now;
+            lagOffset = LAG / that.FRAMEDURATION;
+            
+            that.render(lagOffset);
+            
+            
+            
+            PREVIOUS = timestamp;
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
             }
+
             requestAnimationFrame( that.animationLoop, that.canvas );
+          
+            // if(!now){
+            //     now = that.timestamp();
+            // }
+            
+            
+            // if(that.useFpsCounter){
+            //     that.fpsmeter.tickStart();
+            // }
+           
+            // dt += (now - last) ;
+            // //dt = (dt + Math.min(0, (now - last) ));
+            // numUpdateSteps = 0 ;
+            // if(dt >= step) {
+              
+            //     that.capturePreviousPositions(that.gameObject);
+                
+            //     that.update(step/1000);
+            //     dt -= step;
+             
+            //     if (++numUpdateSteps >= 240) {
+            //         that.panic();
+                   
+            //     }
+            // }
+
+            // that.render((dt / step));
+            // last = now;
+            // if(that.useFpsCounter){
+            //     that.fpsmeter.tick();
+            // }
+            // requestAnimationFrame( that.animationLoop, that.canvas );
           
             // if (!timestamp) {
             //     timestamp = 0;

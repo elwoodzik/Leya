@@ -116,7 +116,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
-            
+            this.frameUpdate();
             //this.inRange();
             //this.collide();
         },
@@ -160,6 +160,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
+            //this.frameUpdate();
         },
 
         update: function(dt){
@@ -167,7 +168,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.worldBounce();
             this.moveToPointHandler();
             this.useThereAndBack();
-            this.frameUpdate();
+            
             this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
             this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
           

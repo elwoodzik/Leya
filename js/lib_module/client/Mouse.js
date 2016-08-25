@@ -29,6 +29,8 @@ define(['Class'], function(my){
             //
             this.mouseX = e.offsetX  / this.game.scale1 + this.game.camera.xScroll;
             this.mouseY = e.offsetY  / this.game.scale1 + this.game.camera.yScroll;
+
+            
             //
             //this.click = (e.which == 1 && !this.down);
             //this.down = (e.which == 1);
@@ -73,18 +75,27 @@ define(['Class'], function(my){
         
         
 
-        intersects: function(obj) {
+        intersects: function(obj, static) {
             var t = 2; //tolerance
+            var tempMouseY = this.mouseY;
+            var tempMouseX = this.mouseX;
           
-            var xIntersect = (this.mouseX + t) >= obj.x && (this.mouseX + t) <= obj.x + obj.currentWidth ;
-            var yIntersect = (this.mouseY + t) >= obj.y && (this.mouseY - t) <= obj.y + obj.currentHeight ;
+            if(static){
+                tempMouseX = tempMouseX - (this.game.camera.xScroll);
+                tempMouseY = tempMouseY   - (this.game.camera.yScroll);
+            }
+            
 
+            var xIntersect = (tempMouseX + t) >= obj.x && (tempMouseX + t) <= obj.x + obj.currentWidth;
+            var yIntersect = (tempMouseY + t) >= obj.y && (tempMouseY - t) <= obj.y + obj.currentHeight;
+          
             return  xIntersect && yIntersect ;
         },
 
-        intersectsSprite: function(obj) {
+        intersectsSprite: function(obj, static) {
 
             var t = 2; //tolerance
+           
             var xIntersect = (this.mouseX + t) >= obj.x && (this.mouseX + t) <= obj.x + obj.states[obj.state].fW;
             var yIntersect = (this.mouseY + t) >= obj.y && (this.mouseY - t) <= obj.y + obj.states[obj.state].fH;
 
@@ -99,15 +110,18 @@ define(['Class'], function(my){
 	        }            
 	    },
 
-        updateStats: function(obj, hold){
-            if (this.intersects(obj)) {
+        updateStats: function(obj,static, hold){
+           
+            if (this.intersects(obj, static)) {
+                
                 obj.hovered = true;
-               
+                
                 if(this.click){ 
                     return true;
                 }
             } else {
                 obj.hovered = false;
+                return false;
             }
             
             //
@@ -116,49 +130,52 @@ define(['Class'], function(my){
             // }               
         },
 
-        updateSpriteStats: function(obj){
-            var wasNotClicked = !this.game.mouse.click;
+        // updateSpriteStats: function(obj){
+        //     var wasNotClicked = !this.game.mouse.click;
 
-            if (this.intersectsSprite(obj, this.game.mouse)) {
-                this.hovered = true;
-                if (this.game.mouse.click) {
-                    this.click = true;
-                }
-                if (this.click && wasNotClicked) {
-                    this.click = false;
-                    return true;
-                }
-            } else {
-                this.hovered = false;
-            }
-            //
-            if (!this.game.mouse.down) {
-                this.click = false;
-            }               
-        },
+        //     if (this.intersectsSprite(obj, this.game.mouse)) {
+        //         this.hovered = true;
+        //         if (this.game.mouse.click) {
+        //             this.click = true;
+        //         }
+        //         if (this.click && wasNotClicked) {
+        //             this.click = false;
+        //             return true;
+        //         }
+        //     } else {
+        //         this.hovered = false;
+        //     }
+        //     //
+        //     if (!this.game.mouse.down) {
+        //         this.click = false;
+        //     }               
+        // },
 
-        trigger: function(obj, callback, hold){
+        trigger: function(obj, static, callback, hold){
             var wasNotClicked = this.click;
             
             if(wasNotClicked ){
                 if(!this.trig){
+                   
                     this.trig = hold ? true : false;
 
                     if(Array.isArray(obj)){
                         for(u=obj.length-1; u>=0; u--){
-                            if(this.updateStats(obj[u], hold) ){
+                            if(this.updateStats(obj[u],static, hold) ){
                                 return callback.call(this, obj[u]);
                             }
                         }
                         this.trig = false;
                     }
                     else if(typeof obj === 'object' && obj != null){
-                        if(this.updateStats(obj, hold)){
+                        if(this.updateStats(obj, static, hold)){
+                            
                             return callback.call(this, obj);
                         }
                         this.trig = false; 
                     }
                     else if(obj === null){
+                       
                         if(typeof callback === 'function'){
                             this.click = false;
                             this.trig = false;

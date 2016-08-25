@@ -17,6 +17,29 @@ define([
             this.BoxDesc = that.game.CLASS.BoxDesc.getActivePool();
             this.Water = that.game.CLASS.Water.getActivePool();
             
+            this.pads = [];
+
+            this.leftPad = that.game.add.sprite('main', 90, that.game.height-140, 'left');
+            this.leftPad.zIndex = 10;
+            this.leftPad.animations.add('idle', 0, 0, 90, 90, [0]);
+            this.leftPad.animations.play('idle')
+            this.leftPad.static = true;
+
+            this.rightPad = that.game.add.sprite('main', 260, that.game.height-140, 'right');
+            this.rightPad.zIndex = 10;
+            this.rightPad.animations.add('idle', 0, 0, 90, 90, [0]);
+            this.rightPad.animations.play('idle')
+            this.rightPad.static = true;
+
+            this.jumpPad = that.game.add.sprite('main', that.game.width - 190, that.game.height-140, 'jump');
+            this.jumpPad.zIndex = 10;
+            this.jumpPad.animations.add('idle', 0, 0, 90, 90, [0]);
+            this.jumpPad.animations.play('idle')
+            this.jumpPad.static = true;
+            
+            this.pads.push(this.leftPad)
+            this.pads.push(this.rightPad)
+            this.pads.push(this.jumpPad)
 
             this.startX = x;
             this.startY = y;
@@ -26,12 +49,21 @@ define([
 		},
 		
 		update: function(dt){
-			
+            
             superUpdate.call(this, dt);
+
+            that.leftPad.active = false;
+            that.rightPad.active = false;
+            that.jumpPad.active = false;
+
+            that.game.mouse.trigger(that.pads, true, function(pad){
+                pad.active = true;
+			},false);
+
 
             // that.game.physic.collide(this, that.game.ARR.boxBlocks, this.collideMoveBox);
 
-             that.game.physic.collide(this, this.BoxDesc, this.collideDestroyBox)
+            that.game.physic.collide(this, this.BoxDesc, this.collideDestroyBox)
 
             // that.game.physic.collide(this, that.game.ARR.lifts, this.collideLifts);
 
@@ -40,6 +72,8 @@ define([
             //that.game.physic.overlap(this, this.Coin, this.overlapWater);
 
             this.body.platformer.move(dt);
+
+            
 		},
 
 

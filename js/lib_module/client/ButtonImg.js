@@ -1,12 +1,13 @@
 define(['Class'], function(my){
-    
+   var that;
+
    var Button = my.Class( {
 
-        constructor: function(game, context, key, keyHover, x, y, width, height, action){
+        constructor: function(game,pooled, context, key, keyHover, x, y, width, height, action){
             this.Loader = require('module/Loader');
             //
+            that = this;
             this.game = game;
-            this.used = true;
             //
             this.x = x;
             this.y = y;
@@ -27,59 +28,95 @@ define(['Class'], function(my){
             this.zIndex = 5;
             //
             //this.game.physic.outOfScreen(this)
-            if(context === 'main'){
-				this.context = this.game.ctx;
-				this.contextType = context;
-				this.gameObjectLength = this.game.gameObject.length;
-				this.game.gameObject[this.gameObjectLength] = this; 
-			}else if(context === 'background'){
-				this.context = this.game.bgctx;
-				this.contextType = context;
-				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-				this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
-			}
+            this.used = true;
+
+            this.static = false;
+
+            this.contextType = context;
+
+            if(!this.pooled){
+                this.setContext(this.contextType);
+            }
+
         },
 
         update: function() {
-            var wasNotClicked = this.game.mouse.click;
-             
-            if (this.game.mouse.updateStats(this) && wasNotClicked && typeof this.action === 'function') {
-                this.game.mouse.click = false;
-              
-                this.action.call(this.game, this);
-               
-            }
+            
+           this.game.mouse.trigger(that, function(){
+               console.log('s')
+           })
+            //     this.game.mouse.click = false;
+            //     console.log('p;')
+            //     this.action.call(this.game, this);
+            // }
         },
 
-        draw: function(lag) {
+        draw: function(dt) {
+            
             if (this.hovered) {
                 this.image =  this.Loader.assetManager.get(this.keyHover); 
             } else {
                 this.image =  this.Loader.assetManager.get(this.key); 
             }
             
-            if (this.previousX) {
-	            this.renderX = (this.x - this.previousX) * lag + this.previousX;
-	        } else {
-	            this.renderX = this.x;
-	        }
-	        if (this.previousY) {
-	            this.renderY = (this.y - this.previousY) * lag + this.previousY;
-	        } else {
-	            this.renderY = this.y;
-	        }
+            if (this.previousX) { 
+                this.renderX = (this.previousX + (this.x - this.previousX) * dt);  //this.x + (this.body.velocity.x * dt);
+
+            } else {
+                this.renderX = this.x;
+                
+            }
+            if (this.previousY) {
+                this.renderY = (this.previousY + (this.y - this.previousY) * dt); //this.y + (this.body.velocity.y * dt);
+            } else {
+                this.renderY = this.y;
+            } 
 			this.context.drawImage(
 	            this.image,
 	            0,
 	            0,
+	            this.image.width,
+	            this.image.height,
+	            Math.floor(this.renderX  - (!this.static ? this.game.camera.xScroll : 0)), // * this.scale
+	            Math.floor(this.renderY - (!this.static ? this.game.camera.yScroll : 0)),// * this.scale
 	            this.width,
-	            this.height,
-	            this.renderX - this.game.camera.xScroll, // * this.scale
-	            this.renderY - this.game.camera.yScroll, // * this.scale
-	            this.fullscreen ? this.game.canvas.width : this.width,
-	            this.fullscreen ? this.game.canvas.height : this.height
+	            this.height
 	        )
-        }
+        },
+
+         changeContext: function(context, array){
+            if(this.contextType != context){
+                this.destroy(array);
+                this.setContext(context);
+            }
+            return this;
+        },
+
+        setContext: function(context){
+            if( context){
+                if(context === 'main'){
+                    this.context = this.game.ctx;
+                    this.contextType = context;
+                    this.gameObjectLength = this.game.gameObject.length;
+                    this.game.gameObject[this.gameObjectLength] = this; 
+                }else if(context === 'background'){
+                    this.context = this.game.bgctx;
+                    this.contextType = context;
+                    this.gameObjectStaticLength = this.game.gameObjectStatic.length;
+                    this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
+                    //this.redraw(); 
+                }
+                else if(context === 'onbackground'){
+                    this.context = this.game.onbgctx;
+                    this.contextType = context;
+                    this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
+                    this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
+                    //this.redraw();
+                }else{
+                    return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
+                }
+            }
+        },
     })
 
     return Button;

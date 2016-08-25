@@ -40,7 +40,7 @@ define(['Class'], function(my){
 
             this.ddx = 0;
 
-            if (this.game.keyboard.use['A'].pressed  || this.game.keyboard.use['left'].pressed){
+            if (this.game.keyboard.use['A'].pressed  || this.game.keyboard.use['left'].pressed || this.sprite.leftPad.active){
                 this.ddx = this.ddx - this.accel;     // player wants to go left
                 this.sprite.animations.play('moveLeft') 
                
@@ -51,7 +51,7 @@ define(['Class'], function(my){
             }else if(this.wasleft === 0){
                  this.sprite.animations.playOnce('idle')   
             }
-            else if ( this.game.keyboard.use['D'].pressed  || this.game.keyboard.use['right'].pressed ){
+            else if ( this.game.keyboard.use['D'].pressed  || this.game.keyboard.use['right'].pressed || this.sprite.rightPad.active){
                 this.ddx = this.ddx + this.accel;
                 this.sprite.animations.play('moveRight')   
             }else if (this.wasright){
@@ -61,7 +61,7 @@ define(['Class'], function(my){
             }else if(this.wasright === 0){
                 this.sprite.animations.playOnce('idle')   
             }
-            if ((this.game.keyboard.use['W'].pressed  || this.game.keyboard.use['up'].pressed  )&& !this.body.jumping && !this.body.falling) {
+            if ((this.game.keyboard.use['W'].pressed  || this.game.keyboard.use['up'].pressed || this.sprite.jumpPad.active ) && !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
                 this.onplatform = false;
