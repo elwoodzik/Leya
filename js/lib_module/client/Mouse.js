@@ -38,8 +38,9 @@ define(['Class'], function(my){
 
         touchDown: function(e){
             //
-            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 + this.game.camera.xScroll;
-            this.mouseY = e.touches[0].clientY / this.game.scale1 + this.game.camera.yScroll;
+            e.preventDefault();
+            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1;
+            this.mouseY = e.touches[0].clientY / this.game.scale1;
 
             this.click = !this.down;
             this.down = true;
@@ -47,10 +48,11 @@ define(['Class'], function(my){
         },
 
         touchMove: function(e){ 
+            e.preventDefault();
             //e.preventDefault();
             //
-            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 + this.game.camera.xScroll;
-            this.mouseY = e.touches[0].clientY / this.game.scale1 + this.game.camera.yScroll;
+            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 ;
+            this.mouseY = e.touches[0].clientY / this.game.scale1 ;
             //
             //this.click = (e.which == 1 && !this.down);
             //this.down = (e.which == 1);
