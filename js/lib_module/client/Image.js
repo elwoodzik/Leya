@@ -82,7 +82,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.renderY = this.y;
 	        }
 			
-			this.context.clearRect(this.renderX, this.renderY,this.currentWidth, this.currentHeight);
+			this.context.clearRect(this.renderX, this.renderY, this.currentWidth, this.currentHeight);
 
 			this.context.drawImage(
 	            this.image,

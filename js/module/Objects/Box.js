@@ -1,7 +1,8 @@
 define([
 	'Class',
-	'lib_module/client/Sprite'
-], function(my, Sprite){
+	'lib_module/client/Sprite',
+    'module/Objects/Water',
+], function(my, Sprite, Water){
 	var that;
 
 	var Box = my.Class(Sprite, {
@@ -10,7 +11,8 @@ define([
 			Box.Super.apply(this, arguments);
             
             that = this;
-
+            that.game = game;
+            this.Water = that.game.CLASS.Water.getActivePool();
             this.anims();
             this.configure();
 		},
@@ -19,7 +21,8 @@ define([
 			superUpdate.call(this, dt);
 
             if(this.body.immoveable){
-                this.game.physic.collide(this.game.ARR.waterBlocks, this, function(p, b , dir, oy, ox){
+                this.game.physic.collide(this.Water, this, function(p, b , dir, oy, ox){
+                    console.log('a')
                     b.body.immoveable = false;
                     if(dir === 'b'){
                         b.body.velocity.y = 0;
@@ -27,11 +30,11 @@ define([
                 })
             }
 
-            this.game.physic.collide(this, this.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
-                if(dir === 'b'){
-                    b.body.velocity.y = oy
-                }   
-            })
+            // this.game.physic.collide(this, this.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
+            //     if(dir === 'b'){
+            //         b.body.velocity.y = oy
+            //     }   
+            // })
 
             if(this.body.immoveable){
                  this.body.platformer.collision(dt);
@@ -50,6 +53,7 @@ define([
         configure: function(){
             this.body.immoveable = true;
             this.body.colideWorldSide = true;
+            //this.zIndex = 5;
         }
 	})
 

@@ -36,7 +36,7 @@ define([
             // }
             
             this.alfa -= this.alfaSpeed;
-            if(this.alfa <= 0.2){
+            if(this.alfa <= 0){
                 this.destroy();
             }
 		},
@@ -48,14 +48,15 @@ define([
         },
 
         anims: function(){
-            this.animations.add('idle', 0, 0, 29, 25, [0,1,2,3]);
-            this.animations.play('idle', 3);
+            this.animations.add('left', 0, 0, 29, 25, [3,2,1,0]);
+            this.animations.add('right', 0, 0, 29, 25, [0,1,2,3]);
+            this.animations.play('left', 3);
         },
 
         configure: function(){
             this.body.immoveable = true;
             this.alfa = 1;
-            this.alfaSpeed = 0.004;
+            this.alfaSpeed = 0.009;
             this.tile     = 70;              // the size of each tile (in game pixels)
             this.meter    = this.tile;            // abitrary choice for 1m
             this.gravity  = this.meter * 9.8 * 2 ;    // very exagerated gravity (6x)
@@ -63,10 +64,7 @@ define([
             this.maxdy    = this.meter * 40;         // max vertical speed   (60 tiles per second)
             this.ddx = 0;
             this.ddy = 0;  
-           
-              
-           
-           
+            this.zIndex = 11;
         },
 
         destroy: function(){

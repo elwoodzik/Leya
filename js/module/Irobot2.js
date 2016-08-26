@@ -6,10 +6,11 @@ define([
     'module/Objects/Lift',
     'module/Objects/Coin',
     'module/Objects/BoxDesc',
+    'module/Objects/Box',
     'module/Objects/Water',
     'module/Objects/ParticleBox',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox){
 	
     var that;
     var ct = 0;
@@ -35,41 +36,21 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
             that.game.CLASS.BoxDesc = BoxDesc;
             that.game.CLASS.Water = Water;
             that.game.CLASS.ParticleBox = ParticleBox;
+            that.game.CLASS.Box = Box;
 
             that.game.ARR.map = [];
 		},
 
 		create: function(){
-            that.game.world.setPortView(3500,840);
+            that.game.world.setPortView(3500, 840);
             
             that.game.CLASS.ParticleBox.setupPool(70, 'main');
             that.game.CLASS.Coin.setupPool(30, 'main');
             that.game.CLASS.BoxDesc.setupPool(20, 'main');
             that.game.CLASS.Water.setupPool(40, 'main');
+            that.game.CLASS.Box.setupPool(20, 'main');
             
-
-           
-
-            // for(var i =0; i<10; i++){
-            //     Coin.pnew(that.game, true, 'main', 133, 111, 'coin');
-            // }
-            // console.log(Coin.getActivePool())
-           
-             //console.log(coin)
-            // for(var i=0; i<count; i++){
-                
-           
-            //     var r = this.rand( 100, 500);
-            //     var y = this.rand( 100, 500);
-            //     new Coin(that.game ,'main', r, y, 'coin');
-            
-            // }
-            // that.createCoins();
-            // that.createDescBox();
-            // that.createWater();
-            // that.createLifts();
-            // tworzy tlo
-            that.game.add.image('main', 0, 0, 'bg', 3500, 840);
+            //that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
             
             // tworzy mape
             that.game.ARR.map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
@@ -78,31 +59,25 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Water, ParticleBox){
             that.game.ARR.map.setElements(that.getElements());
 
             // tworzy dynamiczne obiekty zdefinoiwane w maps/Maps.js
-            that.game.ARR.map.createObjOnMap('main');
+            that.game.ARR.map.createObjOnMap();
 
+            if(Levels.LEVEL === 1){
+                // for (var i=0; i<35; i++){
+                //     that.game.add.particles(9*70+34,4*70+10);
+                // }
+                // var liftsCords = [
+                //     { x:  70*10, y: 70*3, dis: 170, dir: 'down'},
+                // ] 
 
-
-    // if(Levels.LEVEL === 1){
-    //     for (var i=0; i<35; i++){
-    //         that.game.add.particles(9*70+34,4*70+10);
-    //     }
-    //     var liftsCords = [
-    //         { x:  70*10, y: 70*3, dis: 170, dir: 'down'},
-    //     ] 
-
-    //     for (var i=0; i<liftsCords.length; i++){
-    //         let cords = liftsCords[i];
-    //         var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
-    //         lift.thereAndBack(cords.dis, cords.dir, 100);
-            
-    //         that.game.ARR.lifts.push(lift);
-    //     }
-    // }
-
-
+                // for (var i=0; i<liftsCords.length; i++){
+                //     let cords = liftsCords[i];
+                //     var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
+                //     lift.thereAndBack(cords.dis, cords.dir, 100);
+                    
+                //     that.game.ARR.lifts.push(lift);
+                // }
+            }
 		}
-
-		
 	});
 
 	return Irobot2;

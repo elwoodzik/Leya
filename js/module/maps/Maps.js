@@ -120,7 +120,6 @@ define([
                 objects:[
                     {
                         "name":Player,
-                        
                         "context":"main",
                         "image":"player3",
                         "varr":"player",
@@ -130,7 +129,6 @@ define([
                     {
                      "name":"Water",
                      "pool": "poolWater",
-                     "arr":"waterBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":420,
@@ -140,7 +138,6 @@ define([
                     {
                      "name":"Water",
                      "pool": "poolWater",
-                     "arr":"waterBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":490,
@@ -150,7 +147,6 @@ define([
                     {
                      "name":"Water",
                      "pool": "poolWater",
-                     "arr":"waterBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":560,
@@ -160,7 +156,6 @@ define([
                     {
                      "name":"BoxDesc",
                      "pool": "poolBoxDesc",
-                     "arr":"boxDescBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":700,
@@ -169,7 +164,6 @@ define([
                     {
                      "name":"BoxDesc",
                      "pool": "poolBoxDesc",
-                     "arr":"boxDescBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":770,
@@ -178,7 +172,6 @@ define([
                     {
                      "name":"BoxDesc",
                      "pool": "poolBoxDesc",
-                     "arr":"boxDescBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":1540,
@@ -187,12 +180,21 @@ define([
                     {
                      "name":"BoxDesc",
                      "pool": "poolBoxDesc",
-                     "arr":"boxDescBlocks",
                      "context":"main",
                      "image":"mapa",
                      "x":1610,
                      "y":420,
                     },
+
+                    {
+                     "name":"Box",
+                     "pool": "poolBox",
+                     "context":"main",
+                     "image":"mapa",
+                     "x":140,
+                     "y":220,
+                    },
+                    
 
                 ]
             }

@@ -37,10 +37,10 @@ define([
         },
 
         destroy:function(arr){
-           
-            
-            var rand = that.game.rand(2,3);
-            for( i=0; i<rand; i++){
+            var randCoin = that.game.rand(2,3);
+            var randParticle = that.game.rand(3,8);
+
+            for( i=0; i<randCoin; i++){
                 randVelocityY = that.game.rand(-580,-100);
                 randVelocityX = that.game.rand(-100,200);
                 
@@ -51,43 +51,24 @@ define([
                 coin.body.immoveable = true; 
                 coin = null;
             }
-            for(var i=0; i<6; i++){
-                var randVelocityY = this.game.rand(-730,-650);
+
+            for(var i=0; i<randParticle; i++){
+                var randVelocityY = this.game.rand(-730,-350);
                 var randVelocityX = this.game.rand(-160,440);
+                
                 particle = ParticleBox.pnew(that.game, true, 'main', this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
                 particle.body.velocity.y = randVelocityY;
                 particle.body.velocity.x = randVelocityX;
+
+                if(randVelocityX < 0){
+                     particle.animations.play('left', 3);
+                }else{
+                     particle.animations.play('right', 3);
+                }
                 particle.body.immoveable = true;
                // this.game.ARR.particleBoxYellow.push(particle);
             }
-             this.pdispose();
-            // var i=0;
-            
-            // for(var i =0; i<300; i++){
-            //   
-               
-            // }
-            // this.used = false;
-        //     var coin;
-        
-
-        //    // console.log(this.game.gameObject.length)
-        //    for(var i=0; i<6; i++){
-        //         var randVelocityY = this.game.rand(-730,-650);
-        //         var randVelocityX = this.game.rand(-160,440);
-        //         particle = that.poolParticleBoxDesc.get(this.x+this.currentHalfWidth, this.y+this.currentHeight);
-        //         particle.body.velocity.y = randVelocityY;
-        //         particle.body.velocity.x = randVelocityX;
-        //         particle.body.immoveable = true;
-        //        // this.game.ARR.particleBoxYellow.push(particle);
-        //     }
-            //that.game.poolBoxDesc.free(this, that.game.ARR.boxDescBlocks);
-            
-
-            
-            
-           
-            //superDestroy.apply(this, arguments)
+            this.pdispose();
         },
 
         configure: function(){

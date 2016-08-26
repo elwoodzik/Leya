@@ -27,8 +27,8 @@ define(['Class'], function(my){
         mouseMove: function(e){ 
             e.preventDefault();
             //
-            this.mouseX = e.offsetX  / this.game.scale1 + this.game.camera.xScroll;
-            this.mouseY = e.offsetY  / this.game.scale1 + this.game.camera.yScroll;
+            this.mouseX = e.offsetX  / this.game.scale1 ;
+            this.mouseY = e.offsetY  / this.game.scale1 ;
 
             
             //
@@ -79,10 +79,10 @@ define(['Class'], function(my){
             var t = 2; //tolerance
             var tempMouseY = this.mouseY;
             var tempMouseX = this.mouseX;
-          
-            if(static){
-                tempMouseX = tempMouseX - (this.game.camera.xScroll);
-                tempMouseY = tempMouseY   - (this.game.camera.yScroll);
+            
+            if(!static){
+                tempMouseX = tempMouseX + (this.game.camera.xScroll);
+                tempMouseY = tempMouseY   + (this.game.camera.yScroll);
             }
             
 
@@ -115,10 +115,10 @@ define(['Class'], function(my){
             if (this.intersects(obj, static)) {
                 
                 obj.hovered = true;
-                
-                if(this.click){ 
+               
+                //if(this.click){ 
                     return true;
-                }
+                //}
             } else {
                 obj.hovered = false;
                 return false;

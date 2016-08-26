@@ -12,7 +12,7 @@ define(['Class', 'require'], function(my, require){
 			this.y = y || 0;
 
 			
-			this.zIndex = 5;
+			this.zIndex = 7;
 
 			this.contextType = 'main';
             
@@ -45,7 +45,7 @@ define(['Class', 'require'], function(my, require){
                 b: 0
             }
             //
-            this.composite = this.options.composite || "screen"; //screen, lighter
+            this.composite = this.options.composite || "lighter"; //screen, lighter
             //
 			//this.game.physic.outOfScreen(this)
 
@@ -55,12 +55,12 @@ define(['Class', 'require'], function(my, require){
 		},
 
 		draw: function(){
+			this.game.ctx.globalCompositeOperation = this.composite;
 			
-			this.game.ctx.globalCompositeOperation = this.composite; 
-	
 			this.opacity = Math.round(this.remaining_life/this.life*100)/100;
 		
 			this.game.ctx.beginPath();
+			
 			var gradient = this.game.ctx.createRadialGradient(this.x - this.game.camera.xScroll, this.y - this.game.camera.yScroll, 0, this.x- this.game.camera.xScroll, this.y- this.game.camera.yScroll, this.radius);
 			gradient.addColorStop(0, "rgba("+this.colors.r+", "+this.colors.g+", "+this.colors.b+", "+this.opacity+")");
 			gradient.addColorStop(0.5, "rgba("+this.colors.r+", "+this.colors.g+", "+this.colors.b+", "+this.opacity+")");
@@ -71,6 +71,7 @@ define(['Class', 'require'], function(my, require){
 			this.game.ctx.closePath();
 			
 			this.game.ctx.globalCompositeOperation = "source-over";
+			
 		},
 
 		update: function(dt){

@@ -49,6 +49,7 @@ define([
 
         collect: function(player, coin){
            // this.game.poolCoin.free(coin, that.game.ARR.coins);
+           player.score.add(1)
            coin.pdispose();
         }
 	})

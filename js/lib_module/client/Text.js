@@ -52,14 +52,14 @@ define(['Class'], function(my){
 
         add: function(count){
             this.text+=count;
-            this.context.clearRect(this.x, this.y-this.currentHeight,  this.currentWidth, this.currentHeight)
-            this.draw();
+            //this.context.clearRect(this.x, this.y-this.currentHeight,  this.currentWidth, this.currentHeight)
+            //this.draw();
         },
 
         rem: function(count){
             this.text-=count;
-            this.context.clearRect(this.x, this.y-this.currentHeight,  this.currentWidth, this.currentHeight)
-            this.draw();
+            //this.context.clearRect(this.x, this.y-this.currentHeight,  this.currentWidth, this.currentHeight)
+            //this.draw();
         },
 
         destroy: function(array){  

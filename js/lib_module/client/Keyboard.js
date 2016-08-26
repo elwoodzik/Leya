@@ -1,8 +1,11 @@
 define(['Class'], function(my){
-    
+   var that;
+
    var Keyboard = my.Class({
         constructor: function(game){
             this.game = game;
+
+            that = this;
 
             this.use = {
                 'left': {
@@ -73,37 +76,38 @@ define(['Class'], function(my){
 
         initialize: function(){
             var that = this;
-            window.document.addEventListener("keydown", function(e){that.keyDown(e)});
-            window.document.addEventListener("keyup", function(e){that.keyUp(e)});
+            window.document.addEventListener("keydown", that.keyDown);
+            window.document.addEventListener("keyup", that.keyUp);
         },
 
         keyDown: function(e){
             var code = e.which || e.keyCode;
-            var key = this.getKeyByCode(e, code);
+
+            var key = that.getKeyByCode(e, code);
             
-            if(!this.use[key]){
+            if(!that.use[key]){
                 return false;
             }
 
-            if(this.lastKeyCode === code){
-                this.use[key].hold =  true;
+            if(that.lastKeyCode === code){
+                that.use[key].hold =  true;
                 return;
             }
             
-            this.lastKeyCode = code;
-            this.use[key].pressed =  true;
+            that.lastKeyCode = code;
+            that.use[key].pressed =  true;
        
         },
         
         keyUp: function(e){
             var code = e.which || e.keyCode;
-            var key = this.getKeyByCode(e, code);
-            this.hold = false;
-            this.lastKeyCode = null;
+            var key = that.getKeyByCode(e, code);
+            that.hold = false;
+            that.lastKeyCode = null;
             
-            if(this.use[key] && this.use[key].pressed){
-                this.use[key].pressed = false;
-                this.use[key].hold = false;
+            if(that.use[key] && that.use[key].pressed){
+                that.use[key].pressed = false;
+                that.use[key].hold = false;
             }
             
             // if(Object.keys(this._pressed).length <= 0){
