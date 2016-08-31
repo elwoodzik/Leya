@@ -165,6 +165,7 @@ define([
             
             this.zIndex = 6;
 
+            this.createPlayerIcon();
             this.createLifeHud();
             this.createScoreHud();
             
@@ -176,33 +177,42 @@ define([
             
         },
 
+        createPlayerIcon : function(){
+            var playerIcon; 
+            playerIcon = that.game.add.sprite('main', 25, 17, 'hud');
+            playerIcon.animations.add('icon', 52,48, 52, 50, [0]);
+            playerIcon.animations.playOnce('icon');
+            playerIcon.static = true;
+            playerIcon.zIndex = 10;
+        },
+
         createLifeHud: function(){
             this.life = 3;
 
-            var lifeX = 30; 
+            var lifeX = 95; 
             that.game.ARR.playerLifes = [];
 
             for(var i=0; i<this.life; i++){
-                this.lifeSprite = that.game.add.sprite('main', lifeX, 20, 'life');
-                this.lifeSprite.animations.add('full', 0,0, 53, 45, [0]);
-                this.lifeSprite.animations.add('empty', 53,0, 53, 45, [0]);
-                this.lifeSprite.animations.playOnce('full')
-                this.lifeSprite.static = true;
-                this.lifeSprite.zIndex = 10;
+                var lifeSprite = that.game.add.sprite('main', lifeX, 20, 'life');
+                lifeSprite.animations.add('full', 0,0, 53, 45, [0]);
+                lifeSprite.animations.add('empty', 53,0, 53, 45, [0]);
+                lifeSprite.animations.playOnce('full');
+                lifeSprite.static = true;
+                lifeSprite.zIndex = 10;
                 lifeX += 60;
 
-                that.game.ARR.playerLifes.push(this.lifeSprite);
+                that.game.ARR.playerLifes.push(lifeSprite);
             }
         },
 
         createScoreHud: function(){
-            this.scoreIcon = that.game.add.sprite('main', this.game.width - 200, 20, 'coin');
-            this.scoreIcon.animations.add('icon', 55,57, 55, 57, [0]);
-            this.scoreIcon.animations.playOnce('icon')
+            this.scoreIcon = that.game.add.sprite('main', 350, 20, 'hud');
+            this.scoreIcon.animations.add('icon', 55,0, 48, 48, [0]);
+            this.scoreIcon.animations.playOnce('icon');
             this.scoreIcon.static = true;
             this.scoreIcon.zIndex = 10;
 
-            this.score = that.game.add.text('main', 0, this.game.width - 130, 65, 50, 'white', null);
+            this.score = that.game.add.text('main', 0, 410, 60, 50, 'black', null);
         }
 	})
 
