@@ -365,7 +365,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 this.thereAndBack_dis = _dir === 'right' ? this.x + _dis : this.x - _dis;
             }else{
                 this.thereAndBack_dis = _dir === 'down' ? this.y + _dis : this.y - _dis;
-           
             }
            
             this.thereAndBack_dir = _dir;

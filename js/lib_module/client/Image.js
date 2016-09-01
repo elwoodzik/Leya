@@ -229,14 +229,15 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
         moveToPointHandler: function(){
             if(this.moveTo){
                 
-                this.myX = Math.floor(this.x+ this.currentWidth /2);
-                this.myY = Math.floor(this.y+ this.currentHeight /2 );
+                this.myX = Math.floor(this.x + this.currentWidth /2);
+                this.myY = Math.floor(this.y + this.currentHeight /2 );
             
                 if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
-                    this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);  
-                    this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
+                    this.x -= Math.floor(((this.myX - this.positionToMoveX) / this.positionSpeed));  
+                    this.y -= Math.floor(((this.myY - this.positionToMoveY) / this.positionSpeed));
                     this.body.velocity.x = 0;
                     this.body.velocity.y = 0;
+					
                 }else if(this.moveTo ){
                     this.body.velocity.x = this.oldVelocityX;
                     this.body.velocity.y = this.oldVelocityY;
@@ -244,6 +245,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                     this.x = Math.floor(this.x)
                     this.y = Math.floor(this.y) 
                     this.moveTo = false;
+					
                     if(typeof this.positionCallback === 'function'){
                         this.positionCallback.call(this.game, this);
                     }

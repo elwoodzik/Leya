@@ -12,11 +12,13 @@ define([
             
             that = this;
             that.game = game;
+            this.used = false;
 
             this.Coin = that.game.CLASS.Coin.getActivePool();
             this.BoxDesc = that.game.CLASS.BoxDesc.getActivePool();
             this.Water = that.game.CLASS.Water.getActivePool();
             this.Box = that.game.CLASS.Box.getActivePool();
+            this.Lift = that.game.CLASS.Lift.getActivePool();
             
             this.pads = [];
 
@@ -57,8 +59,9 @@ define([
             that.rightPad.active = false;
             that.jumpPad.active = false;
 
-            that.game.mouse.trigger(that.pads, true, function(pad){
+            that.game.mouse.touchtrigger(that.pads, true, function(pad){
                 pad.active = true;
+
 			},false);
 
 
@@ -66,7 +69,7 @@ define([
 
             that.game.physic.collide(this, this.BoxDesc, this.collideDestroyBox)
 
-            // that.game.physic.collide(this, that.game.ARR.lifts, this.collideLifts);
+            that.game.physic.collide(this, this.Lift, this.collideLifts);
 
             that.game.physic.overlap(this, this.Water, this.overlapWater);
 
@@ -79,9 +82,32 @@ define([
 
 
         overlapWater: function(p, w, dir, oy, ox){
-            p.checkLife();
-            p.x = p.startX;
-            p.y = p.startY;
+            //p.checkLife();
+
+            if(p.life > 1 ){
+                p.life--;
+               	that.game.ARR.playerLifes[p.life].animations.play('empty');
+                p.x = p.startX;
+                p.y = p.startY;
+                p.renderX = p.startX;
+                p.renderY = p.startY;
+                p.used = false;
+                that.game.VAR.camera.moveToPoint(p.startX, p.startY, 22, function(){
+                    p.body.velocity.y = 0;
+                
+                    that.game.VAR['ufo'].used = true;
+                    //
+                    that.game.VAR.ufo.moveToPoint(320, 270, 30, function(u){
+                        p.used = true;
+                        that.game.VAR.camera.follow(that, that.game.width/2, that.game.height/2);
+                        u.moveToPoint(-530, -50, 40, function(u){
+                            u.used = false
+                        })
+                    })
+                })
+            }else{
+                that.game.state.start('Menu');
+            }
         },
 
         collideMoveBox: function(p, b, dir, oy, ox){
@@ -119,7 +145,7 @@ define([
                 p.body.falling = false;
                 p.body.jumping = false;
                 
-                if(this.game.keyboard._pressed['D'] || this.game.keyboard._pressed['A'] || this.game.keyboard._pressed['left'] || this.game.keyboard._pressed['right']){
+                if(this.game.keyboard.use['D'].pressed || this.game.keyboard.use['A'].pressed || this.game.keyboard.use['left'].pressed || this.game.keyboard.use['right'].pressed){
                     p.body.platformer.onplatform = false;
                 }else{
                     p.body.velocity.x = b.body.velocity.x ;
@@ -138,14 +164,8 @@ define([
         },
 
         checkLife: function(){
-            if(this.life > 1 ){
-                this.life--;
-               	that.game.ARR.playerLifes[this.life].animations.play('empty')
-                //that.game.renderOnStatic();
-            }else{
-                that.game.ARR.playerLifes[0].animations.play('empty')
-                that.game.state.start('Menu');
-            }
+            
+           
         },
 
         changeImage: function(key){
@@ -171,8 +191,8 @@ define([
             
             // dodaje obsluge kamery do gracza
 
-            var camera = this.game.add.camera(0, 0, this.game.width, this.game.height, this.game.portViewWidth, this.game.portViewHeight);
-            camera.follow(this, this.game.width/2, this.game.height/2);
+            that.game.VAR.camera = this.game.add.camera(0, 0, this.game.width, this.game.height, this.game.portViewWidth, this.game.portViewHeight);
+            that.game.VAR.camera.follow(this, this.game.width/2, this.game.height/2);
 
             
         },
@@ -212,7 +232,22 @@ define([
             this.scoreIcon.static = true;
             this.scoreIcon.zIndex = 10;
 
-            this.score = that.game.add.text('main', 0, 410, 60, 50, 'black', null);
+            // this.scoreimage = that.game.add.sprite('main', 550, 20, 'hud');
+            // this.scoreimage.static = true;
+            // this.scoreimage.zIndex = 10;
+            // this.scoreimage.animations.add('0', 230, 0, 32, 40, [0]);
+            // this.scoreimage.animations.add('1', 195,40, 32, 40, [0]);
+            // this.scoreimage.animations.add('2', 55,97, 32, 40, [0]);
+            // this.scoreimage.animations.add('3', 237, 81, 32, 40, [0]);
+            // this.scoreimage.animations.add('4', 237, 121, 32, 40, [0]);
+            // this.scoreimage.animations.add('5', 237, 161, 32, 40, [0]);
+            // this.scoreimage.animations.add('6', 230, 40, 32, 40, [0]);
+            // this.scoreimage.animations.add('7', 225, 203, 34, 40, [0]);
+            // this.scoreimage.animations.add('8', 190, 203, 34, 42, [0]);
+            // this.scoreimage.animations.add('9', 196, 0, 32, 40, [0]);
+            // this.scoreimage.animations.playOnce('0');
+
+            this.score = that.game.add.text('main', 0, 410, 60, 50, '#795548', null);
         }
 	})
 

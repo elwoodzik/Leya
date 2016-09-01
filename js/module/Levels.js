@@ -50,7 +50,7 @@ define(['Class'], function(my){
                         lvl.lvl = i+1;
                         lvl.stars = 0;
                         lvl.icon = 'stars'+ lvl.stars;
-                        that.game.add.text('main', lvl.lvl, lvl_x+5, lvl_y+22, 22, "black", null);
+                        that.game.add.text('main', lvl.lvl, lvl_x+5, lvl_y+22, 22, "white", null);
                     }else{
                         lvl.animations.play('locked');
                         lvl.playable = false;
@@ -65,7 +65,7 @@ define(['Class'], function(my){
                     lvl.stars = that.savedLevels[i].stars;
                     lvl.icon = that.savedLevels[i].icon;
                     if(lvl.playable){
-                        that.game.add.text('main', that.savedLevels[i].lvl, lvl_x+5, lvl_y+22, 22, "black", null);
+                        that.game.add.text('main', that.savedLevels[i].lvl, lvl_x+5, lvl_y+22, 22, "white", null);
                     }
                 }
 

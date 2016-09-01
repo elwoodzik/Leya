@@ -11,6 +11,7 @@ define(['Class'], function(my){
             this.trig = false;
             this.mouseX = null;
             this.mouseY = null;
+            this.touches = [];
         },
 
         initialize: function(){
@@ -39,9 +40,11 @@ define(['Class'], function(my){
         touchDown: function(e){
             //
             e.preventDefault();
-            this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1;
-            this.mouseY = e.touches[0].clientY / this.game.scale1;
+            // this.mouseX = (e.touches[0].clientX - this.game.canvas.offsetLeft)  / this.game.scale1;
+            // this.mouseY = e.touches[0].clientY / this.game.scale1;
 
+            this.touches = e.touches;
+           
             this.click = !this.down;
             this.down = true;
             this.trig = false;
@@ -80,7 +83,7 @@ define(['Class'], function(my){
         intersects: function(obj, static) {
             var t = 2; //tolerance
             var tempMouseY = this.mouseY;
-            var tempMouseX = this.mouseX;
+            var tempMouseX = this.mouseX ;
             
             if(!static){
                 tempMouseX = tempMouseX + (this.game.camera.xScroll);
@@ -92,6 +95,27 @@ define(['Class'], function(my){
             var yIntersect = (tempMouseY + t) >= obj.y && (tempMouseY - t) <= obj.y + obj.currentHeight;
           
             return  xIntersect && yIntersect ;
+        },
+
+         touchIntersects: function(obj, static) {
+            var t = 2; //tolerance
+          
+            for(var i=0; i<this.touches.length; i++){
+                var tempMouseY = this.touches[i].clientY / this.game.scale1 ;
+                var tempMouseX = (this.touches[i].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 ;
+                  
+                if(!static){
+                    tempMouseX = tempMouseX + (this.game.camera.xScroll);
+                    tempMouseY = tempMouseY   + (this.game.camera.yScroll);
+                }
+                
+
+                var xIntersect = (tempMouseX + t) >= obj.x && (tempMouseX + t) <= obj.x + obj.currentWidth;
+                var yIntersect = (tempMouseY + t) >= obj.y && (tempMouseY - t) <= obj.y + obj.currentHeight;
+            
+                return  xIntersect && yIntersect ;
+            }
+            
         },
 
         intersectsSprite: function(obj, static) {
@@ -132,6 +156,27 @@ define(['Class'], function(my){
             // }               
         },
 
+        updateTouchStats: function(obj,static, hold){
+           
+            if (this.touchIntersects(obj, static)) {
+                
+                obj.hovered = true;
+               
+                //if(this.click){ 
+                    return true;
+                //}
+            } else {
+                obj.hovered = false;
+                return false;
+            }
+            
+            //
+            // if (!this.game.mouse.down) {
+            //     this.click = false;
+            // }               
+        },
+        
+
         // updateSpriteStats: function(obj){
         //     var wasNotClicked = !this.game.mouse.click;
 
@@ -152,6 +197,41 @@ define(['Class'], function(my){
         //         this.click = false;
         //     }               
         // },
+        touchtrigger: function(obj, static, callback, hold){
+            var wasNotClicked = this.click;
+            
+            if(wasNotClicked ){
+                if(!this.trig){
+                   
+                    this.trig = hold ? true : false;
+
+                    if(Array.isArray(obj)){
+                        for(u=obj.length-1; u>=0; u--){
+                            if(this.updateTouchStats(obj[u],static, hold) ){
+                                return callback.call(this, obj[u]);
+                            }
+                        }
+                        this.trig = false;
+                    }
+                    else if(typeof obj === 'object' && obj != null){
+                        if(this.updateTouchStats(obj, static, hold)){
+                            
+                            return callback.call(this, obj);
+                        }
+                        this.trig = false; 
+                    }
+                    else if(obj === null){
+                       
+                        if(typeof callback === 'function'){
+                            this.click = false;
+                            this.trig = false;
+                            this.down = false;
+                            return callback.call(this);
+                        }   
+                    }
+                }
+            }
+        },
 
         trigger: function(obj, static, callback, hold){
             var wasNotClicked = this.click;

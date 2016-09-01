@@ -14,6 +14,7 @@ define(['Class'], function(my){
             this.currentWidth = size
             this.currentHeight = size
             this.zIndex = 5;
+            
 
             this.contextType = 'main';
             //
@@ -26,7 +27,7 @@ define(['Class'], function(my){
             
             var fontSize = this.size;
             this.context.fillStyle = this.color;
-            this.context.font = fontSize + "px Sans";
+            this.context.font = fontSize + "px Forte";
     
             var textSize = this.context.measureText(this.text);
             this.currentWidth = textSize.width;

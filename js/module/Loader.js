@@ -24,7 +24,7 @@ define([
 
         create: function(){
             this.assetManager.load({
-                "mapa": "images/mapa1.png",
+                "mapa": "images/mapa.png",
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
@@ -39,7 +39,8 @@ define([
                 "right": "images/right.png",
                 "jump": "images/jump.png",
                 "items": "images/items.png",
-                "hud": "images/hud.png"
+                "hud": "images/hud.png",
+                "ufo": "images/ufo.png"
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
@@ -53,7 +54,7 @@ define([
             //game.createBgCanvas();
             //game.createOnBgCanvas(6);
             
-            //game.scallable(true);
+            game.scallable(true);
            
             game.showFPS();
             //game.add.multiplayer('http://localhost:3000');

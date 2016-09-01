@@ -117,7 +117,6 @@ define(['Class'], function(my){
             for(var i=0; i<this.objects.length; i++){
                 obj = this.objects[i];
                 if(obj.pool ){
-                    console.log(obj.name)
                     this.game.CLASS[obj.name].pnew(that.game, true, 'main', obj.x + (obj.marginX || 0), obj.y - this.offsetY+ (obj.marginY || 0), 'mapa');
                     //this.game.ARR[obj.arr].push(that.game[obj.pool].get(obj.x + (obj.marginX || 0),obj.y - this.offsetY+ (obj.marginY || 0)));
                     // newObj = this.game.ARR["Tab_"+obj.arr].pop();

@@ -55,7 +55,7 @@ function(my, Rectangle){
         },
 
         update: function(){
-          
+            this.moveToPointHandler();
             if(this.followed != null){		
 				if(this.axis === Camera.AXIS.HORIZONTAL || this.axis === Camera.AXIS.BOTH){		
 					// moves camera on horizontal axis based on followed object position
@@ -96,7 +96,56 @@ function(my, Rectangle){
 			this.followed = gameObject;	
 			this.xDeadZone = xDeadZone;
 			this.yDeadZone = yDeadZone;
-		}					
+		},
+
+        moveToPoint: function(x, y, speed, callback){
+            //if(!this.moveTo){
+                this.positionToMoveX = Math.floor(x);
+                this.positionToMoveY = Math.floor(y)  ;
+                this.positionSpeed = speed;
+                this.followed = null;
+                this.moveTo = true;
+                
+                this.positionCallback = callback;
+            //}
+        },	
+        moveToPointHandler: function(){
+            if(this.moveTo){
+                
+                this.myX = Math.floor(this.xScroll + this.wView / 2);
+                this.myY = Math.floor(this.yScroll + this.hView / 2 );
+            
+                if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
+                    this.xScroll -= Math.floor(((this.myX - this.positionToMoveX) / this.positionSpeed));  
+                    this.yScroll -= Math.floor(((this.myY - this.positionToMoveY) / this.positionSpeed));
+                }else if(this.moveTo ){
+        
+                    this.xScroll = Math.floor(this.xScroll)
+                    this.yScroll = Math.floor(this.yScroll) 
+                    this.moveTo = false;
+					
+                    if(typeof this.positionCallback === 'function'){
+                        this.positionCallback.call(this.game, this);
+                    }
+                }
+
+                if(!this.viewportRect.within(this.worldRect)){
+                
+                    if(this.viewportRect.left < this.worldRect.left)
+                        this.positionToMoveX = this.myX
+                    // if(this.viewportRect.top < this.worldRect.top)					
+                    //     this.yScroll = this.worldRect.top;
+                    if(this.xScroll >= this.game.portViewWidth-this.game.width )
+                         this.positionToMoveX = this.myX
+                    if( this.yScroll < 0)					
+                        this.positionToMoveY = this.myY
+                    if( this.yScroll > this.game.portViewHeight-this.game.height)					
+                        this.positionToMoveY = this.myY
+                
+                }
+            }
+            
+        },		
      })
 
     return Camera;
