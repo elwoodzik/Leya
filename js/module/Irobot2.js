@@ -72,14 +72,14 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox)
             that.game.ARR.map.createObjOnMap();
 
             if(Levels.LEVEL === 1){
-                var liftsCords = [
-                    { x:  70*5, y: 70*5, dis: 170, dir: 'down'},
-                ] 
-                for (var i=0; i<liftsCords.length; i++){
-                    let cords = liftsCords[i];
-                    var lift = that.game.CLASS.Lift.pnew(that.game, true, 'main', cords.x, cords.y, 'mapa');
-                    lift.thereAndBack(cords.dis, cords.dir, 100);
-                }
+                // var liftsCords = [
+                //     { x:  70*5, y: 70*5, dis: 170, dir: 'down'},
+                // ] 
+                // for (var i=0; i<liftsCords.length; i++){
+                //     let cords = liftsCords[i];
+                //     var lift = that.game.CLASS.Lift.pnew(that.game, true, 'main', cords.x, cords.y, 'mapa');
+                //     lift.thereAndBack(cords.dis, cords.dir, 100);
+                // }
                
               
                 // for (var i=0; i<35; i++){

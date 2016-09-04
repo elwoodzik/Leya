@@ -24,7 +24,7 @@ define([
 
         create: function(){
             this.assetManager.load({
-                "mapa": "images/mapa.png",
+                "mapa": "images/mapa1.png",
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
@@ -56,7 +56,7 @@ define([
             
             game.scallable(true);
            
-            game.showFPS();
+           // game.showFPS();
             //game.add.multiplayer('http://localhost:3000');
 
             //game.multiplayer.onSocket('message', that.getMessage);

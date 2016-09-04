@@ -58,11 +58,22 @@ define([
             that.leftPad.active = false;
             that.rightPad.active = false;
             that.jumpPad.active = false;
+            document.getElementById('a').innerHTML = "1 NIE"
+            document.getElementById('b').innerHTML = "2 NIE"
+            document.getElementById('c').innerHTML = "3 NIE"
 
-            that.game.mouse.touchtrigger(that.pads, true, function(pad){
+            that.game.mouse.touchtrigger(that.pads[0], true, function(pad){
                 pad.active = true;
-
+                document.getElementById('a').innerHTML = "1 Tak"
 			},false);
+            that.game.mouse.touchtrigger(that.pads[1], true, function(pad){
+                pad.active = true;
+                document.getElementById('b').innerHTML = "2 Tak"
+            },false);
+             that.game.mouse.touchtrigger(that.pads[2], true, function(pad){
+                pad.active = true;
+                document.getElementById('c').innerHTML = "3 Tak"
+            },false);
 
 
             that.game.physic.collide(this, this.Box, this.collideMoveBox);

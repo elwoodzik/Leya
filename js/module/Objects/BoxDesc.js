@@ -52,22 +52,22 @@ define([
                 coin = null;
             }
 
-            // for(var i=0; i<randParticle; i++){
-            //     var randVelocityY = this.game.rand(-730,-350);
-            //     var randVelocityX = this.game.rand(-160,440);
+            for(var i=0; i<randParticle; i++){
+                var randVelocityY = this.game.rand(-730,-350);
+                var randVelocityX = this.game.rand(-160,440);
                 
-            //     particle = ParticleBox.pnew(that.game, true, 'main', this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
-            //     particle.body.velocity.y = randVelocityY;
-            //     particle.body.velocity.x = randVelocityX;
+                particle = ParticleBox.pnew(that.game, true, 'main', this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
+                particle.body.velocity.y = randVelocityY;
+                particle.body.velocity.x = randVelocityX;
 
-            //     if(randVelocityX < 0){
-            //          particle.animations.play('left', 3);
-            //     }else{
-            //          particle.animations.play('right', 3);
-            //     }
-            //     particle.body.immoveable = true;
-            //    // this.game.ARR.particleBoxYellow.push(particle);
-            // }
+                if(randVelocityX < 0){
+                     particle.animations.play('left', 3);
+                }else{
+                     particle.animations.play('right', 3);
+                }
+                particle.body.immoveable = true;
+               // this.game.ARR.particleBoxYellow.push(particle);
+            }
             this.pdispose();
         },
 
