@@ -9,8 +9,9 @@ define([
     'module/Objects/Box',
     'module/Objects/Water',
     'module/Objects/ParticleBox',
+    'module/Objects/JumpPlatform',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform){
 	
     var that;
     var ct = 0;
@@ -38,6 +39,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox)
             that.game.CLASS.ParticleBox = ParticleBox;
             that.game.CLASS.Box = Box;
             that.game.CLASS.Lift = Lift;
+            that.game.CLASS.JumpPlatform = JumpPlatform;
 
             that.game.ARR.map = [];
 		},
@@ -45,13 +47,6 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox)
 		create: function(){
             that.game.world.setPortView(3500, 840);
             
-            that.game.VAR.ufo = that.game.add.image('main', -530, -250, 'ufo');
-            that.game.VAR.ufo.moveToPoint(320, 270, 30, function(u){
-                that.game.VAR.player.used = true;
-                u.moveToPoint(-530, -50, 40, function(u){
-                    u.used = false
-                })
-            })
 
             that.game.CLASS.ParticleBox.setupPool(70, 'main');
             that.game.CLASS.Coin.setupPool(30, 'main');
@@ -59,6 +54,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox)
             that.game.CLASS.Water.setupPool(40, 'main');
             that.game.CLASS.Box.setupPool(20, 'main');
             that.game.CLASS.Lift.setupPool(5, 'main');
+            that.game.CLASS.JumpPlatform.setupPool(5, 'main');
             
             //that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
             
@@ -66,10 +62,20 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox)
             that.game.ARR.map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
 
             // podstawia pod pola mapy odpowiednie obiekty zdefiniowane w maps/Maps.js 
-            that.game.ARR.map.setElements(that.getElements());
+            that.game.ARR.map.setElements(that.getElements(Levels.LEVEL));
 
             // tworzy dynamiczne obiekty zdefinoiwane w maps/Maps.js
             that.game.ARR.map.createObjOnMap();
+
+            that.game.VAR.ufo = that.game.add.image('main', -530, -250, 'ufo');
+            that.game.VAR.ufo.moveToPoint(that.game.VAR.player.x+that.game.VAR.player.currentHalfWidth, that.game.VAR.player.y, 30, function(u){
+                that.game.VAR.player.used = true;
+                u.moveToPoint(-530, -50, 40, function(u){
+                    u.used = false
+                })
+            })
+
+            //var plat = new JumpPlatform(that.game, false, 'main', 400, 572, 'items')
 
             if(Levels.LEVEL === 1){
                 // var liftsCords = [
@@ -97,7 +103,6 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox)
                 //     that.game.ARR.lifts.push(lift);
                 // }
             }
-           
 		}
 	});
 

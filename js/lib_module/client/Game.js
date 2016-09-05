@@ -632,7 +632,12 @@ define([
     // the pool contains objects : grab one
             this.poolSize--;
             pnewObj = this.pool[this.poolSize];
-        
+            pnewObj.x = -1000;
+            pnewObj.y = -1000;
+            pnewObj.renderX = -1000;
+            pnewObj.renderY = -1000;
+            pnewObj.previousX = -1000;
+            pnewObj.previousY = -1000;
             this.pool[this.poolSize] = null; 
             this.poolActiveSize++;
             
@@ -653,7 +658,7 @@ define([
                 return i;
             }
         }
-        return this.pollActive.length
+        return this.pollActive.length;
     }
 
     function pdispose() {

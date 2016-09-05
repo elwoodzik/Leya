@@ -26,8 +26,8 @@ define([
 	        return new Image(this.game, false, context, x, y, key, w, h, f);
 	    },
 
-	    tileSprite: function(x, y, key, w, h){
-	    	return new TileSprite(this.game, x, y, key, w, h);
+	    tileSprite: function(context, x, y, key, w, h){
+	    	return new TileSprite(this.game, false, context, x, y, key, w, h);
 	    },
 
 	    sprite: function(context, x, y, key, w, h){

@@ -8,7 +8,8 @@ define([
     'Game',
     'module/Irobot2',
     'module/Menu',
-], function(my, AssetManager, Game, Irobot2, Menu){
+    'module/Intro',
+], function(my, AssetManager, Game, Irobot2, Menu, Intro){
     
     //variable
     var that;
@@ -24,7 +25,7 @@ define([
 
         create: function(){
             this.assetManager.load({
-                "mapa": "images/mapa1.png",
+                "mapa": "images/mapa.png",
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
@@ -40,7 +41,8 @@ define([
                 "jump": "images/jump.png",
                 "items": "images/items.png",
                 "hud": "images/hud.png",
-                "ufo": "images/ufo.png"
+                "ufo": "images/ufo.png",
+                "galactic": "images/galactic.jpg"
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
@@ -56,7 +58,7 @@ define([
             
             game.scallable(true);
            
-           // game.showFPS();
+            game.showFPS();
             //game.add.multiplayer('http://localhost:3000');
 
             //game.multiplayer.onSocket('message', that.getMessage);
@@ -66,7 +68,8 @@ define([
             
             game.state.add("Irobot2", Irobot2);
             game.state.add("Menu", Menu);
-            game.state.start("Menu");
+            game.state.add("Intro", Intro);
+            game.state.start("Intro");
 
         },
 

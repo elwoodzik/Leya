@@ -116,8 +116,8 @@ function(my, Rectangle){
                 this.myY = Math.floor(this.yScroll + this.hView / 2 );
             
                 if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
-                    this.xScroll -= Math.floor(((this.myX - this.positionToMoveX) / this.positionSpeed));  
-                    this.yScroll -= Math.floor(((this.myY - this.positionToMoveY) / this.positionSpeed));
+                    this.xScroll -= (((this.myX - this.positionToMoveX) / this.positionSpeed));  
+                    this.yScroll -= (((this.myY - this.positionToMoveY) / this.positionSpeed));
                 }else if(this.moveTo ){
         
                     this.xScroll = Math.floor(this.xScroll)

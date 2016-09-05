@@ -19,6 +19,7 @@ define([
             this.Water = that.game.CLASS.Water.getActivePool();
             this.Box = that.game.CLASS.Box.getActivePool();
             this.Lift = that.game.CLASS.Lift.getActivePool();
+            this.JumpPlatform = that.game.CLASS.JumpPlatform.getActivePool();
             
             this.pads = [];
 
@@ -75,6 +76,7 @@ define([
                 document.getElementById('c').innerHTML = "3 Tak"
             },false);
 
+            that.game.physic.collide(this, this.JumpPlatform, this.collideJumpPlatform);
 
             that.game.physic.collide(this, this.Box, this.collideMoveBox);
 
@@ -91,6 +93,35 @@ define([
             
 		},
 
+        collideJumpPlatform: function(p, j, dir, oy, ox){
+            if(dir === 'b'){
+  
+                if(p.body.jumping){
+                    p.body.falling = false;
+                    p.body.jumping = false;
+                    p.body.velocity.y = 0;
+                    p.body.platformer.ddy = 0;
+                    return;
+                }else{
+                    p.body.platformer.ddy = -p.body.platformer.meter * 1250;
+                    
+                    j.animations.playOnce('jump', 14 , function(){
+                        j.animations.playOnce('idle')
+                        j.y = j.startY
+                        console.log()
+                    });
+                    j.y = j.startY -28;
+                    return;    
+                }
+                           
+            }
+            // if(dir === 'r'){
+            //    p.x -= ox*3;
+            // }
+            // else if(dir === 'l'){
+            //    p.x += ox*3;
+            // }
+        },
 
         overlapWater: function(p, w, dir, oy, ox){
             //p.checkLife();
@@ -102,13 +133,15 @@ define([
                 p.y = p.startY;
                 p.renderX = p.startX;
                 p.renderY = p.startY;
+                p.previousX = p.startX;
+                p.previousY = p.startY;
                 p.used = false;
-                that.game.VAR.camera.moveToPoint(p.startX, p.startY, 22, function(){
+                that.game.VAR.camera.moveToPoint(p.startX, p.startY, 11, function(){
                     p.body.velocity.y = 0;
                 
                     that.game.VAR['ufo'].used = true;
                     //
-                    that.game.VAR.ufo.moveToPoint(320, 270, 30, function(u){
+                    that.game.VAR.ufo.moveToPoint(p.startX, 270, 30, function(u){
                         p.used = true;
                         that.game.VAR.camera.follow(that, that.game.width/2, that.game.height/2);
                         u.moveToPoint(-530, -50, 40, function(u){

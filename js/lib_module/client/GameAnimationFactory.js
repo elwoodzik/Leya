@@ -33,6 +33,8 @@ define(['Class'], function(my){
                 if(typeof callback === 'function'){
                     this.sprite.playCallback = callback;
                     this.sprite.playCallbackDellay = callbackDellay || 1;
+                }else{
+                    this.sprite.playCallback = null
                 }
             }
         },
@@ -49,6 +51,8 @@ define(['Class'], function(my){
                 this.sprite.f_max_delay = delay || 4;
                 if(typeof callback === 'function'){
                     this.sprite.onceCallback = callback;
+                }else{
+                    this.sprite.onceCallback = null
                 }
             }
         },

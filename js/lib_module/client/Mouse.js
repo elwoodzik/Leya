@@ -12,17 +12,18 @@ define(['Class'], function(my){
             this.mouseX = null;
             this.mouseY = null;
             this.touches = [];
+            this.touchesIntersects = [];
+            this.touchAccepted = [];
         },
 
         initialize: function(){
             var that = this;
-
-            window.document.addEventListener("mousemove", function(e){that.mouseMove(e)});
-            window.document.addEventListener("mousedown", function(e){that.mouseDown(e)});
-            window.document.addEventListener("touchstart", function(e){that.touchDown(e)});
-            window.document.addEventListener("touchmove", function(e){that.touchMove(e)});
-            window.document.addEventListener("touchend", function(e){that.mouseUp(e)});
-            window.document.addEventListener("mouseup", function(e){that.mouseUp(e)});
+            window.document.addEventListener("mousemove", function(e){that.mouseMove(e)}, false);
+            window.document.addEventListener("mousedown", function(e){that.mouseDown(e)}, false);
+            window.document.addEventListener("touchstart", function(e){that.touchDown(e)}, false);
+            window.document.addEventListener("touchmove", function(e){that.touchMove(e)}, false);
+            window.document.addEventListener("touchend", function(e){that.mouseUp(e)}, false);
+            window.document.addEventListener("mouseup", function(e){that.mouseUp(e)}, false);
         },
 
         mouseMove: function(e){ 
@@ -101,6 +102,8 @@ define(['Class'], function(my){
             var t = 2; //tolerance
           
             for(var i=0; i<this.touches.length; i++){
+                ///console.log('a');
+                
                 var tempMouseY = this.touches[i].clientY / this.game.scale1 ;
                 var tempMouseX = (this.touches[i].clientX - this.game.canvas.offsetLeft)  / this.game.scale1 ;
                   
@@ -113,9 +116,10 @@ define(['Class'], function(my){
                 var xIntersect = (tempMouseX + t) >= obj.x && (tempMouseX + t) <= obj.x + obj.currentWidth;
                 var yIntersect = (tempMouseY + t) >= obj.y && (tempMouseY - t) <= obj.y + obj.currentHeight;
             
-                return  xIntersect && yIntersect ;
+                this.touchesIntersects[i] = xIntersect && yIntersect;
             }
-            
+           
+            return this.touchesIntersects;
         },
 
         intersectsSprite: function(obj, static) {
@@ -157,19 +161,20 @@ define(['Class'], function(my){
         },
 
         updateTouchStats: function(obj,static, hold){
-           
-            if (this.touchIntersects(obj, static)) {
-                
-                obj.hovered = true;
-               
-                //if(this.click){ 
-                    return true;
-                //}
-            } else {
-                obj.hovered = false;
-                return false;
-            }
-            
+            var tab = this.touchIntersects(obj, static);
+            var ac
+            for(var i=0; i<tab.length; i++){
+                if (tab[i]) {
+                    console.log('ppp')
+                    obj.hovered = true;
+                    this.touchAccepted[i] = true;
+                   
+                } else {
+                    obj.hovered = false;
+                    this.touchAccepted[i] = false;
+                }
+            } 
+            return this.touchAccepted;
             //
             // if (!this.game.mouse.down) {
             //     this.click = false;
@@ -198,27 +203,34 @@ define(['Class'], function(my){
         //     }               
         // },
         touchtrigger: function(obj, static, callback, hold){
-            var wasNotClicked = this.click;
             
-            if(wasNotClicked ){
+            if(this.click ){
+              //  console.log('aaa')
                 if(!this.trig){
                    
                     this.trig = hold ? true : false;
 
                     if(Array.isArray(obj)){
+                       
                         for(u=obj.length-1; u>=0; u--){
-                            if(this.updateTouchStats(obj[u],static, hold) ){
-                                return callback.call(this, obj[u]);
+                             console.log(obj[u]);
+                            if(this.updateTouchStats(obj[u],static, hold)[u] ){
+                                callback.call(this, obj[u]);
                             }
                         }
                         this.trig = false;
+                        return false
                     }
                     else if(typeof obj === 'object' && obj != null){
-                        if(this.updateTouchStats(obj, static, hold)){
-                            
-                            return callback.call(this, obj);
+                        var tab = this.updateTouchStats(obj, static, hold);
+                        for(i=0; i<tab.length; i++){
+                            if(tab[i]){
+                                console.log('azxczxc')
+                                callback.call(this, obj);
+                            }
                         }
                         this.trig = false; 
+                        return false
                     }
                     else if(obj === null){
                        
@@ -226,7 +238,7 @@ define(['Class'], function(my){
                             this.click = false;
                             this.trig = false;
                             this.down = false;
-                            return callback.call(this);
+                            callback.call(this);
                         }   
                     }
                 }
@@ -234,9 +246,7 @@ define(['Class'], function(my){
         },
 
         trigger: function(obj, static, callback, hold){
-            var wasNotClicked = this.click;
-            
-            if(wasNotClicked ){
+            if(this.click ){
                 if(!this.trig){
                    
                     this.trig = hold ? true : false;
@@ -244,15 +254,14 @@ define(['Class'], function(my){
                     if(Array.isArray(obj)){
                         for(u=obj.length-1; u>=0; u--){
                             if(this.updateStats(obj[u],static, hold) ){
-                                return callback.call(this, obj[u]);
+                                callback.call(this, obj[u]);
                             }
                         }
                         this.trig = false;
                     }
                     else if(typeof obj === 'object' && obj != null){
                         if(this.updateStats(obj, static, hold)){
-                            
-                            return callback.call(this, obj);
+                            callback.call(this, obj);
                         }
                         this.trig = false; 
                     }
@@ -262,7 +271,7 @@ define(['Class'], function(my){
                             this.click = false;
                             this.trig = false;
                             this.down = false;
-                            return callback.call(this);
+                            callback.call(this);
                         }   
                     }
                 }
