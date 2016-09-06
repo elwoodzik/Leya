@@ -27,8 +27,9 @@ define([
                             "78" :{ "type":"solid"}
                         },
                         objects:[
+                            // Gracz
                             { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
-                            ///////////////
+                            // Woda
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":420, "y":840, "marginY": 30 },
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":490, "y":840, "marginY": 30 },
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":560, "y":840, "marginY": 30 },
@@ -40,15 +41,20 @@ define([
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":2240, "y":840, "marginY": 30 },
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":2450, "y":840, "marginY": 30 },
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":2450, "y":840, "marginY": 30 },
-                            ///////////
-                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":700, "y":420, },
-                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":770, "y":420, },
-                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1540, "y":420, },
-                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1610, "y":420, },
-                            ////////
-                            { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":140, "y":220, },
-                            //
-                            { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":400, "y":664, },
+                            // skrzynki do zniszczenia
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":700, "y":420 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":770, "y":420 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1540, "y":420 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1610, "y":420 },
+                            // skrzynki do przesuwania
+                            { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":140, "y":220 },
+                            // Windy
+                            { "name":"Lift", "pool": true, "context":"main", "image":"mapa", "x":70*8, "y":70*7, "method":[ {"name": "thereAndBack", "attr": [220, 'left', 160] } ] },
+                            // platforma do wybijania
+                            { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":400, "y":664 },
+                            // przeciwnicy
+                            { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*12, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'left', 160] } ] },
+                            { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
                         ]
                     },
                 },

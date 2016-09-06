@@ -92,7 +92,13 @@ define(['Class'], function(my){
             for(var i=0; i<this.objects.length; i++){
                 obj = this.objects[i];
                 if(obj.pool ){
-                    this.game.CLASS[obj.name].pnew(that.game, true, 'main', obj.x + (obj.marginX || 0), obj.y - this.offsetY+ (obj.marginY || 0), obj.image);
+                    var objCreated = this.game.CLASS[obj.name].pnew(that.game, true, 'main', obj.x + (obj.marginX || 0), obj.y - this.offsetY+ (obj.marginY || 0), obj.image);
+                    if(obj.method){
+                         for(var j=0; j<obj.method.length; j++){
+                            objCreated[obj.method[j].name](obj.method[j].attr[0],obj.method[j].attr[1], obj.method[j].attr[2])
+                         }
+                    }
+                   
                 }else if(obj.varr){
                     obj.marginX = obj.marginX ? obj.marginX : 0;
                     obj.marginY = obj.marginY ? obj.marginY : 0;

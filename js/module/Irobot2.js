@@ -10,8 +10,9 @@ define([
     'module/Objects/Water',
     'module/Objects/ParticleBox',
     'module/Objects/JumpPlatform',
+    'module/Objects/Enemies/Enemy1',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Enemy1){
 	
     var that;
     var ct = 0;
@@ -40,6 +41,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Box = Box;
             that.game.CLASS.Lift = Lift;
             that.game.CLASS.JumpPlatform = JumpPlatform;
+            that.game.CLASS.Enemy1 = Enemy1;
 
             that.game.ARR.map = [];
 		},
@@ -47,7 +49,6 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 		create: function(){
             that.game.world.setPortView(3500, 840);
             
-
             that.game.CLASS.ParticleBox.setupPool(70, 'main');
             that.game.CLASS.Coin.setupPool(30, 'main');
             that.game.CLASS.BoxDesc.setupPool(20, 'main');
@@ -55,6 +56,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Box.setupPool(20, 'main');
             that.game.CLASS.Lift.setupPool(5, 'main');
             that.game.CLASS.JumpPlatform.setupPool(5, 'main');
+            that.game.CLASS.Enemy1.setupPool(10, 'main');
             
             //that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
             
@@ -75,7 +77,8 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
                 })
             })
 
-            //var plat = new JumpPlatform(that.game, false, 'main', 400, 572, 'items')
+            //var enemy1 = new Enemy1(that.game, false, 'main', 70*12, 70*3, 'enemies')
+           
 
             if(Levels.LEVEL === 1){
                 // var liftsCords = [

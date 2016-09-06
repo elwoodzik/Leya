@@ -21,11 +21,12 @@ define([
             this.assetManager = new AssetManager();
             //
             this.create();
+            console.log('pp')
         },
 
         create: function(){
             this.assetManager.load({
-                "mapa": "images/mapa.png",
+                "mapa": "images/mapa1.png",
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
@@ -42,13 +43,15 @@ define([
                 "items": "images/items.png",
                 "hud": "images/hud.png",
                 "ufo": "images/ufo.png",
-                "galactic": "images/galactic.jpg"
+                "galactic": "images/galactic.jpg",
+                "enemies": "images/enemies.png"
                 //"bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
 
         onProgress: function(loaded, total, key, path, success) {
-
+            // domyslny sposob wyswietlenia paska postepu
+            that.assetManager.preload(loaded, total);
         },
 
         onComplete: function(){    
@@ -69,7 +72,7 @@ define([
             game.state.add("Irobot2", Irobot2);
             game.state.add("Menu", Menu);
             game.state.add("Intro", Intro);
-            game.state.start("Intro");
+            game.state.start("Menu");
 
         },
 

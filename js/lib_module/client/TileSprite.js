@@ -56,7 +56,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                         this.image.width,
 	                    this.image.height,
                         w+this.x + this.width - this.game.camera.xScroll, // * this.scale
-                        h- this.y - this.game.camera.yScroll, // * this.scale
+                        h- this.y - this.height - this.game.camera.yScroll, // * this.scale
                         this.width,
                         this.height
                     )
@@ -75,6 +75,9 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 
             if (this.x+this.width < 0){
                 this.x =  0
+            }
+            if (this.y+this.height < 0){
+                this.y =  0
             }
             // else if(this.x >  this.game.canvas.width){
             //     this.x = 0 - this.velocity.x;
