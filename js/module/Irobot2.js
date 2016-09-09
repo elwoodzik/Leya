@@ -10,9 +10,10 @@ define([
     'module/Objects/Water',
     'module/Objects/ParticleBox',
     'module/Objects/JumpPlatform',
+    'module/Objects/Lever',
     'module/Objects/Enemies/Enemy1',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Enemy1){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Enemy1){
 	
     var that;
     var ct = 0;
@@ -41,6 +42,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Box = Box;
             that.game.CLASS.Lift = Lift;
             that.game.CLASS.JumpPlatform = JumpPlatform;
+            that.game.CLASS.Lever = Lever;
             that.game.CLASS.Enemy1 = Enemy1;
 
             that.game.ARR.map = [];
@@ -56,6 +58,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Box.setupPool(20, 'main');
             that.game.CLASS.Lift.setupPool(5, 'main');
             that.game.CLASS.JumpPlatform.setupPool(5, 'main');
+            that.game.CLASS.Lever.setupPool(5, 'main');
             that.game.CLASS.Enemy1.setupPool(10, 'main');
             
             //that.game.add.image('main', 0, 0, 'bg', 3500, 840); 

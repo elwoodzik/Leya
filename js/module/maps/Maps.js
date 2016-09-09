@@ -51,7 +51,9 @@ define([
                             // Windy
                             { "name":"Lift", "pool": true, "context":"main", "image":"mapa", "x":70*8, "y":70*7, "method":[ {"name": "thereAndBack", "attr": [220, 'left', 160] } ] },
                             // platforma do wybijania
-                            { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":400, "y":664 },
+                            { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":400, "y":664, "method":[ {"name": "configure", "attr": [ { jump:1200 } ] } ] },
+                            // dzwignie
+                            { "name":"Lever", "pool": true, "context":"main", "image": "items", "x":640, "y":70*10, "method":[ {"name": "configure", "attr": [ { moveToX:2200, moveToY:0, actionObj:'BoxDesc' } ] } ] },
                             // przeciwnicy
                             { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*12, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'left', 160] } ] },
                             { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },

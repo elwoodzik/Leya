@@ -11,8 +11,10 @@ define([
             
             that = this;
 
+            this.jump = - (this.body.platformer.meter * 1250);
+
             this.anims();
-            this.configure();
+            //this.configure();
 		},
 		
 		update: function(dt){
@@ -26,9 +28,10 @@ define([
             this.animations.playOnce('idle', 7);
         },
 
-        configure: function(){
-          this.startX = this.x;
-          this.startY = this.y;
+        configure: function(options){
+            this.startX = this.x;
+            this.startY = this.y;
+            this.jump = - (this.body.platformer.meter * options.jump)
         }
 	})
 

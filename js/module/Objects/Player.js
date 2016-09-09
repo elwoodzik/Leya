@@ -20,6 +20,7 @@ define([
             this.Box = that.game.CLASS.Box.getActivePool();
             this.Lift = that.game.CLASS.Lift.getActivePool();
             this.JumpPlatform = that.game.CLASS.JumpPlatform.getActivePool();
+            this.Lever = that.game.CLASS.Lever.getActivePool();
             
             this.pads = [];
 
@@ -76,6 +77,8 @@ define([
                 document.getElementById('c').innerHTML = "3 Tak"
             },false);
 
+            that.game.physic.overlap(this, this.Lever, this.collideLever);
+
             that.game.physic.collide(this, this.JumpPlatform, this.collideJumpPlatform);
 
             that.game.physic.collide(this, this.Box, this.collideMoveBox);
@@ -93,9 +96,16 @@ define([
             
 		},
 
+        collideLever: function(p, l, dir, oy, ox){
+            if(this.game.keyboard.use['SPACE'].pressed && !l.active){
+         	    l.animations.playOnce('active');
+                l.active = true;
+                l.actived();
+            }
+        },
+
         collideJumpPlatform: function(p, j, dir, oy, ox){
             if(dir === 'b'){
-  
                 if(p.body.jumping){
                     p.body.falling = false;
                     p.body.jumping = false;
@@ -103,12 +113,11 @@ define([
                     p.body.platformer.ddy = 0;
                     return;
                 }else{
-                    p.body.platformer.ddy = -p.body.platformer.meter * 1250;
+                    p.body.platformer.ddy = j.jump;
                     
                     j.animations.playOnce('jump', 14 , function(){
                         j.animations.playOnce('idle')
-                        j.y = j.startY
-                        console.log()
+                        j.y = j.startY;
                     });
                     j.y = j.startY -28;
                     return;    

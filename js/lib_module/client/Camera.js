@@ -114,7 +114,7 @@ function(my, Rectangle){
                 
                 this.myX = Math.floor(this.xScroll + this.wView / 2);
                 this.myY = Math.floor(this.yScroll + this.hView / 2 );
-            
+                console.log(this.myY + "  " + this.positionToMoveY)
                 if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
                     this.xScroll -= (((this.myX - this.positionToMoveX) / this.positionSpeed));  
                     this.yScroll -= (((this.myY - this.positionToMoveY) / this.positionSpeed));
@@ -130,13 +130,13 @@ function(my, Rectangle){
                 }
 
                 if(!this.viewportRect.within(this.worldRect)){
-                
-                    if(this.viewportRect.left < this.worldRect.left)
+                //console.log(this.xScroll)
+                    if(this.xScroll <= 0)
                         this.positionToMoveX = this.myX
                     // if(this.viewportRect.top < this.worldRect.top)					
                     //     this.yScroll = this.worldRect.top;
-                    if(this.xScroll >= this.game.portViewWidth-this.game.width )
-                         this.positionToMoveX = this.myX
+                    // if(this.xScroll >= this.game.portViewWidth-this.game.width )
+                    //      this.positionToMoveX = this.myX
                     if( this.yScroll < 0)					
                         this.positionToMoveY = this.myY
                     if( this.yScroll > this.game.portViewHeight-this.game.height)					
