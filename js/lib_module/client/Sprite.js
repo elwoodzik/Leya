@@ -10,6 +10,12 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.game = game; 
             this.x = x || -500; 
             this.y = y || -500; 
+
+            this.renderX = this.x;
+            this.renderY = this.y;
+            this.previousX = this.x;
+            this.previousY = this.y;
+
             this.key = key;
             this.zIndex = 3;
             this.image = this.loader.assetManager.get(this.key) || {}; 

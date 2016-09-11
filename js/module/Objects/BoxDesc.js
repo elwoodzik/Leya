@@ -57,8 +57,8 @@ define([
                 var randVelocityX = this.game.rand(-160,440);
                 
                 particle = ParticleBox.pnew(that.game, true, 'main', this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
-                particle.body.platformer.ddy = randVelocityY;
-                particle.body.platformer.ddx = randVelocityX;
+                particle.body.velocity.y = randVelocityY;
+                particle.body.velocity.x = randVelocityX;
 
                 if(randVelocityX < 0){
                      particle.animations.play('left', 3);

@@ -21,7 +21,6 @@ define([
             this.assetManager = new AssetManager();
             //
             this.create();
-            console.log('pp')
         },
 
         create: function(){
@@ -59,7 +58,7 @@ define([
             //game.createBgCanvas();
             //game.createOnBgCanvas(6);
             
-            game.scallable(true);
+           // game.scallable(true);
            
             game.showFPS();
             //game.add.multiplayer('http://localhost:3000');

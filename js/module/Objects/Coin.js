@@ -33,16 +33,17 @@ define([
         },
 
         configure: function(){
-           this.body.immoveable = true;
-           this.body.platformer.configure({
+            this.body.immoveable = true;
+            this.body.platformer.configure({
                gravity: 200
-           })
+            })
+            this.zIndex = 5;
         },
 
         collect: function(player, coin){
            // this.game.poolCoin.free(coin, that.game.ARR.coins);
            player.score.add(1);
-          
+            
            coin.pdispose();
         }
 	})
