@@ -111,8 +111,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].fH,
                Math.floor(this.states[this.state].flip ? (-this.states[this.state].fW-this.renderX + (!this.static ? this.game.camera.xScroll : 0)) : Math.floor(this.renderX  - (!this.static ? this.game.camera.xScroll : 0))), // * this.scale
                Math.floor(this.renderY - (!this.static ? this.game.camera.yScroll : 0)),// * this.scale
-               this.states[this.state].fW ,
-               this.states[this.state].fH 
+               this.states[this.state].fW * this.scale,
+               this.states[this.state].fH * this.scale 
             )
 
              if(this.states[this.state].flip){
@@ -174,6 +174,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.worldBounce();
             this.moveToPointHandler();
             this.useThereAndBack();
+            this.scaleUpDownHandler();
             
             this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
             this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
@@ -478,8 +479,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 
                 this.myX = Math.floor(this.x+ this.currentWidth /2);
                 this.myY = Math.floor(this.y+ this.currentHeight /2 );
-            
-                if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
+                console.log(this.myY + " " + this.positionToMoveY )
+                if(this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY) ){
                     this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);  
                     this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
                     this.body.velocity.x = 0;
@@ -511,6 +512,44 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         setAtributes: function(options){
             for(var i=0; i<Object.keys(options).length; i++){
                 this[Object.keys(options)[i]] = options[Object.keys(options)[i]];
+            }
+        },
+
+        scaleUp: function(too, speed, callback){
+            this.scaleUpTrig = true;
+            this.scaleSpeed = speed;
+            this.scaleToo = too;
+            this.scallUpCallback = callback;
+        },
+
+        scaleDown: function(too, speed, callback){
+            this.scaleDownTrig = true;
+            this.scaleSpeed = speed;
+            this.scaleToo = too;
+            this.scallDownCallback = callback;
+        },
+
+        scaleUpDownHandler: function(){
+            if(this.scaleUpTrig){
+                if(this.scale < this.scaleToo){
+                    this.scale += this.scaleSpeed;
+                }else{
+                    this.scaleUpTrig = false;
+                    if(typeof this.scallUpCallback === 'function'){
+                        this.scallUpCallback();
+                    }
+                   
+                }
+            }else if(this.scaleDownTrig){
+                if(this.scale > this.scaleToo){
+                    this.scale -= this.scaleSpeed;
+                }else{
+                    this.scaleDownTrig = false;
+                    this.scale = 1;
+                    if(typeof this.scallDownCallback === 'function'){
+                        this.scallDownCallback();
+                    }
+                }
             }
         },
 

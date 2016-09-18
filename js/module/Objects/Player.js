@@ -1,11 +1,11 @@
 define([
 	'Class',
 	'lib_module/client/Sprite',
-
-], function(my, Sprite, Coin){
+    'module/Objects/Hud',
+], function(my, Sprite, Hud){
 	var that;
 
-	var Player = my.Class(Sprite, {
+	var Player = my.Class(Sprite, Hud, {
 
 		constructor: function(game, polled, context, x, y, key, width, height){
 			Player.Super.apply(this, arguments);
@@ -21,30 +21,34 @@ define([
             this.Lift = that.game.CLASS.Lift.getActivePool();
             this.JumpPlatform = that.game.CLASS.JumpPlatform.getActivePool();
             this.Lever = that.game.CLASS.Lever.getActivePool();
+            this.Keys = that.game.CLASS.Keys.getActivePool();
             
-            this.pads = [];
+            this.leftPad = {};
+            this.rightPad = {};
+            this.jumpPad = {};
+            // this.pads = [];
 
-            this.leftPad = that.game.add.sprite('main', 90, that.game.height-140, 'left');
-            this.leftPad.zIndex = 10;
-            this.leftPad.animations.add('idle', 0, 0, 90, 90, [0]);
-            this.leftPad.animations.play('idle')
-            this.leftPad.static = true;
+            // this.leftPad = that.game.add.sprite('main', 90, that.game.height-140, 'left');
+            // this.leftPad.zIndex = 10;
+            // this.leftPad.animations.add('idle', 0, 0, 90, 90, [0]);
+            // this.leftPad.animations.play('idle')
+            // this.leftPad.static = true;
 
-            this.rightPad = that.game.add.sprite('main', 260, that.game.height-140, 'right');
-            this.rightPad.zIndex = 10;
-            this.rightPad.animations.add('idle', 0, 0, 90, 90, [0]);
-            this.rightPad.animations.play('idle')
-            this.rightPad.static = true;
+            // this.rightPad = that.game.add.sprite('main', 260, that.game.height-140, 'right');
+            // this.rightPad.zIndex = 10;
+            // this.rightPad.animations.add('idle', 0, 0, 90, 90, [0]);
+            // this.rightPad.animations.play('idle')
+            // this.rightPad.static = true;
 
-            this.jumpPad = that.game.add.sprite('main', that.game.width - 190, that.game.height-140, 'jump');
-            this.jumpPad.zIndex = 10;
-            this.jumpPad.animations.add('idle', 0, 0, 90, 90, [0]);
-            this.jumpPad.animations.play('idle')
-            this.jumpPad.static = true;
+            // this.jumpPad = that.game.add.sprite('main', that.game.width - 190, that.game.height-140, 'jump');
+            // this.jumpPad.zIndex = 10;
+            // this.jumpPad.animations.add('idle', 0, 0, 90, 90, [0]);
+            // this.jumpPad.animations.play('idle')
+            // this.jumpPad.static = true;
             
-            this.pads.push(this.leftPad)
-            this.pads.push(this.rightPad)
-            this.pads.push(this.jumpPad)
+            // this.pads.push(this.leftPad)
+            // this.pads.push(this.rightPad)
+            // this.pads.push(this.jumpPad)
 
             this.startX = x;
             this.startY = y;
@@ -57,25 +61,27 @@ define([
             
             superUpdate.call(this, dt);
 
-            that.leftPad.active = false;
-            that.rightPad.active = false;
-            that.jumpPad.active = false;
-            document.getElementById('a').innerHTML = "1 NIE"
-            document.getElementById('b').innerHTML = "2 NIE"
-            document.getElementById('c').innerHTML = "3 NIE"
+   //          that.leftPad.active = false;
+   //          that.rightPad.active = false;
+   //          that.jumpPad.active = false;
+   //          document.getElementById('a').innerHTML = "1 NIE"
+   //          document.getElementById('b').innerHTML = "2 NIE"
+   //          document.getElementById('c').innerHTML = "3 NIE"
 
-            that.game.mouse.touchtrigger(that.pads[0], true, function(pad){
-                pad.active = true;
-                document.getElementById('a').innerHTML = "1 Tak"
-			},false);
-            that.game.mouse.touchtrigger(that.pads[1], true, function(pad){
-                pad.active = true;
-                document.getElementById('b').innerHTML = "2 Tak"
-            },false);
-             that.game.mouse.touchtrigger(that.pads[2], true, function(pad){
-                pad.active = true;
-                document.getElementById('c').innerHTML = "3 Tak"
-            },false);
+   //          that.game.mouse.touchtrigger(that.pads[0], true, function(pad){
+   //              pad.active = true;
+   //              document.getElementById('a').innerHTML = "1 Tak"
+			// },false);
+   //          that.game.mouse.touchtrigger(that.pads[1], true, function(pad){
+   //              pad.active = true;
+   //              document.getElementById('b').innerHTML = "2 Tak"
+   //          },false);
+   //           that.game.mouse.touchtrigger(that.pads[2], true, function(pad){
+   //              pad.active = true;
+   //              document.getElementById('c').innerHTML = "3 Tak"
+   //          },false);
+            
+            that.game.physic.overlap(this, this.Keys, this.collectKeys);
 
             that.game.physic.overlap(this, this.Lever, this.collideLever);
 
@@ -96,11 +102,22 @@ define([
             
 		},
 
+        collectKeys:function(p, k, dir, oy, ox){
+            var hudKey = p.keysIcon[k.state];
+            hudKey.available = true;
+            hudKey.animations.playOnce(k.state+'active');
+            hudKey.scaleUp(2, 0.07, function(){
+                hudKey.scaleDown(1, 0.07, null)
+            })
+            k.pdispose();
+        },
+
         collideLever: function(p, l, dir, oy, ox){
             if(this.game.keyboard.use['SPACE'].pressed && !l.active){
          	    l.animations.playOnce('active');
                 l.active = true;
                 l.actived();
+
             }
         },
 
@@ -216,11 +233,6 @@ define([
             }
         },
 
-        checkLife: function(){
-            
-           
-        },
-
         changeImage: function(key){
             return this.image = this.loader.assetManager.get(key); 
         },
@@ -241,67 +253,15 @@ define([
             this.createPlayerIcon();
             this.createLifeHud();
             this.createScoreHud();
+            this.createKeysIcon();
             
             // dodaje obsluge kamery do gracza
 
             that.game.VAR.camera = this.game.add.camera(0, 0, this.game.width, this.game.height, this.game.portViewWidth, this.game.portViewHeight);
             that.game.VAR.camera.follow(this, this.game.width/2, this.game.height/2);
-
-            
         },
 
-        createPlayerIcon : function(){
-            var playerIcon; 
-            playerIcon = that.game.add.sprite('main', 25, 17, 'hud');
-            playerIcon.animations.add('icon', 52,48, 52, 50, [0]);
-            playerIcon.animations.playOnce('icon');
-            playerIcon.static = true;
-            playerIcon.zIndex = 10;
-        },
 
-        createLifeHud: function(){
-            this.life = 3;
-
-            var lifeX = 95; 
-            that.game.ARR.playerLifes = [];
-
-            for(var i=0; i<this.life; i++){
-                var lifeSprite = that.game.add.sprite('main', lifeX, 20, 'life');
-                lifeSprite.animations.add('full', 0,0, 53, 45, [0]);
-                lifeSprite.animations.add('empty', 53,0, 53, 45, [0]);
-                lifeSprite.animations.playOnce('full');
-                lifeSprite.static = true;
-                lifeSprite.zIndex = 10;
-                lifeX += 60;
-
-                that.game.ARR.playerLifes.push(lifeSprite);
-            }
-        },
-
-        createScoreHud: function(){
-            this.scoreIcon = that.game.add.sprite('main', 350, 20, 'hud');
-            this.scoreIcon.animations.add('icon', 55,0, 48, 48, [0]);
-            this.scoreIcon.animations.playOnce('icon');
-            this.scoreIcon.static = true;
-            this.scoreIcon.zIndex = 10;
-
-            // this.scoreimage = that.game.add.sprite('main', 550, 20, 'hud');
-            // this.scoreimage.static = true;
-            // this.scoreimage.zIndex = 10;
-            // this.scoreimage.animations.add('0', 230, 0, 32, 40, [0]);
-            // this.scoreimage.animations.add('1', 195,40, 32, 40, [0]);
-            // this.scoreimage.animations.add('2', 55,97, 32, 40, [0]);
-            // this.scoreimage.animations.add('3', 237, 81, 32, 40, [0]);
-            // this.scoreimage.animations.add('4', 237, 121, 32, 40, [0]);
-            // this.scoreimage.animations.add('5', 237, 161, 32, 40, [0]);
-            // this.scoreimage.animations.add('6', 230, 40, 32, 40, [0]);
-            // this.scoreimage.animations.add('7', 225, 203, 34, 40, [0]);
-            // this.scoreimage.animations.add('8', 190, 203, 34, 42, [0]);
-            // this.scoreimage.animations.add('9', 196, 0, 32, 40, [0]);
-            // this.scoreimage.animations.playOnce('0');
-
-            this.score = that.game.add.text('main', 0, 410, 60, 50, '#795548', null);
-        }
 	})
 
     var superUpdate = Player.Super.prototype.update;

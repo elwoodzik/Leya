@@ -1,7 +1,8 @@
 define([
 	'Class',
     'module/Objects/Player',
-], function(my, Player){
+    'module/Objects/Exit',
+], function(my, Player, Exit){
 	var that;
 
 	var Maps = my.Class({
@@ -28,8 +29,7 @@ define([
                             "173" :{ "type":"solid"}
                         },
                         objects:[
-                            // Gracz
-                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
+                            
                             // Woda
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":420, "y":840, "marginY": 30 },
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":490, "y":840, "marginY": 30 },
@@ -58,9 +58,21 @@ define([
                             { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":400, "y":664, "method":[ {"name": "configure", "attr": [ { jump:1200 } ] } ] },
                             // dzwignie
                             { "name":"Lever", "pool": true, "context":"main", "image": "items", "x":640, "y":70*10, "method":[ {"name": "configure", "attr": [ { moveToX:2200, moveToY:0, actionObj:'BoxDesc' } ] } ] },
+                            // Klucze
+                            { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":140, "y":220, "method":[ {"name": "configure", "attr": [ { key:'red'} ] } ] },
+                            { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":340, "y":520, "method":[ {"name": "configure", "attr": [ { key:'blue'} ] } ] },
+                            { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":440, "y":520, "method":[ {"name": "configure", "attr": [ { key:'green'} ] } ] },
+                            { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":770, "y":710, "method":[ {"name": "configure", "attr": [ { key:'yellow'} ] } ] },
+                            // zamki do drzwi
+                            { "name":"Lock", "pool": true, "context":"main", "image": "mapa", "x":240, "y":620, "method":[ {"name": "configure", "attr": [ { lock:'green'} ] } ] },
                             // przeciwnicy
                             { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*12, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'left', 160] } ] },
                             { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
+                        
+                            // Gracz
+                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
+                            // Exit
+                            { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 3220, "y": 560, "marginY": 30 },
                         ]
                     },
                 },

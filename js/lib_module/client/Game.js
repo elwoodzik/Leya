@@ -109,7 +109,7 @@ define([
             
             if (elapsed > 1000 || elapsed < 0) {
                 elapsed = that.FRAMEDURATION;
-                LAG = 0;
+                
             }
            
             LAG += elapsed;
@@ -117,10 +117,10 @@ define([
             while (LAG >= that.FRAMEDURATION) {  
                that.capturePreviousPositions(that.gameObject);
                //that.cTime += that.FRAMEDURATION;
-              
+                
                that.update(that.FRAMEDURATION/1000);
                LAG -= that.FRAMEDURATION;
-                
+               
             }
 
             lagOffset = LAG / that.FRAMEDURATION;
@@ -632,13 +632,7 @@ define([
     // the pool contains objects : grab one
             this.poolSize--;
             pnewObj = this.pool[this.poolSize];
-            console.log(this)
-            // pnewObj.x = -1000;
-            // pnewObj.y = -1000;
-            // pnewObj.renderX = -1000;
-            // pnewObj.renderY = -1000;
-            // pnewObj.previousX = -1000;
-            // pnewObj.previousY = -1000;
+          
             this.pool[this.poolSize] = null; 
             this.poolActiveSize++;
             
