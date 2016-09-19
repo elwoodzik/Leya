@@ -24,8 +24,6 @@ define(['Class'], function(my){
               
             this.ddx = 0;
             this.ddy = 0;  
-
-            
         },
 
         move: function(dt){
