@@ -22,7 +22,8 @@ define([
 		},
 
         configure: function(){
-           
+           this.startX = this.x;
+           this.startY = this.y;
         },
 
         endLevel: function(player, exitDoor){
@@ -37,7 +38,7 @@ define([
                 }
 
                 if(!levelNext.playable){
-                        levelNext.icon = 'stars0';
+                    levelNext.icon = 'stars0';
                     levelNext.playable = true;
                 }
                 

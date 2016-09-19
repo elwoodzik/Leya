@@ -16,20 +16,16 @@ define([
 		},
 		
 		update: function(dt){
-			superUpdate.call(this, dt);
+            superUpdate.call(this, dt);
 		},
-
-        changeImage: function(key){
-            return this.image = this.loader.assetManager.get(key); 
-        },
 
         anims: function(){
             this.animations.add('idle', 5*72, 8*75, 72, 70, [0,1]);
-            this.animations.play('idle',8);
+            this.animations.play('idle',6);
         },
 
         configure: function(){
-           this.zIndex = 8;
+            this.zIndex = 8;
         }
 	})
 

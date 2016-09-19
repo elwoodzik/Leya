@@ -19,7 +19,6 @@ define(['Class'], function(my){
             this.canvas.style.left = '50%';
             this.canvas.style.marginLeft = -this.canvas.width/2 + "px";
 
-
             document.body.style.overflow = 'hidden';
                 
             document.body.appendChild(this.canvas);

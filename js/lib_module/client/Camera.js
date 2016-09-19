@@ -114,7 +114,7 @@ function(my, Rectangle){
                 
                 this.myX = Math.floor(this.xScroll + this.wView / 2);
                 this.myY = Math.floor(this.yScroll + this.hView / 2 );
-                console.log(this.myY + "  " + this.positionToMoveY)
+                
                 if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
                     this.xScroll -= (((this.myX - this.positionToMoveX) / this.positionSpeed));  
                     this.yScroll -= (((this.myY - this.positionToMoveY) / this.positionSpeed));

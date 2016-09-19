@@ -89,18 +89,31 @@ define([
 
             that.game.physic.collide(this, this.Box, this.collideMoveBox);
 
-            that.game.physic.collide(this, this.BoxDesc, this.collideDestroyBox)
+            that.game.physic.collide(this, this.BoxDesc, this.collideDestroyBox);
 
             that.game.physic.collide(this, this.Lift, this.collideLifts);
 
             that.game.physic.overlap(this, this.Water, this.overlapWater);
 
+            that.usePotion();
+
             //that.game.physic.overlap(this, this.Coin, this.overlapWater);
 
             this.body.platformer.move(dt);
-
-            
 		},
+
+        usePotion: function(){
+            if(this.game.keyboard.use['1'].pressed){
+                if(that.game.VAR.player.life < 3){
+                    that.game.VAR.player.life++;
+                    that.game.ARR.playerLifes[that.game.VAR.player.life-1].animations.play('full');
+                }  
+            }else{
+                // dodac odglos
+            }
+            this.game.keyboard.use['1'].pressed = false;
+        },
+        
 
         collectKeys:function(p, k, dir, oy, ox){
             var hudKey = p.keysIcon[k.state];
@@ -117,7 +130,6 @@ define([
          	    l.animations.playOnce('active');
                 l.active = true;
                 l.actived();
-
             }
         },
 
@@ -141,17 +153,9 @@ define([
                 }
                            
             }
-            // if(dir === 'r'){
-            //    p.x -= ox*3;
-            // }
-            // else if(dir === 'l'){
-            //    p.x += ox*3;
-            // }
         },
 
         overlapWater: function(p, w, dir, oy, ox){
-            //p.checkLife();
-
             if(p.life > 1 ){
                 p.life--;
                	that.game.ARR.playerLifes[p.life].animations.play('empty');
@@ -233,10 +237,6 @@ define([
             }
         },
 
-        changeImage: function(key){
-            return this.image = this.loader.assetManager.get(key); 
-        },
-
         anims: function(){
             this.animations.add('idle', 0,195, 65, 90, [0]);
             this.animations.add('moveRight', 0, 0, 73, 90, [0,1,2,3,4]);
@@ -260,8 +260,6 @@ define([
             that.game.VAR.camera = this.game.add.camera(0, 0, this.game.width, this.game.height, this.game.portViewWidth, this.game.portViewHeight);
             that.game.VAR.camera.follow(this, this.game.width/2, this.game.height/2);
         },
-
-
 	})
 
     var superUpdate = Player.Super.prototype.update;

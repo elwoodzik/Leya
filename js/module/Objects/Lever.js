@@ -37,7 +37,6 @@ define([
         action: function(options){
             that.game.CLASS[that.actionObj].pnew(that.game, true,'main', 2000, 150, 'mapa');
             setTimeout(function(){
-                console.log('ile')
                 that.game.VAR.camera.moveToPoint(that.game.VAR.player.x, that.game.VAR.player.y, 15, function(){
                     that.game.VAR.camera.follow(that.game.VAR.player, that.game.width/2, that.game.height/2);
                 })

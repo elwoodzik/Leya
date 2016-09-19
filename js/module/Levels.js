@@ -21,7 +21,7 @@ define(['Class'], function(my){
 		},
 
 		update: function(){
-			that.game.mouse.trigger(that.lvls,true, function(lvl){
+			that.game.mouse.trigger(that.lvls, true, function(lvl){
             
                 if(lvl.playable){
                     Levels.LEVEL = lvl.lvl;

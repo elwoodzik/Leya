@@ -2,10 +2,33 @@ define([
 	'Class',
     'module/Objects/Player',
     'module/Objects/Exit',
-], function(my, Player, Exit){
+    'module/maps/switchFunctions'
+], function(my, Player, Exit, switchFunctions){
 	var that;
 
-	var Maps = my.Class({
+    switchFunctions = switchFunctions.init();
+   
+   
+    //  var switchFunctions = {
+    //     lvl1:  [
+    //         {
+    //             actOn: 'exit',
+    //             callbackIn: function(){
+    //                 if(this.game.VAR[this.actOn]){ 
+    //                     this.game.VAR[this.actOn].x = 30; 
+    //                 }
+    //             },
+    //             callbackOut: function(){ 
+    //                 if(this.game.VAR[this.actOn]){
+    //                     this.game.VAR[this.actOn].x = this.game.VAR[this.actOn].startX;
+    //                 }
+    //             }
+    //         }
+    //     ]
+    //  } 
+
+	var Maps = my.Class(null, {
+
 
         STATIC: {
             MAPS: {
@@ -29,7 +52,6 @@ define([
                             "173" :{ "type":"solid"}
                         },
                         objects:[
-                            
                             // Woda
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":420, "y":840, "marginY": 30 },
                             { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":490, "y":840, "marginY": 30 },
@@ -64,7 +86,9 @@ define([
                             { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":440, "y":520, "method":[ {"name": "configure", "attr": [ { key:'green'} ] } ] },
                             { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":770, "y":710, "method":[ {"name": "configure", "attr": [ { key:'yellow'} ] } ] },
                             // zamki do drzwi
-                            { "name":"Lock", "pool": true, "context":"main", "image": "mapa", "x":240, "y":620, "method":[ {"name": "configure", "attr": [ { lock:'green'} ] } ] },
+                            { "name":"Lock", "pool": true, "context":"main", "image": "mapa", "x":240, "y":620, "method":[ {"name": "configure", "attr": [ { lock:'yellow'} ] } ] },
+                            // przyciski
+                            { "name":"Switch", "pool": true, "context":"main", "image": "items", "x":290, "y":70*9, "marginY": 5, "method":[ {"name": "configure", "attr": [ { actOn: switchFunctions.lvl1[0].actOn, callbackIn: switchFunctions.lvl1[0].callbackIn, callbackOut: switchFunctions.lvl1[0].callbackOut  /* End */}  ] }  ] },
                             // przeciwnicy
                             { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*12, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'left', 160] } ] },
                             { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
@@ -110,7 +134,13 @@ define([
         getElements: function(lvl){
             return Maps.MAPS['LEVEL'+lvl].ELEMENTS;
         }
+
+        
+       
 	})
+
+   
+       
 	
 	return Maps;
 })

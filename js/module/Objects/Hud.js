@@ -24,6 +24,15 @@ define([
             }
         },
 
+        createPotionIcon: function(){
+            var potionIcon; 
+            potionIcon = this.game.add.sprite('main', 25, 17, 'hud');
+            potionIcon.animations.add('icon', 52,48, 52, 50, [0]);
+            potionIcon.animations.playOnce('icon');
+            potionIcon.static = true;
+            potionIcon.zIndex = 10;
+        },
+
         createPlayerIcon : function(){
             var playerIcon; 
             playerIcon = this.game.add.sprite('main', 25, 17, 'hud');

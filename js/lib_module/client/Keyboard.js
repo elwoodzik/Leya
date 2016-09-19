@@ -48,6 +48,11 @@ define(['Class'], function(my){
                     pressed: false,
                     name:"D"
                 },
+                '1': {
+                    hold: false,
+                    pressed: false,
+                    name:"1"
+                },
 
                 'SPACE': {
                     hold: false,
@@ -67,6 +72,7 @@ define(['Class'], function(my){
                 '83': 'S',
                 '65': 'A',
                 '68': 'D',
+                '49': '1',
 
                 '32': 'SPACE'
             }

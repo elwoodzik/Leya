@@ -21,28 +21,19 @@ define([
 			superUpdate.call(this, dt);
 
             if(this.body.immoveable){
-                this.game.physic.collide(this.Water, this, function(p, b , dir, oy, ox){
-                    console.log('a')
-                    b.body.immoveable = false;
-                    if(dir === 'b'){
-                        b.body.velocity.y = 0;
-                    }   
-                })
+                this.game.physic.collide(this.Water, this, this.waterCollide);
             }
-
-            // this.game.physic.collide(this, this.game.ARR.boxBlocks, function(p, b , dir, oy, ox){
-            //     if(dir === 'b'){
-            //         b.body.velocity.y = oy
-            //     }   
-            // })
 
             if(this.body.immoveable){
                  this.body.platformer.collision(dt);
             }
 		},
 
-        changeImage: function(key){
-            return this.image = this.loader.assetManager.get(key); 
+        waterCollide: function(p, b , dir, oy, ox){
+            b.body.immoveable = false;
+            if(dir === 'b'){
+                b.body.velocity.y = 0;
+            }   
         },
 
         anims: function(){
@@ -53,7 +44,6 @@ define([
         configure: function(){
             this.body.immoveable = true;
             this.body.colideWorldSide = true;
-            //this.zIndex = 5;
         }
 	})
 

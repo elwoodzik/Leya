@@ -24,27 +24,26 @@ define([
             if(this.body.immoveable){
                 this.body.platformer.collision(dt);
             }
-            
 		},
 
         anims: function(){
-            this.animations.add('idle', 0, 0, 55, 57, [0,1,2,3,4]);
-            this.animations.play('idle', 5);
+            this.animations.add('gold', 1, 0, 39.5, 38, [0,1,2,3,4,5,6,7,8,9]);
+            this.animations.add('silver', 1, 38, 39.5, 38, [0,1,2,3,4,5,6,7,8,9]);
+            //this.animations.add('idle', 0, 0, 55, 57, [0,1,2,3,4]);
+            this.animations.play('silver', 4);
         },
 
         configure: function(){
             this.body.immoveable = true;
             this.body.platformer.configure({
-               gravity: 200
+                gravity: 200
             })
             this.zIndex = 5;
         },
 
         collect: function(player, coin){
-           // this.game.poolCoin.free(coin, that.game.ARR.coins);
-           player.score.add(1);
-            
-           coin.pdispose();
+            player.score.add(1);
+            coin.pdispose();
         }
 	})
 

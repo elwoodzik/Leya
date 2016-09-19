@@ -13,7 +13,7 @@ define([
     var that,
         PREVIOUS = 0,
         FPS = 60,
-        step = 1000/FPS,
+        step = (1000/FPS)/1000,
         LAG = 0,
         loop = null,
         elapsed = 0,
@@ -31,7 +31,8 @@ define([
         entityUpdate,
         entityRender,
         entityRenderStatic,
-        entityRenderOnStatic;
+        entityRenderOnStatic,
+        entityCapture;
     
     var Game = my.Class({
         
@@ -87,8 +88,6 @@ define([
             this.createCanvas(width, height, orientation);
 
             this.useFpsCounter = false;
-
-            
         },
 
         timestamp: function() {
@@ -104,12 +103,10 @@ define([
                 that.fpsmeter.tickStart();
             }
             
-            
             elapsed = timestamp - PREVIOUS;
             
             if (elapsed > 1000 || elapsed < 0) {
                 elapsed = that.FRAMEDURATION;
-                
             }
            
             LAG += elapsed;
@@ -118,18 +115,16 @@ define([
                that.capturePreviousPositions(that.gameObject);
                //that.cTime += that.FRAMEDURATION;
                 
-               that.update(that.FRAMEDURATION/1000);
+               that.update(step);
                LAG -= that.FRAMEDURATION;
-               
             }
 
             lagOffset = LAG / that.FRAMEDURATION;
             
             that.render(lagOffset);
             
-            
-            
             PREVIOUS = timestamp;
+
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
             }
@@ -263,7 +258,7 @@ define([
 
                             entityRender.draw(dt);
                             
-                            if(entityRender.body && entityRender.body.angle!=0 ){
+                            if(entityRender.body && entityRender.body.angle != 0 ){
                                 this.ctx.restore();
                             }
                         }
@@ -565,14 +560,13 @@ define([
         },
 
         capturePreviousPositions: function(entities){
-            var entity;
             for(u=0, uMax=entities.length; u<uMax; u++){
-                entity = entities[u];
-                if(entity.used){
-                    entity.previousX = entity.x;
-                    entity.previousY = entity.y;
+                entityCapture = entities[u];
+                if(entityCapture.used){
+                    entityCapture.previousX = entityCapture.x;
+                    entityCapture.previousY = entityCapture.y;
                 }
-                entity = null;
+                entityCapture = null;
             }
         },
 

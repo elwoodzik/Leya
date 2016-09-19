@@ -24,18 +24,12 @@ define([
             var hudKey = player.keysIcon[lock.state];
             var lockState = lock.state;
             
-           
-
             if(hudKey.available && this.game.keyboard.use['SPACE'].pressed){
-               
                 hudKey.moveToPoint(lock.x+lock.currentHalfWidth, lock.y-lock.currentHalfHeight, 10, function(){
                     hudKey.used = false;
+                    hudKey.available = false;
                 })
             }
-            //hudKey.available = false;
-
-           // console.log(hudKey.state.substr(0, hudKey.state.length-6))
-          
         },
 
         anims: function(){

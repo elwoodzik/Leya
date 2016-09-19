@@ -13,29 +13,35 @@ define([
     'module/Objects/Lever',
     'module/Objects/Keys',
     'module/Objects/Lock',
+    'module/Objects/Switch',
     'module/Objects/Enemies/Enemy1',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Keys, Lock, Enemy1){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Keys, Lock, Switch, Enemy1){
 	
     var that;
-    var ct = 0;
-    var time = 200;
-    var count = 1000;
-    var cc = 0;
 
 	var Irobot2 = my.Class(null, Maps, {
 
         STATIC: {
-            COINS: 0,
-            DESCBOX: 0,
-            WATER: 0,
-            LIFTS: 0,
-            PARTICLEBOX: 0
+            COINS: 50,
+            BOXDESC: 20,
+            BOX: 20,
+            WATER: 40,
+            LIFT: 5,
+            PARTICLEBOX: 70,
+            JUMPPLATFORM: 5,
+            LEVER: 5,
+            KEYS: 4,
+            LOCK: 4,
+            SWITCH: 4,
+            ENEMY1: 5
         },
 
 		constructor: function(game){
             that = this;
             that.game = game; 
+
+           // that.game.canvas.style.background = 'url("images/bg.png")';
 
             that.game.CLASS.Coin = Coin;
             that.game.CLASS.BoxDesc = BoxDesc;
@@ -47,26 +53,31 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Lever = Lever;
             that.game.CLASS.Keys = Keys;
             that.game.CLASS.Lock = Lock;
+            that.game.CLASS.Switch = Switch;
             that.game.CLASS.Enemy1 = Enemy1;
-
+            
             that.game.ARR.map = [];
+
+            that.game.VAR.exit = null;
+            that.game.VAR.player = null;
+            that.game.VAR.ufo = null;
 		},
 
 		create: function(){
             that.game.world.setPortView(3500, 840);
             
-            that.game.CLASS.ParticleBox.setupPool(70, 'main');
-            that.game.CLASS.Coin.setupPool(30, 'main');
-            that.game.CLASS.BoxDesc.setupPool(20, 'main');
-            that.game.CLASS.Water.setupPool(40, 'main');
-            that.game.CLASS.Box.setupPool(20, 'main');
-            that.game.CLASS.Lift.setupPool(5, 'main');
-            that.game.CLASS.JumpPlatform.setupPool(5, 'main');
-            that.game.CLASS.Lever.setupPool(5, 'main');
-            that.game.CLASS.Keys.setupPool(4, 'main');
-            that.game.CLASS.Lock.setupPool(4, 'main');
-            that.game.CLASS.Enemy1.setupPool(10, 'main');
-
+            that.game.CLASS.ParticleBox.setupPool(Irobot2.PARTICLEBOX, 'main');
+            that.game.CLASS.Coin.setupPool(Irobot2.COINS, 'main');
+            that.game.CLASS.BoxDesc.setupPool(Irobot2.BOXDESC, 'main');
+            that.game.CLASS.Water.setupPool(Irobot2.WATER, 'main');
+            that.game.CLASS.Box.setupPool(Irobot2.BOX, 'main');
+            that.game.CLASS.Lift.setupPool(Irobot2.LIFT, 'main');
+            that.game.CLASS.JumpPlatform.setupPool(Irobot2.JUMPPLATFORM, 'main');
+            that.game.CLASS.Lever.setupPool(Irobot2.LEVER, 'main');
+            that.game.CLASS.Keys.setupPool(Irobot2.KEYS, 'main');
+            that.game.CLASS.Lock.setupPool(Irobot2.LOCK, 'main');
+            that.game.CLASS.Switch.setupPool(Irobot2.SWITCH, 'main');
+            that.game.CLASS.Enemy1.setupPool(Irobot2.ENEMY1, 'main');
             
             //that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
             
@@ -85,37 +96,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
                 u.moveToPoint(-530, -50, 40, function(u){
                     u.used = false
                 })
-            })
-
-            //var enemy1 = new Enemy1(that.game, false, 'main', 70*12, 70*3, 'enemies')
-           
-
-            if(Levels.LEVEL === 1){
-                // var liftsCords = [
-                //     { x:  70*5, y: 70*5, dis: 170, dir: 'down'},
-                // ] 
-                // for (var i=0; i<liftsCords.length; i++){
-                //     let cords = liftsCords[i];
-                //     var lift = that.game.CLASS.Lift.pnew(that.game, true, 'main', cords.x, cords.y, 'mapa');
-                //     lift.thereAndBack(cords.dis, cords.dir, 100);
-                // }
-               
-              
-                // for (var i=0; i<35; i++){
-                //     that.game.add.particles(9*70+34,4*70+10);
-                // }
-                // var liftsCords = [
-                //     { x:  70*10, y: 70*3, dis: 170, dir: 'down'},
-                // ] 
-
-                // for (var i=0; i<liftsCords.length; i++){
-                //     let cords = liftsCords[i];
-                //     var lift = new Lift(that.game, 'main', cords.x, cords.y, 'mapa');
-                //     lift.thereAndBack(cords.dis, cords.dir, 100);
-                    
-                //     that.game.ARR.lifts.push(lift);
-                // }
-            }
+            })     
 		}
 	});
 

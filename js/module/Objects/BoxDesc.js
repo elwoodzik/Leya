@@ -18,19 +18,10 @@ define([
             
             this.ParticleBox = that.game.CLASS.ParticleBox.getActivePool();
 
-
             this.anims();
             this.configure();
 		},
 		
-		// update: function(dt){
-		// 	superUpdate.call(this, dt);
-		// },
-
-        changeImage: function(key){
-            return this.image = this.loader.assetManager.get(key); 
-        },
-
         anims: function(){
             this.animations.add('idle', 0*72, 2*72, 70, 70, [0]);
             this.animations.play('idle');
@@ -44,7 +35,7 @@ define([
                 randVelocityY = that.game.rand(-580,-100);
                 randVelocityX = that.game.rand(-100,200);
                 
-                var coin = Coin.pnew(that.game, true,'main', this.x, this.y, 'coin');
+                var coin = Coin.pnew(that.game, true,'main', this.x, this.y, 'coin1');
                
                 coin.body.velocity.y = randVelocityY;
                 coin.body.velocity.x = randVelocityX;

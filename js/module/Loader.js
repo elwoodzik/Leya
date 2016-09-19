@@ -29,11 +29,11 @@ define([
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",
-                "ground": "images/ground.png",
                 "bg": "images/bg.png",
                 "levels": "images/levels.png",
                 "exit": "images/exit.png",
                 "coin": "images/coin.png",
+                "coin1": "images/coins_new.png",
                 "life": "images/life.png",
                 "particleBox": "images/particleBox.png",
                 "left": "images/left.png",
@@ -43,8 +43,8 @@ define([
                 "hud": "images/hud.png",
                 "ufo": "images/ufo.png",
                 "galactic": "images/galactic.jpg",
-                "enemies": "images/enemies.png"
-                //"bg2": "images/bg2.png",
+                "enemies": "images/enemies.png",
+                "bg2": "images/bg2.png",
             }, this.onComplete, this.onProgress);
         },
 
@@ -54,7 +54,7 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(1366, 768, false, true);
+            game = new Game(1366, 768, false);
             //game.createBgCanvas();
             //game.createOnBgCanvas(6);
             

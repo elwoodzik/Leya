@@ -479,7 +479,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 
                 this.myX = Math.floor(this.x+ this.currentWidth /2);
                 this.myY = Math.floor(this.y+ this.currentHeight /2 );
-                console.log(this.myY + " " + this.positionToMoveY )
+
                 if(this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY) ){
                     this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);  
                     this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
