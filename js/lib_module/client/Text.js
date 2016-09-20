@@ -1,4 +1,4 @@
-define(['Class'], function(my){
+define(['Class', 'lib_module/client/Body'], function(my, Body){
     
    var Text = my.Class({
         constructor: function(game, context, text, x, y, size, color, action){
@@ -11,16 +11,27 @@ define(['Class'], function(my){
             this.color = color;
             this.text = text;
             this.action = action;
-            this.currentWidth = size
-            this.currentHeight = size
-            this.zIndex = 5;
             
+            
+            
+            this.body = new Body(this.game, this);
 
             this.contextType = 'main';
             //
             //this.game.physic.outOfScreen(this);
             this.setContext(context);
-           
+            var textSize = this.context.measureText(this.text);
+            
+            this.currentWidth = textSize.width;
+            this.currentHeight = size;
+            this.currentHalfWidth = textSize.width / 2;
+            this.currentHalfHeight = size / 2;
+            this.zIndex = 5;
+        },
+
+        update:function(dt){
+            this.moveToPointHandler();
+            this.doInTimeHandler();
         },
 
         draw: function() { 
@@ -28,9 +39,7 @@ define(['Class'], function(my){
             var fontSize = this.size;
             this.context.fillStyle = this.color;
             this.context.font = fontSize + "px Forte";
-    
-            var textSize = this.context.measureText(this.text);
-            this.currentWidth = textSize.width;
+
             var textX = this.x;
             var textY = this.y;
            
@@ -123,6 +132,64 @@ define(['Class'], function(my){
 			}
         },
 
+        moveToPoint: function(x, y, speed, callback){
+            //if(!this.moveTo){
+                this.positionToMoveX = Math.floor(x);
+                this.positionToMoveY = Math.floor(y)  ;
+                this.positionSpeed = speed;
+                this.oldVelocityX = this.body.velocity.x;
+                this.oldVelocityY = this.body.velocity.y;
+                this.oldUseCollision = this.useCollision;
+                this.useCollision = false;
+                this.moveTo = true;
+                
+                this.positionCallback = callback;
+            //}
+        },
+
+        moveToPointHandler: function(){
+            if(this.moveTo){
+                
+                this.myX = Math.floor(this.x+ this.currentWidth /2);
+                this.myY = Math.floor(this.y+ this.currentHeight /2 );
+
+                if(this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY) ){
+                    this.x -= ((this.myX - this.positionToMoveX) / this.positionSpeed);  
+                    this.y -= ((this.myY - this.positionToMoveY) / this.positionSpeed);
+                    this.body.velocity.x = 0;
+                    this.body.velocity.y = 0;
+                }else if(this.moveTo ){
+                    this.body.velocity.x = this.oldVelocityX;
+                    this.body.velocity.y = this.oldVelocityY;
+                    this.useCollision = this.oldUseCollision;
+                    this.x = Math.floor(this.x)
+                    this.y = Math.floor(this.y) 
+                    this.moveTo = false;
+                    if(typeof this.positionCallback === 'function'){
+                        this.positionCallback.call(this.game, this);
+                    }
+                }
+            }
+        },
+
+        doInTime: function(time, callback){
+            this.timeLocal = 0; 
+            this.timeMax = time;
+            this.timeCallback = callback;
+            this.inTime = true;
+        },
+
+        doInTimeHandler: function(){
+            if(this.inTime){
+                this.timeLocal += this.game.FRAMEDURATION;
+
+                if(this.timeLocal > this.timeMax ){
+                    this.timeLocal = 0;
+                    this.inTime = false;
+                    this.timeCallback.call(this);
+                }
+            }
+        },
 
         remove: function(count){
             return this.text-=count;

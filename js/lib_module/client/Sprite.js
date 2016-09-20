@@ -489,15 +489,14 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                     this.body.velocity.x = this.oldVelocityX;
                     this.body.velocity.y = this.oldVelocityY;
                     this.useCollision = this.oldUseCollision;
-                    this.x = Math.floor(this.x)
-                    this.y = Math.floor(this.y) 
+                    this.x = Math.floor(this.x);
+                    this.y = Math.floor(this.y);
                     this.moveTo = false;
                     if(typeof this.positionCallback === 'function'){
                         this.positionCallback.call(this.game, this);
                     }
                 }
             }
-            
         },
 
         doInTime: function(time, callback){

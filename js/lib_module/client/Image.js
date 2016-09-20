@@ -253,6 +253,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             }
             
         },
+		
 		setIndex: function(index){
             this.zIndex = index;
             this.game.gameObject.sort(function(obj1, obj2) {

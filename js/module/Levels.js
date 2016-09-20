@@ -17,12 +17,11 @@ define(['Class'], function(my){
 		},
 		
 		create: function(){
-			this.createBlockLevels(440, 260, 90, 6, 24);
+			this.createBlockLevels(440, 250, 90, 6, 24);
 		},
 
 		update: function(){
 			that.game.mouse.trigger(that.lvls, true, function(lvl){
-            
                 if(lvl.playable){
                     Levels.LEVEL = lvl.lvl;
                     that.game.state.start('Irobot2');

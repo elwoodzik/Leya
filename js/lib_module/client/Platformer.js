@@ -63,6 +63,7 @@ define(['Class'], function(my){
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
                 this.onplatform = false;
+                this.game.sounds.play('player-jump');
             }
         },
 
@@ -83,7 +84,7 @@ define(['Class'], function(my){
                 
                 this.ddy = this.body.falling ? this.gravity : 0;
             
-                this.body.tolerance = this.sprite.currentHeight - this.tile;
+                this.body.tolerance =  this.sprite.currentHeight > 70 ? this.sprite.currentHeight - this.tile : (this.tile - this.sprite.currentHeight);
                 //this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
                 
                 var tx        = this.p2t(this.sprite.x ),
@@ -100,11 +101,12 @@ define(['Class'], function(my){
             //console.log(this.checkmove(this.sprite.x, this.sprite.y))
             
                 if(this.body.velocity.y > 0){
-                    if(this.checkmove(this.sprite.x, this.sprite.y + this.body.tolerance)){
+                    if(this.checkmove(this.sprite.x, this.sprite.y )){
                         this.body.velocity.y = 0;
+                        
                         this.body.falling = false;   // no longer falling
                         this.body.jumping = false;
-                        this.sprite.y = this.t2p(ty) - this.body.tolerance-1;
+                        this.sprite.y = this.t2p(ty) - (this.sprite.currentHeight > 70 ? this.sprite.currentHeight - this.tile : -(this.tile - this.sprite.currentHeight));
                         
                     }
                 }else if(this.body.velocity.y < 0){

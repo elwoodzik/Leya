@@ -40,9 +40,8 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 		constructor: function(game){
             that = this;
             that.game = game; 
-
-           // that.game.canvas.style.background = 'url("images/bg.png")';
-
+           
+            // that.game.canvas.style.background = 'url("images/bg.png")';
             that.game.CLASS.Coin = Coin;
             that.game.CLASS.BoxDesc = BoxDesc;
             that.game.CLASS.Water = Water;
@@ -79,7 +78,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Switch.setupPool(Irobot2.SWITCH, 'main');
             that.game.CLASS.Enemy1.setupPool(Irobot2.ENEMY1, 'main');
             
-            //that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
+            that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
             
             // tworzy mape
             that.game.ARR.map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
@@ -90,6 +89,10 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             // tworzy dynamiczne obiekty zdefinoiwane w maps/Maps.js
             that.game.ARR.map.createObjOnMap();
 
+            //that.createUfo();
+		},
+
+        createUfo: function(){
             that.game.VAR.ufo = that.game.add.image('main', -530, -250, 'ufo');
             that.game.VAR.ufo.moveToPoint(that.game.VAR.player.x+that.game.VAR.player.currentHalfWidth, that.game.VAR.player.y, 30, function(u){
                 that.game.VAR.player.used = true;
@@ -97,7 +100,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
                     u.used = false
                 })
             })     
-		}
+        }
 	});
 
 	return Irobot2;

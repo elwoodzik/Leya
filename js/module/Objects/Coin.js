@@ -40,10 +40,12 @@ define([
                 gravity: 200
             })
             this.zIndex = 5;
+        
         },
 
         collect: function(player, coin){
             player.score.add(1);
+            that.game.sounds.play('coin-take');
             coin.pdispose();
         }
 	})

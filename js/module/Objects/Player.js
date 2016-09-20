@@ -26,6 +26,8 @@ define([
             this.leftPad = {};
             this.rightPad = {};
             this.jumpPad = {};
+
+            
             // this.pads = [];
 
             // this.leftPad = that.game.add.sprite('main', 90, that.game.height-140, 'left');
@@ -143,7 +145,7 @@ define([
                     return;
                 }else{
                     p.body.platformer.ddy = j.jump;
-                    
+                    that.game.sounds.play('jump-platform');
                     j.animations.playOnce('jump', 14 , function(){
                         j.animations.playOnce('idle')
                         j.y = j.startY;
@@ -168,16 +170,17 @@ define([
                 p.used = false;
                 that.game.VAR.camera.moveToPoint(p.startX, p.startY, 11, function(){
                     p.body.velocity.y = 0;
-                
-                    that.game.VAR['ufo'].used = true;
+
+                    that.game.VAR['ufo'].startPoint();
+                    //that.game.VAR['ufo'].used = true;
                     //
-                    that.game.VAR.ufo.moveToPoint(p.startX, 270, 30, function(u){
-                        p.used = true;
-                        that.game.VAR.camera.follow(that, that.game.width/2, that.game.height/2);
-                        u.moveToPoint(-530, -50, 40, function(u){
-                            u.used = false
-                        })
-                    })
+                    // that.game.VAR.ufo.moveToPoint(p.startX, 270, 30, function(u){
+                    //     p.used = true;
+                    //     that.game.VAR.camera.follow(that, that.game.width/2, that.game.height/2);
+                    //     u.moveToPoint(-530, -50, 40, function(u){
+                    //         u.used = false
+                    //     })
+                    // })
                 })
             }else{
                 that.game.state.start('Menu');

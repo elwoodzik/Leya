@@ -31,6 +31,7 @@ define([
                 "player3": "images/player3.png",
                 "bg": "images/bg.png",
                 "levels": "images/levels.png",
+                "levels1": "images/levels1.png",
                 "exit": "images/exit.png",
                 "coin": "images/coin.png",
                 "coin1": "images/coins_new.png",
@@ -45,6 +46,10 @@ define([
                 "galactic": "images/galactic.jpg",
                 "enemies": "images/enemies.png",
                 "bg2": "images/bg2.png",
+                "menu-bg": "images/menu-bg.png",
+                "coin-take": "sounds/coin-take.wav",
+                "jump-platform": "sounds/jump.wav",
+                "player-jump":"sounds/player-jump.wav"
             }, this.onComplete, this.onProgress);
         },
 
@@ -54,25 +59,27 @@ define([
         },
 
         onComplete: function(){    
-            game = new Game(1366, 768, false);
-            //game.createBgCanvas();
-            //game.createOnBgCanvas(6);
-            
-            game.scallable(true);
-           
-            game.showFPS();
-            //game.add.multiplayer('http://localhost:3000');
+            new Game(1366, 768, false, function(){
+                
+                this.showFPS();
+                //this.add.multiplayer('http://localhost:3000');
+                this.add.sounds(that.assetManager);
 
-            //game.multiplayer.onSocket('message', that.getMessage);
+                this.sounds.useSounds(false);
+                //this.multiplayer.onSocket('message', that.getMessage);
+                
+                this.mouse.initialize();
+                this.keyboard.initialize();
+                
+                this.state.add("Irobot2", Irobot2);
+                this.state.add("Menu", Menu);
+                this.state.add("Intro", Intro);
+                this.state.start("Menu");
+            });
+            //this.createBgCanvas();
+            //this.createOnBgCanvas(6);
            
-            game.mouse.initialize();
-            game.keyboard.initialize();
             
-            game.state.add("Irobot2", Irobot2);
-            game.state.add("Menu", Menu);
-            game.state.add("Intro", Intro);
-            game.state.start("Menu");
-
         },
 
         getMessage: function(data){

@@ -23,6 +23,8 @@ define(['Class'], function(my){
                 
             document.body.appendChild(this.canvas);
 
+            this.sounds = true;
+
         },
         
         load: function(images, onDone, onProgress) {
@@ -51,7 +53,7 @@ define(['Class'], function(my){
             }
 	},
         
-        _loadItem: function(queueItem, itemCounter, onDone, onProgress) {
+    _loadItem: function(queueItem, itemCounter, onDone, onProgress) {
 		var self = this;
 		
 		if(queueItem.path.slice(-3) === "jpg" || queueItem.path.slice(-3) === "png" || queueItem.path.slice(-4) === "jpeg"
@@ -69,9 +71,8 @@ define(['Class'], function(my){
                     };
                     img.src = queueItem.path;
 		}
-		else if(queueItem.path.slice(-3) == "mp3" || queueItem.path.slice(-3) == "ogg" || queueItem.path.slice(-3) == "wav"){
+		else if(queueItem.path.slice(-3) === "mp3" || queueItem.path.slice(-3) === "ogg" || queueItem.path.slice(-3) === "wav"){
                     // var audio = new Audio();
-                    console.log('a')
                     createjs.Sound.registerSound(queueItem.path, queueItem.key, 0);
                     self._onItemLoaded(queueItem, itemCounter, onDone, onProgress, true);
                     // audio.oncanplaythrough = function() {
@@ -86,7 +87,7 @@ define(['Class'], function(my){
                     // audio.src = queueItem.path;
 		}
 		else{
-                    console.log("niepoprawne rozszerzenie")
+                    console.error('plik ' +queueItem.path+ ' nie zostal zaladowany!')
 		}
 		
 	},
@@ -108,7 +109,9 @@ define(['Class'], function(my){
 	},
 
 	play: function(key) {
-        createjs.Sound.play(key);
+        if(this.sounds){
+            createjs.Sound.play(key);
+        }
 	},
 
 	stop: function(key) {
@@ -117,11 +120,24 @@ define(['Class'], function(my){
         createjs.Sound.stop(key);
 	},
 
+    useSounds: function(bool){
+        if(typeof bool === 'undefined'){
+             console.error('Metoda "useSounds" wymaga podania argumentu: True / False');
+        }
+        else if(typeof bool === 'boolean'){
+            this.sounds = bool;
+            return this.sounds;
+        }else{
+            console.error('Metoda "useSounds" przyjmuje tylko argument: True / False');
+        }
+        
+    },
+
     preload: function(loaded, total){
         var currentProgress = loaded /total * 400;
         if(loaded === 1){
             this.ctx.font = "30px Arial";
-            this.ctx.fillStyle = 'black';
+            this.ctx.fillStyle = 'white';
             this.ctx.fillText("Ładowanie", 180, 60);
         }
         this.ctx.beginPath();
@@ -133,9 +149,9 @@ define(['Class'], function(my){
         this.ctx.fillRect(51, 81, currentProgress-1, 28);
         //
         
-        this.ctx.clearRect(200,120,500,300)
+        this.ctx.clearRect(200,120,500,300);
         this.ctx.font = "30px Arial";
-        this.ctx.fillStyle = 'black';
+        this.ctx.fillStyle = 'white';
         this.ctx.fillText(Math.floor(currentProgress/4) + "%", 230, 150);
 
         if(loaded === total){

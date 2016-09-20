@@ -2,8 +2,9 @@ define([
 	'Class',
     'module/Objects/Player',
     'module/Objects/Exit',
+    'module/Objects/Ufo',
     'module/maps/switchFunctions'
-], function(my, Player, Exit, switchFunctions){
+], function(my, Player, Exit, Ufo, switchFunctions){
 	var that;
 
     switchFunctions = switchFunctions.init();
@@ -97,6 +98,8 @@ define([
                             { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
                             // Exit
                             { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 3220, "y": 560, "marginY": 30 },
+
+                            { "name":Ufo, "context":"main", "image":"ufo", "varr":"ufo", "x": -530, "y":  -250 },
                         ]
                     },
                 },

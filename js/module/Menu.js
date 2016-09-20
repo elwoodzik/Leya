@@ -11,7 +11,9 @@ define([
 		},
 		
 		create: function(){
-			this.add.text('main', "test", (this.canvas.width/2)-50, 100, 99, "white", null);
+			this.add.image('main', 0,0,'menu-bg',1366, 768);
+			
+			this.add.text('main', "Wybierz Poziom", (this.canvas.width/2)-300, 170, 99, "#333", null);
 			
 			that.levels = new Levels(this);
 		},

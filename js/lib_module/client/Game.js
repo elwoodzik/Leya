@@ -5,8 +5,9 @@ define([
     'lib_module/client/World', 
     'lib_module/client/Mouse',
     'lib_module/client/Keyboard',
-    'lib_module/client/Physic'
-], function(my, GameObjectFactory, GameStateFactory, World, Mouse, Keyboard, Physic){
+    'lib_module/client/Physic',
+    'lib_module/client/Logo'
+], function(my, GameObjectFactory, GameStateFactory, World, Mouse, Keyboard, Physic,Logo){
     
     'use strict';
     //private
@@ -40,7 +41,7 @@ define([
             
         },
 
-        constructor: function(width, height, orientation){
+        constructor: function(width, height, orientation, callback){
             that = this;
 
             this.width = width;
@@ -74,6 +75,8 @@ define([
 
             this.map = null;
 
+            
+
             this.cTime = 0;
 
             this.renderer = true;
@@ -87,7 +90,12 @@ define([
             
             this.createCanvas(width, height, orientation);
 
+            this.scallable(true);
+            this.callback = callback;
             this.useFpsCounter = false;
+            this.state.add('Logo', Logo)
+            this.state.start('Logo')
+            // this.callback();
         },
 
         timestamp: function() {
@@ -105,6 +113,8 @@ define([
             
             elapsed = timestamp - PREVIOUS;
             
+            PREVIOUS = timestamp;
+
             if (elapsed > 1000 || elapsed < 0) {
                 elapsed = that.FRAMEDURATION;
             }
@@ -122,8 +132,6 @@ define([
             lagOffset = LAG / that.FRAMEDURATION;
             
             that.render(lagOffset);
-            
-            PREVIOUS = timestamp;
 
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
@@ -445,7 +453,7 @@ define([
                     ));
 
                     var width = Math.min(Math.floor(this.screenWidth * this.scale1), w);
-                    var height = Math.min(Math.floor(this.screenHeight * this.scale1),h);
+                    var height = Math.min(Math.floor(this.screenHeight * this.scale1), h);
                
                     canvas.style.width = width + "px";
                     canvas.style.height = height + "px";
@@ -456,6 +464,8 @@ define([
                    
                  }else{
                     this.scale1 = 1;
+                    canvas.style.width = this.portViewWidth + "px";
+                    canvas.style.height = this.portViewHeight + "px";
                     canvas.style.position = 'absolute';
                     canvas.style.left = '50%';
                     canvas.style.marginLeft = -this.screenWidth/2 + "px";
@@ -493,16 +503,22 @@ define([
             if(that.onbgcanvas){
                 this.resizeCanvas(this.onbgcanvas, this.orientation);
             }
+            window.removeEventListener("resize", this.scallableFunction);
+            if(bool){
+                window.addEventListener("resize", this.scallableFunction);
+            }
+            
+        },
 
-            window.addEventListener("resize", function() {
-                that.resizeCanvas(that.canvas, that.orientation);
-                if(that.bgcanvas){
-                    that.resizeCanvas(that.bgcanvas, that.orientation);
-                }
-                if(that.onbgcanvas){
-                    that.resizeCanvas(that.onbgcanvas, that.orientation);
-                }
-            }, false);
+        scallableFunction: function(){
+            that.resizeCanvas(that.canvas, that.orientation);
+
+            if(that.bgcanvas){
+                that.resizeCanvas(that.bgcanvas, that.orientation);
+            }
+            if(that.onbgcanvas){
+                that.resizeCanvas(that.onbgcanvas, that.orientation);
+            }
         },
 
         sortByIndex: function(){
