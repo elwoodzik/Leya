@@ -106,7 +106,9 @@ define(['Class'], function(my){
                         
                         this.body.falling = false;   // no longer falling
                         this.body.jumping = false;
-                        this.sprite.y = this.t2p(ty) - (this.sprite.currentHeight > 70 ? this.sprite.currentHeight - this.tile : -(this.tile - this.sprite.currentHeight));
+                        var tol = this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile - 1) : - (this.tile - this.sprite.currentHeight-1);
+                      
+                        this.sprite.y = this.t2p(ty) - tol 
                         
                     }
                 }else if(this.body.velocity.y < 0){

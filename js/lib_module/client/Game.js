@@ -93,9 +93,9 @@ define([
             this.scallable(true);
             this.callback = callback;
             this.useFpsCounter = false;
-            this.state.add('Logo', Logo)
-            this.state.start('Logo')
-            // this.callback();
+           this.state.add('Logo', Logo)
+           this.state.start('Logo')
+           //   this.callback();
         },
 
         timestamp: function() {
