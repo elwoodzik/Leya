@@ -232,7 +232,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                 this.myX = Math.floor(this.x + this.currentWidth /2);
                 this.myY = Math.floor(this.y + this.currentHeight /2 );
             
-                if(this.moveTo && (this.myX != this.positionToMoveX || this.myY != this.positionToMoveY) ){
+                if(this.moveTo && (this.myX != this.positionToMoveX && this.myY != this.positionToMoveY) ){
                     this.x -= Math.floor(((this.myX - this.positionToMoveX) / this.positionSpeed));  
                     this.y -= Math.floor(((this.myY - this.positionToMoveY) / this.positionSpeed));
                     this.body.velocity.x = 0;

@@ -13,6 +13,7 @@ define([
             that = this;
             that.game = game;
             this.Water = that.game.CLASS.Water.getActivePool();
+            this.Box = that.game.CLASS.Box.getActivePool();
             this.anims();
             this.configure();
 		},
@@ -23,14 +24,28 @@ define([
             if(this.body.immoveable){
                 this.game.physic.collide(this.Water, this, this.waterCollide);
             }
+            
+                this.game.physic.collide(this.Box, this, this.boxCollide);
+           
 
             if(this.body.immoveable){
                  this.body.platformer.collision(dt);
             }
 		},
 
+        boxCollide: function(p, b , dir, oy, ox){
+            //p.y -= oy;
+            if(dir === 'b'){
+                p.y -= oy;
+                console.log('zzz')
+            }
+
+            //p.body.immoveable = false;
+        },
+
         waterCollide: function(p, b , dir, oy, ox){
             b.body.immoveable = false;
+            
             if(dir === 'b'){
                 b.body.velocity.y = 0;
             }   

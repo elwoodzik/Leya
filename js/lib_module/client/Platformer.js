@@ -20,7 +20,7 @@ define(['Class'], function(my){
             this.maxdy    = options.maxdy || this.meter * 40;         // max vertical speed   (60 tiles per second)
             this.accel    = options.accel || this.maxdx / (1 / 3);          // horizontal acceleration -  take 1/2 second to reach maxdx
             this.friction = options.maxdx || this.maxdx / (1/6);          // horizontal friction     -  take 1/6 second to stop from maxdx
-            this.jump     = options.meter || this.meter * 850;     
+            this.jump     = options.meter || this.meter * 800;     
               
             this.ddx = 0;
             this.ddy = 0;  
@@ -101,7 +101,7 @@ define(['Class'], function(my){
             //console.log(this.checkmove(this.sprite.x, this.sprite.y))
             
                 if(this.body.velocity.y > 0){
-                    if(this.checkmove(this.sprite.x, this.sprite.y +this.body.tolerance)){
+                    if(this.checkmove(this.sprite.x, this.sprite.y + this.body.tolerance)){
                         this.body.velocity.y = 0;
                         
                         this.body.falling = false;   // no longer falling
