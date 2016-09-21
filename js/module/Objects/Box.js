@@ -1,8 +1,8 @@
 define([
 	'Class',
 	'lib_module/client/Sprite',
-    'module/Objects/Water',
-], function(my, Sprite, Water){
+    // 'module/Objects/Water',
+], function(my, Sprite){
 	var that;
 
 	var Box = my.Class(Sprite, {

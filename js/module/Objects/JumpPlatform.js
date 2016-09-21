@@ -18,9 +18,8 @@ define([
 		},
 		
 		update: function(dt){
-			superUpdate.call(this, dt);
+            superUpdate.call(this, dt);
 		},
-
        
         anims: function(){
             this.animations.add('idle', 430, 322, 72, 45, [0]);

@@ -2,7 +2,8 @@ define([
 	'Class',
 	'lib_module/client/Sprite',
     'module/Objects/Hud',
-], function(my, Sprite, Hud){
+    'module/Objects/Coin',
+], function(my, Sprite, Hud, Coin){
 	var that;
 
 	var Player = my.Class(Sprite, Hud, {
@@ -14,7 +15,7 @@ define([
             that.game = game;
             this.used = false;
 
-            this.Coin = that.game.CLASS.Coin.getActivePool();
+            this.Coin = Coin.getActivePool();
             this.BoxDesc = that.game.CLASS.BoxDesc.getActivePool();
             this.Water = that.game.CLASS.Water.getActivePool();
             this.Box = that.game.CLASS.Box.getActivePool();

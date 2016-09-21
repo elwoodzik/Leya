@@ -141,6 +141,7 @@ define(['Class'], function(my){
             this.ctx.fillText("Ładowanie", 180, 60);
         }
         this.ctx.beginPath();
+        this.ctx.strokeStyle = 'white';
         this.ctx.rect(50,80,400,30);
         this.ctx.stroke();
         this.ctx.closePath();

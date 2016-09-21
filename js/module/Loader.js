@@ -67,7 +67,7 @@ define([
                 //this.add.multiplayer('http://localhost:3000');
                 this.add.sounds(that.assetManager);
 
-                //this.sounds.useSounds(false);
+                this.sounds.useSounds(false);
                 //this.multiplayer.onSocket('message', that.getMessage);
                 
                 this.mouse.initialize();

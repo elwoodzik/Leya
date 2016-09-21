@@ -40,8 +40,10 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 		constructor: function(game){
             that = this;
             that.game = game; 
+		},
+
+		create: function(){
            
-            // that.game.canvas.style.background = 'url("images/bg.png")';
             that.game.CLASS.Coin = Coin;
             that.game.CLASS.BoxDesc = BoxDesc;
             that.game.CLASS.Water = Water;
@@ -55,52 +57,42 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Switch = Switch;
             that.game.CLASS.Enemy1 = Enemy1;
             
-            that.game.ARR.map = [];
-
             that.game.VAR.exit = null;
             that.game.VAR.player = null;
             that.game.VAR.ufo = null;
-		},
 
-		create: function(){
-            that.game.world.setPortView(3500, 840);
             
-            that.game.CLASS.ParticleBox.setupPool(Irobot2.PARTICLEBOX, 'main');
-            that.game.CLASS.Coin.setupPool(Irobot2.COINS, 'main');
-            that.game.CLASS.BoxDesc.setupPool(Irobot2.BOXDESC, 'main');
-            that.game.CLASS.Water.setupPool(Irobot2.WATER, 'main');
-            that.game.CLASS.Box.setupPool(Irobot2.BOX, 'main');
-            that.game.CLASS.Lift.setupPool(Irobot2.LIFT, 'main');
-            that.game.CLASS.JumpPlatform.setupPool(Irobot2.JUMPPLATFORM, 'main');
-            that.game.CLASS.Lever.setupPool(Irobot2.LEVER, 'main');
-            that.game.CLASS.Keys.setupPool(Irobot2.KEYS, 'main');
-            that.game.CLASS.Lock.setupPool(Irobot2.LOCK, 'main');
-            that.game.CLASS.Switch.setupPool(Irobot2.SWITCH, 'main');
-            that.game.CLASS.Enemy1.setupPool(Irobot2.ENEMY1, 'main');
+            ParticleBox.setupPool(Irobot2.PARTICLEBOX, 'main');
+            Coin.setupPool(Irobot2.COINS, 'main');
+            BoxDesc.setupPool(Irobot2.BOXDESC, 'main');
+            Water.setupPool(Irobot2.WATER, 'main');
+            Box.setupPool(Irobot2.BOX, 'main');
+            Lift.setupPool(Irobot2.LIFT, 'main');
+            JumpPlatform.setupPool(Irobot2.JUMPPLATFORM, 'main');
+            Lever.setupPool(Irobot2.LEVER, 'main');
+            Keys.setupPool(Irobot2.KEYS, 'main');
+            Lock.setupPool(Irobot2.LOCK, 'main');
+            Switch.setupPool(Irobot2.SWITCH, 'main');
+            Enemy1.setupPool(Irobot2.ENEMY1, 'main');
             
             that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
             
             // tworzy mape
-            that.game.ARR.map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
-
+            var map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
+       
             // podstawia pod pola mapy odpowiednie obiekty zdefiniowane w maps/Maps.js 
-            that.game.ARR.map.setElements(that.getElements(Levels.LEVEL));
+            map.setElements(that.getElements(Levels.LEVEL));
 
             // tworzy dynamiczne obiekty zdefinoiwane w maps/Maps.js
-            that.game.ARR.map.createObjOnMap();
+            map.createObjOnMap();
 
-            //that.createUfo();
-		},
+            // okresla wielkosc calego swiata
+            that.game.world.setPortView(map.mapObj.w * map.w, map.mapObj.h * map.h);
 
-        createUfo: function(){
-            that.game.VAR.ufo = that.game.add.image('main', -530, -250, 'ufo');
-            that.game.VAR.ufo.moveToPoint(that.game.VAR.player.x+that.game.VAR.player.currentHalfWidth, that.game.VAR.player.y, 30, function(u){
-                that.game.VAR.player.used = true;
-                u.moveToPoint(-530, -50, 40, function(u){
-                    u.used = false
-                })
-            })     
-        }
+           
+		}
+
+      
 	});
 
 	return Irobot2;

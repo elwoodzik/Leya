@@ -124,6 +124,10 @@ define([
                         },
                         objects:[ 
                             { "name":Player, "context": "main", "image": "player3", "varr": "player", "x": 697.5, "y": 497.5 },
+
+                            { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 220, "y": 460, "marginY": 30 },
+
+                            { "name":Ufo, "context":"main", "image":"ufo", "varr":"ufo", "x": 530, "y":  -250 },
                         ]
                     }
                 }
