@@ -11,7 +11,9 @@ define([
             
             that = this;
             that.game = game;
-
+          
+            this.Water = that.game.CLASS.Water.getActivePool();
+            
             this.anims();
             this.configure();
 		},
@@ -20,6 +22,8 @@ define([
 			superUpdate.call(this, dt);
 
             that.game.physic.overlap(that.game.VAR.player, this, this.collect);
+
+            that.game.physic.overlap(this.Water, this, this.collideWater);
 
             if(this.body.immoveable){
                 this.body.platformer.collision(dt);
@@ -40,12 +44,16 @@ define([
                 gravity: 200
             })
             this.zIndex = 5;
-        
         },
 
         collect: function(player, coin){
             player.score.add(1);
             that.game.sounds.play('coin-take');
+            coin.pdispose();
+        },
+
+        collideWater: function(water, coin){
+            coin.immoveable = false;
             coin.pdispose();
         }
 	})

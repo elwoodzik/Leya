@@ -23,7 +23,7 @@ define([
             this.JumpPlatform = that.game.CLASS.JumpPlatform.getActivePool();
             this.Lever = that.game.CLASS.Lever.getActivePool();
             this.Keys = that.game.CLASS.Keys.getActivePool();
-            
+       
             this.leftPad = {};
             this.rightPad = {};
             this.jumpPad = {};

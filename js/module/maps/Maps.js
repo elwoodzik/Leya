@@ -148,7 +148,7 @@ define([
                             { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":1960, "y":348 },
                             { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":2380, "y":348 },
 
-                            { "name":Player, "context": "main", "image": "player3", "varr": "player", "x": 1900, "y": 197 },
+                            { "name":Player, "context": "main", "image": "player3", "varr": "player", "x": 1900, "y": 497 },
 
                             { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 220, "y": 460, "marginY": 30 },
 

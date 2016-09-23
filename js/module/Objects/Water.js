@@ -26,6 +26,7 @@ define([
 
         configure: function(){
             this.zIndex = 8;
+            
         }
 	})
 

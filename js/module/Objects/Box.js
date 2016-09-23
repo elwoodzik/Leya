@@ -20,27 +20,26 @@ define([
 		
 		update: function(dt){
 			superUpdate.call(this, dt);
-
+            
+            if(this.body.immoveable){
+                 this.body.platformer.collision(dt);
+            }
             if(this.body.immoveable){
                 this.game.physic.collide(this.Water, this, this.waterCollide);
             }
             
-                this.game.physic.collide(this.Box, this, this.boxCollide);
-           
-
-            if(this.body.immoveable){
-                 this.body.platformer.collision(dt);
-            }
+            this.game.physic.collide(this.Box, this, this.boxCollide);
 		},
 
         boxCollide: function(p, b , dir, oy, ox){
-            //p.y -= oy;
             if(dir === 'b'){
                 p.y -= oy;
-                console.log('zzz')
+                p.body.immoveable = true;
             }
-
-            //p.body.immoveable = false;
+            if(dir === 't'){
+                b.y += oy;
+                b.body.immoveable = false;
+            }
         },
 
         waterCollide: function(p, b , dir, oy, ox){

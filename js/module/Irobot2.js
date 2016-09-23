@@ -44,9 +44,10 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 
 		create: function(){
            
-            that.game.CLASS.Coin = Coin;
+            
             that.game.CLASS.BoxDesc = BoxDesc;
             that.game.CLASS.Water = Water;
+            that.game.CLASS.Coin = Coin;
             that.game.CLASS.ParticleBox = ParticleBox;
             that.game.CLASS.Box = Box;
             that.game.CLASS.Lift = Lift;
@@ -63,9 +64,9 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 
             
             ParticleBox.setupPool(Irobot2.PARTICLEBOX, 'main');
+            Water.setupPool(Irobot2.WATER, 'main');
             Coin.setupPool(Irobot2.COINS, 'main');
             BoxDesc.setupPool(Irobot2.BOXDESC, 'main');
-            Water.setupPool(Irobot2.WATER, 'main');
             Box.setupPool(Irobot2.BOX, 'main');
             Lift.setupPool(Irobot2.LIFT, 'main');
             JumpPlatform.setupPool(Irobot2.JUMPPLATFORM, 'main');
