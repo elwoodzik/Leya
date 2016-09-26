@@ -60,7 +60,8 @@ define([
 
         onComplete: function(){    
             new Game(1366, 768, false, function(){
-                
+                //this.createBgCanvas();
+               // this.createOnBgCanvas(6);
                // this.scallable(false)
 
                 this.showFPS();
@@ -78,8 +79,7 @@ define([
                 this.state.add("Intro", Intro);
                 this.state.start("Menu");
             });
-            //this.createBgCanvas();
-            //this.createOnBgCanvas(6);
+            //
            
             
         },
