@@ -12,9 +12,9 @@ define([
     'use strict';
     //private
     var that,
-        PREVIOUS = 0,
+        PREVIOUS = new Date().getTime(),
         FPS = 60,
-        step = (1000/FPS)/1000,
+        step = 1/60,
         LAG = 0,
         loop = null,
         elapsed = 0,
@@ -102,34 +102,33 @@ define([
             return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
         },
 
-        animationLoop : function(timestamp) {
-            if (!timestamp) {
-                timestamp = 0;
-            } 
+        animationLoop : function() {
+           
            
             if(that.useFpsCounter){
                 that.fpsmeter.tickStart();
             }
-            
-            elapsed = timestamp - PREVIOUS;
-            
-            PREVIOUS = timestamp;
+            now = that.timestamp();
+            elapsed = (now - PREVIOUS) / 1000;
+
+            PREVIOUS = now;
 
             if (elapsed > 1000 || elapsed < 0) {
                 elapsed = that.FRAMEDURATION;
             }
            
             LAG += elapsed;
-        
-            while (LAG >= that.FRAMEDURATION) {  
-               that.capturePreviousPositions(that.gameObject);
-               //that.cTime += that.FRAMEDURATION;
+            //console.log(LAG + "          " + step)
+            while (LAG >= step) { 
                 
+               //that.cTime += that.FRAMEDURATION;
                that.update(step);
-               LAG -= that.FRAMEDURATION;
+               LAG -= step;
             }
 
-            lagOffset = LAG / that.FRAMEDURATION;
+           that.capturePreviousPositions(that.gameObject); 
+
+            lagOffset = LAG / step;
             
             that.render(lagOffset);
 
