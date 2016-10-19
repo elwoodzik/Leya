@@ -65,11 +65,13 @@ define([
                // this.scallable(false)
 
                 this.showFPS();
-                //this.add.multiplayer('http://localhost:3000');
+                
+                this.add.multiplayer('http://localhost:4000');
+                this.multiplayer.onSocket('message', that.getMessage);
                 this.add.sounds(that.assetManager);
 
                 this.sounds.useSounds(false);
-                //this.multiplayer.onSocket('message', that.getMessage);
+                
                 
                 this.mouse.initialize();
                 this.keyboard.initialize();
@@ -85,6 +87,7 @@ define([
         },
 
         getMessage: function(data){
+            console.log(this)
             console.log(data);
         }
     });

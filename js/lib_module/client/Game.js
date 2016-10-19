@@ -109,21 +109,21 @@ define([
                 that.fpsmeter.tickStart();
             }
             now = that.timestamp();
-            elapsed = (now - PREVIOUS) / 1000;
+            elapsed = (now - PREVIOUS)  ;
 
             PREVIOUS = now;
 
             if (elapsed > 1000 || elapsed < 0) {
                 elapsed = that.FRAMEDURATION;
             }
-           
+            
             LAG += elapsed;
             //console.log(LAG + "          " + step)
-            while (LAG >= step) { 
+            if (LAG >= step) { 
                 
                //that.cTime += that.FRAMEDURATION;
                that.update(step);
-               LAG -= step;
+               LAG = 0;
             }
 
            that.capturePreviousPositions(that.gameObject); 

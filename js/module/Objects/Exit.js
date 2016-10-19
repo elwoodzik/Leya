@@ -27,7 +27,7 @@ define([
         },
 
         endLevel: function(player, exitDoor){
-            if(this.game.keyboard.use['SPACE'].pressed  ){
+            if(this.game.keyboard.use['SPACE'].pressed){
                 var loadLevels = that.game.loadData('levels');
                 var level = loadLevels[Levels.LEVEL-1];
                 var levelNext = loadLevels[Levels.LEVEL];
