@@ -58,6 +58,7 @@ define([
         configure: function(){
             this.body.immoveable = true;
             this.body.colideWorldSide = true;
+           
         }
 	})
 

@@ -11,6 +11,9 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.x = x || -500; 
             this.y = y || -500; 
 
+            this.isOutOfScreen = false;
+            this.updateOfScreen = false;
+
             this.renderX = this.x;
             this.renderY = this.y;
             this.previousX = this.x;
@@ -175,8 +178,11 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.useThereAndBack();
             this.scaleUpDownHandler();
             
-            this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
-            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
+            if(this.body.velocity.x != 0 || this.body.velocity.y != 0){
+                this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
+                this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
+            }
+           
           
         },
 

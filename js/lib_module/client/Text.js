@@ -13,7 +13,11 @@ define(['Class', 'lib_module/client/Body'], function(my, Body){
             this.action = action;
             
             
-            
+            this.isOutOfScreen = false;
+            this.updateOfScreen = true;
+
+            this.static = true;
+
             this.body = new Body(this.game, this);
 
             this.contextType = 'main';

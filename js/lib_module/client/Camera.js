@@ -21,6 +21,8 @@ function(my, Rectangle){
             
             this.used = true;
 
+            this.type = 'CAMERA'
+
             this.static = true;
 
             this.xScroll = xView || 0;
@@ -34,8 +36,7 @@ function(my, Rectangle){
             this.wView = canvasWidth;
             this.hView = canvasHeight;	
             
-           	
-
+           
             // allow camera to move in vertical and horizontal axis
             this.axis = Camera.AXIS.BOTH;	
 
@@ -54,23 +55,23 @@ function(my, Rectangle){
             this.game.gameObject[this.game.gameObjectLength] = this; 
         },
 
-        update: function(){
+        update: function(dt){
             this.moveToPointHandler();
             if(this.followed != null){		
 				if(this.axis === Camera.AXIS.HORIZONTAL || this.axis === Camera.AXIS.BOTH){		
 					// moves camera on horizontal axis based on followed object position
-					if(this.followed.x - this.xScroll  + this.xDeadZone > this.wView)
-						this.xScroll = this.followed.x - (this.wView - this.xDeadZone);
-					else if(this.followed.x  - this.xDeadZone < this.xScroll)
-						this.xScroll = this.followed.x  - this.xDeadZone;
+					if(this.followed.renderX - this.xScroll  + this.xDeadZone  > this.wView)
+						this.xScroll = this.followed.renderX - (this.wView - this.xDeadZone);
+					else if(this.followed.renderX  - this.xDeadZone < this.xScroll)
+						this.xScroll = this.followed.renderX  - this.xDeadZone;
 				}
 
 				if(this.axis === Camera.AXIS.VERTICAL || this.axis === Camera.AXIS.BOTH){
 					// moves camera on vertical axis based on followed object position
-					if(this.followed.y - this.yScroll + this.yDeadZone > this.hView)
-						this.yScroll = this.followed.y - (this.hView - this.yDeadZone);
-					else if(this.followed.y - this.yDeadZone < this.yScroll)
-						this.yScroll = this.followed.y - this.yDeadZone;
+					if(this.followed.renderY - this.yScroll + this.yDeadZone > this.hView)
+						this.yScroll = this.followed.renderY - (this.hView - this.yDeadZone);
+					else if(this.followed.renderY - this.yDeadZone < this.yScroll)
+						this.yScroll = this.followed.renderY - this.yDeadZone;
 				}
             }
            
@@ -90,6 +91,7 @@ function(my, Rectangle){
                     this.yScroll =  this.game.portViewHeight-this.game.height;
                
             }	
+            this.game.physic.outOfScreen(this.game.gameObject )
         },
 
         follow: function(gameObject, xDeadZone, yDeadZone){		

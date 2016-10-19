@@ -22,7 +22,9 @@ define(['Class'], function(my){
         // Poprawic by dzialaly poprawnie wszystkie kierunki
         outOfScreenHandler: function(item, callback){
             if(item){
-                  
+                if(item.type==='CAMERA'){
+                    return false;
+                }
                 if(!item.isOutOfScreen){
              
                     if(item.y  >= this.game.height+this.game.camera.yScroll || item.y + item.currentHeight <= 0+this.game.camera.yScroll){

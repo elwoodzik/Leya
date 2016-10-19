@@ -59,15 +59,21 @@ define([
         },
 
         onComplete: function(){    
-            new Game(1366, 768, false, function(){
+            var game = new Game(1366, 768, false, function(){
                 //this.createBgCanvas();
                // this.createOnBgCanvas(6);
                // this.scallable(false)
-
+              
                 this.showFPS();
                 
-                this.add.multiplayer('http://localhost:4000');
-                this.multiplayer.onSocket('message', that.getMessage);
+                // this.add.multiplayer('http://localhost:4000');
+                
+                
+                // this.multiplayer.onSocket('message', that.getMessage);
+                // this.multiplayer.onSocket('message1', that.getMessage1);
+               
+
+                
                 this.add.sounds(that.assetManager);
 
                 this.sounds.useSounds(false);
@@ -87,7 +93,12 @@ define([
         },
 
         getMessage: function(data){
-            console.log(this)
+           
+            console.log(data);
+        },
+
+        getMessage1: function(data){
+           
             console.log(data);
         }
     });

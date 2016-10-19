@@ -79,7 +79,7 @@ define([
                             // skrzynki do przesuwania
                             { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":140, "y":220 },
                             // Windy
-                            { "name":"Lift", "pool": true, "context":"main", "image":"mapa", "x":70*8, "y":70*7, "method":[ {"name": "thereAndBack", "attr": [220, 'left', 160] } ] },
+                            //{ "name":"Lift", "pool": true, "context":"main", "image":"mapa", "x":70*8, "y":70*7, "method":[ {"name": "thereAndBack", "attr": [220, 'left', 160] } ] },
                             // platforma do wybijania
                             { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":400, "y":664, "method":[ {"name": "configure", "attr": [ { jump:1200 } ] } ] },
                             // dzwignie
@@ -94,8 +94,8 @@ define([
                             // przyciski
                             { "name":"Switch", "pool": true, "context":"main", "image": "items", "x":290, "y":70*9, "marginY": 5, "method":[ {"name": "configure", "attr": [ { actOn: switchFunctions.lvl1[0].actOn, callbackIn: switchFunctions.lvl1[0].callbackIn, callbackOut: switchFunctions.lvl1[0].callbackOut  /* End */}  ] }  ] },
                             // przeciwnicy
-                            { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*12, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'left', 160] } ] },
-                            { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
+                            //{ "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*12, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'left', 160] } ] },
+                           // { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
                         
                             // Gracz
                             { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },

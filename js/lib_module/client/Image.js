@@ -29,7 +29,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	        this.currentHalfWidth = this.currentWidth / 2;
 	        this.currentHalfHeight = this.currentHeight / 2;
 
-	        this.isOutOfScreen = false;
+	       	this.isOutOfScreen = false;
+            this.updateOfScreen = true;
 
 	        if(!this.pooled){
 	        	this.setContext(context);
@@ -101,8 +102,11 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			this.worldBounce();
 			this.moveToPointHandler();
 
-			this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
-            this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
+			
+            if(this.body.velocity.x != 0 || this.body.velocity.y != 0){
+                this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
+                this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
+            }
 		},
 
 		kill: function(){

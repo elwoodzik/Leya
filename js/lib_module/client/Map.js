@@ -25,8 +25,8 @@ define(['Class'], function(my){
 
             this.static = true;
 
-            this.cw = this.game.canvas.width;
-            this.ch = this.game.canvas.height;
+            this.cw = this.game.width;
+            this.ch = this.game.height;
         
 
             this.currentWidth = width;
@@ -71,18 +71,26 @@ define(['Class'], function(my){
             ctx = null;  
         },
 
+        update: function(dt){
+            this.x = this.camera.xScroll;
+            this.y = this.camera.yScroll;
+        },
+
         draw: function(dt) {
+ 
+          
+
             this.context.drawImage(
                 this.imageMap,
                 this.camera.xScroll, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)
                 this.camera.yScroll, //Math.floor(this.renderY), // + (this.game.camera.lerpAmount * dt)
-                this.cw,
-                this.ch,
+                this.cw ,
+                this.ch ,
                 0,
                 0,
                 this.cw,
                 this.ch
-            ); 
+            );
         },
 
         createObjOnMap: function(){

@@ -42,6 +42,7 @@ define([
         configure: function(options){
             var lock = options.lock || 'blue';
             this.animations.playOnce(options.lock, 7);
+            this.updateOfScreen = false;
         }
     })
 

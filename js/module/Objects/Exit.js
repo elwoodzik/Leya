@@ -24,6 +24,7 @@ define([
         configure: function(){
            this.startX = this.x;
            this.startY = this.y;
+           this.updateOfScreen = false;
         },
 
         endLevel: function(player, exitDoor){

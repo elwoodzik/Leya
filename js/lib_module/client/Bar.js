@@ -9,6 +9,9 @@ define(['Class', 'require'], function(my, require){
 			this.x = x || 1; 
 			this.y = y || 1;
 
+			this.isOutOfScreen = false;
+            this.updateOfScreen = true;
+
 			this.max = max;
 			this.min = min > this.max ? this.error() : min;
 			

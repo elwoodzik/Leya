@@ -7,6 +7,9 @@ define(['Class'], function(my){
             //
             this.game = game;
             this.used = true;
+
+            this.isOutOfScreen = false;
+            this.updateOfScreen = true;
             //
             this.x = x;
             this.y = y;

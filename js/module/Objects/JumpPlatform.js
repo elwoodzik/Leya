@@ -31,6 +31,7 @@ define([
             this.startX = this.x;
             this.startY = this.y;
             this.jump = - (this.body.platformer.meter * options.jump)
+            this.updateOfScreen = false;
         }
 	})
 

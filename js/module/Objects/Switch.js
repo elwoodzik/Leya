@@ -71,6 +71,7 @@ define([
             this.actOn = options.actOn;
             this.callbackIn = options.callbackIn;
             this.callbackOut = options.callbackOut;
+            this.updateOfScreen = false;
         }
     })
 

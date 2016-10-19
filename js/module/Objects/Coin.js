@@ -17,10 +17,13 @@ define([
             this.anims();
             this.configure();
 		},
-		
+		draw:function(dt){
+            superDraw.call(this, dt);
+           
+        },
 		update: function(dt){
 			superUpdate.call(this, dt);
-
+           
             that.game.physic.overlap(that.game.VAR.player, this, this.collect);
 
             that.game.physic.overlap(this.Water, this, this.collideWater);
@@ -40,8 +43,9 @@ define([
 
         configure: function(){
             this.body.immoveable = true;
+            this.updateOfScreen = false;
             this.body.platformer.configure({
-                gravity: 200
+                gravity: 0.5
             })
             this.zIndex = 5;
         },
@@ -59,6 +63,7 @@ define([
 	})
 
     var superUpdate = Coin.Super.prototype.update;
+    var superDraw = Coin.Super.prototype.draw;
 	
 	return Coin;
 })

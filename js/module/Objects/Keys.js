@@ -28,6 +28,7 @@ define([
         configure: function(options){
             var key = options.key || 'blue';
             this.animations.playOnce(options.key, 7);
+            this.updateOfScreen = false;
         }
     })
 

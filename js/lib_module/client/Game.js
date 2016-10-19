@@ -93,8 +93,8 @@ define([
             this.scallable(true);
             this.callback = callback;
             this.useFpsCounter = false;
-           // this.state.add('Logo', Logo)
-           // this.state.start('Logo')
+          // this.state.add('Logo', Logo)
+           //this.state.start('Logo')
             this.callback();
         },
 
@@ -104,39 +104,70 @@ define([
 
         animationLoop : function() {
            
-           
-            if(that.useFpsCounter){
+           if(that.useFpsCounter){
                 that.fpsmeter.tickStart();
             }
             now = that.timestamp();
-            elapsed = (now - PREVIOUS)  ;
-
+            elapsed = elapsed + Math.min(1, (now - PREVIOUS) / 1000);
+               
             PREVIOUS = now;
 
-            if (elapsed > 1000 || elapsed < 0) {
+            if (elapsed > that.FRAMEDURATION || elapsed < 0) {
                 elapsed = that.FRAMEDURATION;
             }
-            
-            LAG += elapsed;
+           
+            //LAG += elapsed;
             //console.log(LAG + "          " + step)
-            if (LAG >= step) { 
-                
+            if (elapsed >= that.FRAMEDURATION) { 
+               //that.capturePreviousPositions(that.gameObject);  
                //that.cTime += that.FRAMEDURATION;
-               that.update(step);
-               LAG = 0;
+               that.update(1);
+               //LAG -= that.FRAMEDURATION;
             }
 
-           that.capturePreviousPositions(that.gameObject); 
+           
 
-            lagOffset = LAG / step;
+            //lagOffset = LAG / that.FRAMEDURATION;
             
-            that.render(lagOffset);
+            that.render(1);
 
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
             }
 
             requestAnimationFrame( that.animationLoop, that.canvas );
+            // if(that.useFpsCounter){
+            //     that.fpsmeter.tickStart();
+            // }
+            // now = window.performance.now()
+            // elapsed = elapsed + Math.min(1, (now - PREVIOUS) / 1000);
+               
+            // PREVIOUS = now;
+
+            // if (elapsed > that.FRAMEDURATION || elapsed < 0) {
+            //     elapsed = that.FRAMEDURATION;
+            // }
+            
+            // LAG += elapsed;
+            // //console.log(LAG + "          " + step)
+            // if (LAG >= that.FRAMEDURATION) { 
+            //     that.capturePreviousPositions(that.gameObject); 
+              
+            //     that.update(1);
+            //     LAG =0;
+            // }
+
+           
+
+            // lagOffset = LAG / that.FRAMEDURATION;
+            
+            // that.render(lagOffset);
+
+            // if(that.useFpsCounter){
+            //     that.fpsmeter.tick();
+            // }
+
+            // requestAnimationFrame( that.animationLoop, that.canvas );
           
             // if(!now){
             //     now = that.timestamp();
@@ -257,7 +288,7 @@ define([
                        
                         if(!entityRender.isOutOfScreen ){            
                             if(entityRender.body && entityRender.body.angle != 0 ){
-                                this.ctx.save();
+                                //this.ctx.save();
                                 this.ctx.translate(entityRender.x + entityRender.currentWidth * entityRender.body.anchorX, entityRender.y + entityRender.currentHeight * entityRender.body.anchorY);
                                 this.ctx.rotate( entityRender.body.angle*Math.PI/180 ); 
                                 this.ctx.translate(-entityRender.x - entityRender.currentWidth * entityRender.body.anchorX, -entityRender.y - entityRender.currentHeight * entityRender.body.anchorY);
@@ -266,7 +297,8 @@ define([
                             entityRender.draw(dt);
                             
                             if(entityRender.body && entityRender.body.angle != 0 ){
-                                this.ctx.restore();
+                                this.ctx.setTransform(1,0,0,1,0,0);
+                                //this.ctx.restore();
                             }
                         }
                     }
@@ -333,9 +365,12 @@ define([
                 entityUpdate = this.gameObject[u];
                 //if(!entityUpdate.isOutOfScreen && entityUpdate.used){            
                     if(entityUpdate && entityUpdate.update && entityUpdate.used){
-                        //if(!entityUpdate.isOutOfScreen){   
+                        if( entityUpdate.updateOfScreen){  
+                            
                             entityUpdate.update(dt);
-                        //}
+                        }else if(!entityUpdate.updateOfScreen && !entityUpdate.isOutOfScreen){
+                            entityUpdate.update(dt);
+                        }
                     }
                     entityUpdate = null;
                 //}

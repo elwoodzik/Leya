@@ -40,7 +40,14 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 		constructor: function(game){
             that = this;
             that.game = game; 
+           
+           
 		},
+
+         getMessage: function(data){
+            console.log(this)
+            console.log(data);
+        },
 
 		create: function(){
 

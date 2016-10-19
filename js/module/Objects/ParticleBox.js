@@ -59,12 +59,14 @@ define([
             this.alfaSpeed = 0.009;
             this.tile     = 70;              // the size of each tile (in game pixels)
             this.meter    = this.tile;            // abitrary choice for 1m
-            this.gravity  = this.meter * 9.8 * 2 ;    // very exagerated gravity (6x)
-            this.maxdx    = this.meter * 3 - 30;         // max horizontal speed (20 tiles per second)
-            this.maxdy    = this.meter * 40;         // max vertical speed   (60 tiles per second)
+            this.gravity  = 0.5;    // very exagerated gravity (6x)
+            this.maxdx    = 3;         // max horizontal speed (20 tiles per second)
+            this.maxdy    = 12;         // max vertical speed   (60 tiles per second)
             this.ddx = 0;
             this.ddy = 0;  
             this.zIndex = 11;
+
+            
         },
 
         destroy: function(){
