@@ -20,6 +20,7 @@ define([
             that = this;
             this.assetManager = new AssetManager();
             //
+            that.assetManager.preload();
             this.create();
         },
 
@@ -55,7 +56,7 @@ define([
 
         onProgress: function(loaded, total, key, path, success) {
             // domyslny sposob wyswietlenia paska postepu
-            that.assetManager.preload(loaded, total);
+            that.assetManager.preloadOnProgress(loaded, total);
         },
 
         onComplete: function(){    
@@ -88,17 +89,13 @@ define([
                 this.state.start("Menu");
             });
             //
-           
-            
         },
 
         getMessage: function(data){
-           
             console.log(data);
         },
 
         getMessage1: function(data){
-           
             console.log(data);
         }
     });

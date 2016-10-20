@@ -9,22 +9,7 @@ define(['Class'], function(my){
                     this._placeholder.src = placeholderDataUri;
             }
 
-            this.canvas = document.createElement("canvas");
-            this.ctx = this.canvas.getContext("2d");        
-            this.canvas.width =  500;
-            this.canvas.height =  300;
-            this.canvas.id = 'preload';
-
-            this.canvas.style.position = 'absolute';
-            this.canvas.style.left = '50%';
-            this.canvas.style.marginLeft = -this.canvas.width/2 + "px";
-
-            document.body.style.overflow = 'hidden';
-                
-            document.body.appendChild(this.canvas);
-
             this.sounds = true;
-
         },
         
         load: function(images, onDone, onProgress) {
@@ -133,31 +118,49 @@ define(['Class'], function(my){
         
     },
 
-    preload: function(loaded, total){
-        var currentProgress = loaded /total * 400;
-        if(loaded === 1){
+    preload: function(){
+        this.canvas = document.createElement("canvas");
+        this.ctx = this.canvas.getContext("2d");        
+        this.canvas.width =  500;
+        this.canvas.height =  300;
+        this.canvas.id = 'preload';
+
+        this.canvas.style.position = 'absolute';
+        this.canvas.style.left = '50%';
+        this.canvas.style.marginLeft = -this.canvas.width/2 + "px";
+
+        document.body.style.overflow = 'hidden';
+            
+        document.body.appendChild(this.canvas);
+    },
+
+    preloadOnProgress: function(loaded, total){
+        if(this.canvas){
+            var currentProgress = loaded /total * 400;
+            if(loaded === 1){
+                this.ctx.font = "30px Arial";
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText("Ładowanie", 180, 60);
+            }
+            this.ctx.beginPath();
+            this.ctx.strokeStyle = 'white';
+            this.ctx.rect(50,80,400,30);
+            this.ctx.stroke();
+            this.ctx.closePath();
+            
+            this.ctx.fillStyle = 'green';
+            this.ctx.fillRect(51, 81, currentProgress-1, 28);
+            //
+            
+            this.ctx.clearRect(200,120,500,300);
             this.ctx.font = "30px Arial";
             this.ctx.fillStyle = 'white';
-            this.ctx.fillText("Ładowanie", 180, 60);
-        }
-        this.ctx.beginPath();
-        this.ctx.strokeStyle = 'white';
-        this.ctx.rect(50,80,400,30);
-        this.ctx.stroke();
-        this.ctx.closePath();
-        
-        this.ctx.fillStyle = 'green';
-        this.ctx.fillRect(51, 81, currentProgress-1, 28);
-        //
-        
-        this.ctx.clearRect(200,120,500,300);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillStyle = 'white';
-        this.ctx.fillText(Math.floor(currentProgress/4) + "%", 230, 150);
+            this.ctx.fillText(Math.floor(currentProgress/4) + "%", 230, 150);
 
-        if(loaded === total){
-            var child = document.getElementById("preload");
-            document.body.removeChild(child);
+            if(loaded === total){
+                var child = document.getElementById("preload");
+                document.body.removeChild(child);
+            }
         }
     }
         

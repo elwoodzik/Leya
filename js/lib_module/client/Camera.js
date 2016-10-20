@@ -36,7 +36,6 @@ function(my, Rectangle){
             this.wView = canvasWidth;
             this.hView = canvasHeight;	
             
-           
             // allow camera to move in vertical and horizontal axis
             this.axis = Camera.AXIS.BOTH;	
 

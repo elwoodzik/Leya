@@ -12,7 +12,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.y = y || -500; 
 
             this.isOutOfScreen = false;
-            this.updateOfScreen = false;
+            this.updateOfScreen = true;
 
             this.renderX = this.x;
             this.renderY = this.y;
