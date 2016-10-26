@@ -4,9 +4,10 @@
         
     var Users = my.Class({
         
-        constructor: function(){
+        constructor: function(multiplayer){
            that = this;
            this.users = [];
+           this.multiplayer = multiplayer;
         },
 
         addNewUser: function(name, socket, callback){

@@ -8,6 +8,7 @@
             that = this;
             this.io = io;
             this.socket = null;
+            this.multiplayer = multiplayer;
             //this.initializeSockets(callback);
         },
 
