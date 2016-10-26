@@ -1,6 +1,7 @@
-var app = require('http').createServer(handler)
+var app = require('http').createServer(handler);
 var io = require('socket.io')(app);
 var fs = require('fs');
+var Game = require('./Game');
 
 app.listen(4000);
 
@@ -17,10 +18,16 @@ function handler (req, res) {
   });
 }
 
-io.on('connection', function (socket) {
-  console.log('a')
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+Game = new Game(io);
+
+
+// io.sockets.on("connection",function(socket){
+//     // Display a connected message
+//     console.log("Server-Client Connected!");
+    
+//     socket.emit("message", "This is my message");
+//     // When we receive a message...
+//     socket.on("message",function(data){
+//         // We got a message... I dunno what we should do with this...
+//     });
+// });

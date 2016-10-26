@@ -15,7 +15,6 @@ define(['Class', 'Socket'], function(my, io){
 
         onSocket: function(name, callback){
             if(typeof callback === 'function'){
-                console.log(that.socket)
                 that.socket.on(name, callback);
             }else{
                 throw 'Metoda przyjmuje dwa parametry. Nazwe Socketu (String) i callback (Function)';
@@ -26,7 +25,7 @@ define(['Class', 'Socket'], function(my, io){
             if(!name){
                 throw 'musisz podac jako pierwszy parametr nazwe socketu';
             }
-            this.socket.emit(name, data);
+            that.socket.emit(name, data);
         }
     });
 

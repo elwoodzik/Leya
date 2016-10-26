@@ -12,9 +12,9 @@ define([
 	'lib_module/client/Camera',
 	'lib_module/client/Map',
 	'lib_module/client/Bar',
-	//'lib_module/client/Multiplayer',
-	'lib_module/client/Pool'
-	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map, Bar, Multiplayer, Pool){
+	'lib_module/client/Pool',
+	'lib_module/client/Multiplayer',
+	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map, Bar, Pool, Multiplayer ){
 
 	var GameObjectFactory = my.Class( {
 		

@@ -60,17 +60,18 @@ define([
         },
 
         onComplete: function(){    
-            var game = new Game(1366, 768, false, function(){
+           that.game = new Game(1366, 768, false, function(){
                 //this.createBgCanvas();
                // this.createOnBgCanvas(6);
                // this.scallable(false)
               
                 this.showFPS();
                 
-                // this.add.multiplayer('http://localhost:4000');
+                this.add.multiplayer('http://localhost:4000');
                 
                 
-                // this.multiplayer.onSocket('message', that.getMessage);
+                 this.multiplayer.onSocket('message', that.getMessage);
+                 
                 // this.multiplayer.onSocket('message1', that.getMessage1);
                
 
@@ -93,6 +94,7 @@ define([
 
         getMessage: function(data){
             console.log(data);
+            that.game.multiplayer.emit('message', 'dupa');
         },
 
         getMessage1: function(data){
