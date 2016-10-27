@@ -27,6 +27,7 @@
                                 console.log('dolaczyles do pokoju');
                                 // tutaj wprowadzac swoje sockety
                                 socket.on("message", that.message);
+                                socket.on("add object", that.addObject);
                                 socket.on("disconnect", that.disconnect);
                                 Multiplayer.socket.emitToAll("message", "This is my message");
                             }
@@ -50,12 +51,17 @@
                     })
                 }
             })
-            
         },
 
         message: function(data){
           
-            
+        },
+
+        addObject: function(data){
+            Multiplayer.obj.add(data, function(arr){
+               // Multiplayer.socket.emitToAll("message", "This is my message");
+            });
+           
         }
     });
 

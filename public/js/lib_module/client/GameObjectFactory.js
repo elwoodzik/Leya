@@ -80,6 +80,21 @@ define([
 		pool: function(obj, count){
 			return new Pool(this.game, obj, count);
 	    },
+		
+		toMulti: function(obj){
+			var o = {
+				x : obj.x,
+				y: obj.y,
+				vx: obj.body.velocity.x,
+				vy: obj.body.velocity.y,
+				key: obj.key,
+				w: obj.fW,
+				h: obj.fH,
+				states: obj.states,
+				state: obj.state
+			}
+            this.game.multiplayer.emit('add object', o);
+        }
 	});
 
 	return GameObjectFactory;
