@@ -58,10 +58,11 @@
         },
 
         addObject: function(data){
-            Multiplayer.obj.add(data, function(arr){
+            var id = Multiplayer.socket.socket.id;
+            Multiplayer.objs.add(data, id, function(arr){
+                console.log(arr)
                // Multiplayer.socket.emitToAll("message", "This is my message");
             });
-           
         }
     });
 

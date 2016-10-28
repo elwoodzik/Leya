@@ -43,7 +43,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                         0,
                         this.image.width,
                         this.image.height,
-                        w+ this.x - this.game.camera.xScroll, // * this.scale
+                        w + this.x - this.game.camera.xScroll, // * this.scale
                         h - this.y - this.game.camera.yScroll, // * this.scale
                         this.width,
                         this.height
@@ -55,8 +55,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                         0,
                         this.image.width,
 	                    this.image.height,
-                        w+this.x + this.width - this.game.camera.xScroll, // * this.scale
-                        h- this.y - this.height - this.game.camera.yScroll, // * this.scale
+                        w + this.x + this.width - this.game.camera.xScroll, // * this.scale
+                        h - this.y - this.game.camera.yScroll, // * this.scale
                         this.width,
                         this.height
                     )
