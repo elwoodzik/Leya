@@ -67,7 +67,7 @@ define([
               
                 this.showFPS();
                 
-                this.add.multiplayer('http://localhost:4000');
+                this.add.multiplayer('http://192.168.0.10:4000');
                 
                 
                 this.multiplayer.onSocket('message', that.getMessage);
@@ -77,7 +77,6 @@ define([
                 this.add.sounds(that.assetManager);
 
                 this.sounds.useSounds(false);
-                
                 
                 this.mouse.initialize();
                 this.keyboard.initialize();

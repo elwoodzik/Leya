@@ -23,6 +23,7 @@ define([
             this.JumpPlatform = that.game.CLASS.JumpPlatform.getActivePool();
             this.Lever = that.game.CLASS.Lever.getActivePool();
             this.Keys = that.game.CLASS.Keys.getActivePool();
+            this.Switch = that.game.CLASS.Switch.getActivePool();
        
             this.leftPad = {};
             this.rightPad = {};
@@ -200,7 +201,7 @@ define([
         },
 
         collideDestroyBox: function(p, b, dir, oy, ox){
-             if(dir === 'b'){
+            if(dir === 'b'){
                 p.body.falling = false;
                 p.body.jumping = false;
                 
@@ -211,7 +212,6 @@ define([
             if(dir === 't'){
                 p.body.velocity.y = p.body.velocity.y/2;
                 b.destroy();
-
             }
             if(dir === 'l'){
                 p.body.velocity.x = -p.body.velocity.x/2
@@ -260,7 +260,6 @@ define([
             this.createKeysIcon();
             
             // dodaje obsluge kamery do gracza
-
             that.game.VAR.camera = this.game.add.camera(0, 0, this.game.width, this.game.height, this.game.portViewWidth, this.game.portViewHeight);
             that.game.VAR.camera.follow(this, this.game.width/2, this.game.height/2);
         },

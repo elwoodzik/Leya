@@ -15,7 +15,9 @@ define([
             this.Water = that.game.CLASS.Water.getActivePool();
             
             this.anims();
-            this.configure();
+            this.configure({
+                immoveable: true
+            });
 		},
 		draw:function(dt){
             superDraw.call(this, dt);
@@ -41,8 +43,10 @@ define([
             this.animations.play('bronze', 4);
         },
 
-        configure: function(){
-            this.body.immoveable = true;
+        configure: function(options){
+           
+            
+            this.body.immoveable = options.immoveable;
             this.updateOfScreen = false;
             this.body.platformer.configure({
                 gravity: 0.5

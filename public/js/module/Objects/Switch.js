@@ -66,6 +66,7 @@ define([
         },
 
         configure: function(options){
+            
             this.startX = this.x;
             this.startY = this.y;
             this.actOn = options.actOn;

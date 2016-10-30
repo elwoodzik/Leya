@@ -63,6 +63,7 @@ define([
         },
 
         configure: function(){
+            
             this.updateOfScreen = false;
         }
 	})

@@ -39,9 +39,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 
 		constructor: function(game){
             that = this;
-            that.game = game; 
-           
-           
+            that.game = game;
 		},
 
          getMessage: function(data){
@@ -82,11 +80,12 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             Switch.setupPool(Irobot2.SWITCH, 'main');
             Enemy1.setupPool(Irobot2.ENEMY1, 'main');
             
-            that.game.add.image('main', 0, 0, 'bg', 3500, 840); 
+            
             
             // tworzy mape
             var map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
-       
+            
+            that.game.add.image('main', 0, 0, 'bg', map.mapObj.w * map.w, map.mapObj.h * map.h); 
             // podstawia pod pola mapy odpowiednie obiekty zdefiniowane w maps/Maps.js 
             map.setElements(that.getElements(Levels.LEVEL));
 

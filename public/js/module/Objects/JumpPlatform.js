@@ -10,7 +10,7 @@ define([
 			JumpPlatform.Super.apply(this, arguments);
             
             that = this;
-
+            that.game = game;
             this.jump = - (this.body.platformer.meter * 1250);
 
             this.anims();

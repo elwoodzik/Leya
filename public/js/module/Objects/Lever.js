@@ -27,6 +27,7 @@ define([
         },
 
         configure: function(options){
+            console.log(options)
             this.moveToX = options.moveToX || 0;
             this.moveToY = options.moveToY || 0;
             this.actionObj = options.actionObj;
