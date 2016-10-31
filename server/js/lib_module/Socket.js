@@ -13,8 +13,9 @@
         },
 
         initializeSockets: function(callback){
-            this.io.sockets.on('connection', function(socket){
+            this.io.on('connection', function(socket){
                 that.socket = socket;
+                console.error(socket.id)
                 that.onConnection(socket ,callback)
             });
         },
@@ -68,11 +69,12 @@
         },
         
         // wysyla wiadomosc do wszystkich oprocz osoby ktora wyslala socketa
-        broadcastToAll: function(name, data){
+        broadcastToAll: function(name, data, sock){
             if(!name){
                 throw 'musisz podac jako pierwszy parametr nazwe socketu';
             }
-            this.socket.broadcast.emit(name, data);
+            
+            sock.broadcast.emit(name, data);
         }
     });
 

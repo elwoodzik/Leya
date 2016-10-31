@@ -4,8 +4,7 @@
     var Users = require("./Users");
     var Rooms = require("./Rooms");
     var Objs = require("./Objs");
-        
-        
+              
     var Multiplayer = my.Class({
         
         constructor: function(io){
@@ -15,6 +14,11 @@
             this.objs = new Objs(this);
             this.rooms.createRoom('global', 0);
         },
+
+        getSocketId: function(){
+            console.log('skasowac getSOCKET')
+            //return this.socket.io;
+        }
         
     });
 

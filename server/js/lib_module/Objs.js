@@ -1,6 +1,8 @@
 (function(){
     var my = require("./../../../public/js/lib/myclass.js"); 
     
+    var that = null;
+
     var Objs = my.Class({
 
         STATIC: {
@@ -10,24 +12,54 @@
         constructor: function(multiplayer){
             this.objs = [];
             this.multiplayer = multiplayer;
-            this.ID = 0;
+            that = this;
         },
 
-        add: function(obj, id, callback){
+        add: function(obj, callback){
             obj.ID = Objs.ID;
-            obj.socketID = id;
-            this.objs.push(obj);
-
-            callback(this.objs);
+            obj.sockID = this.id;
+             
+            that.objs.push(obj);
+            Objs.ID++;
+            //if(this.objs[i].socketID !== sockID){
+            this.broadcast.emit("share obj", obj);
+            //}
+            callback(obj);
         },
 
-        remove: function(obj, id, callback){
-            obj.ID = this.ID;
-            obj.socketID = id;
+        remove: function(id){
+            var sockID = id;
+              
+            var tab = [];
+            var max = this.objs.length;
 
-            this.objs.push(obj);
-            this.ID++;
-            callback(this.objs);
+            for(var i= 0; i<max; i++){
+                if(this.objs[i].sockID === sockID){
+                    tab.push(this.objs[i])
+                }
+            }
+
+            for(var i= 0; i<tab.length; i++){
+                this.objs.splice(this.objs.indexOf(tab[i]), 1);
+            }
+            
+            this.multiplayer.socket.emitToAll("removed objs", sockID);
+        },
+
+        getObj: function(id){
+            var sockID = id
+
+            for(var i= 0, max=this.objs.length; i<max; i++){
+                if(this.objs[i].socketID !== sockID){
+                     this.multiplayer.socket.emitToMe("share obj", this.objs[i]);
+                }
+            }
+        },
+
+        update: function(data, sock){
+            if(sock){
+                this.multiplayer.socket.broadcastToAll("update obj", data, sock);
+            }
         }
         
     });

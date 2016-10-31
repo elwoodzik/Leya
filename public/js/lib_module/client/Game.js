@@ -119,7 +119,7 @@ define([
             //LAG += elapsed;
             //console.log(LAG + "          " + step)
             if (elapsed >= that.FRAMEDURATION) { 
-               //that.capturePreviousPositions(that.gameObject);  
+               that.capturePreviousPositions(that.gameObject);  
                //that.cTime += that.FRAMEDURATION;
                that.update(1);
                //LAG -= that.FRAMEDURATION;

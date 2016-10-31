@@ -67,12 +67,11 @@ define([
               
                 this.showFPS();
                 
-                this.add.multiplayer('http://192.168.0.10:4000');
+                this.add.multiplayer('http://localhost:4000');
                 
                 
-                this.multiplayer.onSocket('message', that.getMessage);
-                 
-                // this.multiplayer.onSocket('message1', that.getMessage1);
+                
+            
                
                 this.add.sounds(that.assetManager);
 
@@ -89,14 +88,10 @@ define([
             //
         },
 
-        getMessage: function(data){
-            console.log(data);
-            that.game.multiplayer.emit('message', 'dupa');
-        },
 
-        getMessage1: function(data){
-            console.log(data);
-        }
+        
+
+       
     });
 
     return new Loader();

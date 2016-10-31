@@ -6,6 +6,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			
 			this.game = game; 
 			this.used = true;
+			this.type = "image";
 
 			this.pooled = pooled;
 
@@ -17,6 +18,9 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			
 			this.body = new Body(this.game, this);
 			this.zIndex = 2;
+
+			this.fW = width || this.image.width;
+            this.fH = height || this.image.height;
 
 			this.width = width || this.image.width;
 			this.height = height || this.image.height;
@@ -107,6 +111,12 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                 this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
                 this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
             }
+		},
+
+		multiUpdate: function(){
+			if(this.previousX !== this.x || this.previousY !== this.y){
+				this.game.multiplayer.emit("update obj", {x: this.x, y: this.y})
+			}
 		},
 
 		kill: function(){

@@ -16,15 +16,28 @@ define([
 			// this.add.text('main', "Wybierz Poziom", (this.canvas.width/2)-300, 170, 99, "#333", null);
 			
 			// that.levels = new Levels(this);
+			
 
-			var img = this.add.image('main', this.rand(20,400),this.rand(20,400),'menu-bg',80, 80);
-			console.log(this)
-			this.add.toMulti(img);
+			that.img = this.add.image('main', this.rand(20,800),this.rand(20,600),'menu-bg',80, 80);
+			var img2 = this.add.image('main', this.rand(20,800),this.rand(20,800),'menu-bg',80, 80);
+
+			
+			this.add.toMulti(that.img);
+			this.add.toMulti(img2);
 		},
 
 		update: function(){
 			// that.levels.update();
+			if (this.keyboard.use['A'].pressed){
+				that.img.x --
+			}
+			if (this.keyboard.use['D'].pressed){
+				that.img.x ++
+			}
+			that.img.multiUpdate();
 		},
+
+		
 	})
 	
 	return Menu;

@@ -16,6 +16,8 @@
             
             Multiplayer.socket.initializeSockets(function(socket){
 
+                socket.on("disconnect", that.disconnect);
+
                 Multiplayer.users.addNewUser('name', socket, function(err, user){
                     if(err){
                         console.error(err);
@@ -24,12 +26,13 @@
                             if(err){
                                 console.error(err);
                             }else{
-                                console.log('dolaczyles do pokoju');
+                                //console.log('dolaczyles do pokoju');
                                 // tutaj wprowadzac swoje sockety
                                 socket.on("message", that.message);
-                                socket.on("add object", that.addObject);
-                                socket.on("disconnect", that.disconnect);
-                                Multiplayer.socket.emitToAll("message", "This is my message");
+                                socket.on("add object", Multiplayer.objs.add);
+                                socket.on("update obj", that.update);
+                                
+                                Multiplayer.objs.getObj(socket.id);
                             }
                         })
                     }
@@ -38,6 +41,7 @@
         },
 
         disconnect: function(){
+            var id = this.id;
             Multiplayer.users.removeUser(this.id, function(err, user){
                 if(err){
                     console.error("\nWystąpił błąd przy probie disconnect\n");
@@ -46,7 +50,9 @@
                         if(err){
                             console.error("\nWystąpił błąd przy probie disconnect\n");
                         }else{
-                            console.log("\nUżytkownik poprawnie WYLOGOWANY z servera" + that.id +"\n");
+                            //console.log("\nUżytkownik poprawnie WYLOGOWANY z servera" + id +"\n");
+                            
+                            Multiplayer.objs.remove(id);
                         }
                     })
                 }
@@ -57,13 +63,16 @@
           
         },
 
-        addObject: function(data){
-            var id = Multiplayer.socket.socket.id;
-            Multiplayer.objs.add(data, id, function(arr){
-                console.log(arr)
-               // Multiplayer.socket.emitToAll("message", "This is my message");
-            });
+        addObject: function(data, callback){
+            Multiplayer.objs.add(data, this.id, this, function(obj){
+                callback(false, obj.sockID);
+            });   
+        },
+
+        update: function(data){
+            Multiplayer.objs.update(data, this)
         }
+        
     });
 
     module.exports = Game;
