@@ -49,10 +49,10 @@ define(['Class'], function(my){
         draw: function() {
             if (this.hovered) {
                 this.game.ctx.fillStyle = this.backgroundHover;
-                this.textColor = this.backgroundHover
+                this.col = this.backgroundHover
             } else { 
                 this.game.ctx.fillStyle = this.background;
-                this.textColor = this.background
+                this.col = this.background
             }
          
             //draw button
@@ -60,7 +60,7 @@ define(['Class'], function(my){
             this.game.ctx.beginPath();
             this.game.ctx.rect(this.x , this.y , this.width, this.height);
             
-            this.game.ctx.strokeStyle = this.textColor;
+            this.game.ctx.strokeStyle = this.col;
             this.game.ctx.lineWidth = 2;
             this.game.ctx.stroke();
             //this.game.ctx.fill();
@@ -68,7 +68,7 @@ define(['Class'], function(my){
             //text options
             var fontSize = 42;
             this.game.ctx.fillStyle = this.textColor;
-            this.game.ctx.font = fontSize + "px Sans";
+            this.game.ctx.font = fontSize + "px Forte";
          
             //text position
             var textSize = this.game.ctx.measureText(this.text);

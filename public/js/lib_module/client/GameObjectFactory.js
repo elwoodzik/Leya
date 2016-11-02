@@ -92,11 +92,12 @@ define([
 				h: obj.fH,
 				states: obj.states,
 				state: obj.state,
-				type: obj.type
+				type: obj.type,
+				oClass: obj.oClass
 			}
-            this.game.multiplayer.emit('add object', o, function(obj){
-				obj.sockID = obj.sockID;
-				obj.ID = obj.ID;
+            this.game.multiplayer.emit('add object', o, function(data){
+				obj.sockID = data.sockID;
+				obj.ID = data.ID;
 			});
         }
 	});

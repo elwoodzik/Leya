@@ -112,6 +112,10 @@ define(['Class'], function(my){
                     obj.marginY = obj.marginY ? obj.marginY : 0;
 
                     this.game.VAR[obj.varr] = new obj.name(this.game, false, obj.context , obj.x+obj.marginX, obj.y+obj.marginY, obj.image);
+                  
+                    // if(obj.varr ==='player'){
+                    //     that.game.add.toMulti(this.game.VAR[obj.varr]);  
+                    // }
                 }
             }
 

@@ -29,7 +29,7 @@ define([
         },
 
         configure: function(){
-            console.log('lift')
+            
           // this.body.velocity.y = -40;
         }
 	})

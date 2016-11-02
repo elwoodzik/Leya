@@ -48,7 +48,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
         },
 
 		create: function(){
-
+            
             that.game.CLASS.BoxDesc = BoxDesc;
             that.game.CLASS.Water = Water;
             that.game.CLASS.Coin = Coin;
@@ -94,6 +94,8 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 
             // okresla wielkosc calego swiata
             that.game.world.setPortView(map.mapObj.w * map.w, map.mapObj.h * map.h);
+
+           
 		}
 	});
 

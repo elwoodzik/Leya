@@ -17,11 +17,15 @@ define(['Class', 'Socket'], function(my, io){
                 console.error(data)
                 //that.emit("get object");
             });
+            
+        },
+        
+        init: function(){
             that.onSocket('share obj', that.shareObj); 
             that.onSocket('removed objs', that.removeAllObjects); 
             that.onSocket('update obj', that.updateObject); 
         },
-
+        
         onSocket: function(name, callback){
             if(typeof callback === 'function'){
                 that.socket.on(name, callback);
@@ -52,13 +56,46 @@ define(['Class', 'Socket'], function(my, io){
         },
 
         shareObj: function(data){
-            var obj = that.game.add[data.type]('main', data.x, data.y, data.key, data.w, data.h);
-            obj.sockID = data.sockID;
-            obj.ID = data.ID;
+            that.switchType(data);
 		},
 
         updateObject: function(data){
-            console.log(data)
+            var obj = that.getObjById(data.ID);
+            obj.x = data.x;
+            obj.y = data.y;
+        },
+
+        getObjById: function(id){
+            for(var i=0; i<that.game.gameObject.length; i++){
+                if(id === that.game.gameObject[i].ID){
+                    return that.game.gameObject[i];
+                }
+            }
+        },
+
+        switchType: function(data){
+            var obj = null;
+           
+            if(data.oClass){
+                // var req = require('module/Objects/Player')
+                // console.log(req)
+                // obj = new req(that.game, false, 'main', data.x, data.y, data.key, data.w, data.h );
+                // console.log('poszlo')
+            }else{
+                switch(data.type){
+                    case 'image':
+                        obj = that.game.add[data.type]('main', data.x, data.y, data.key, data.w, data.h);
+                        break;
+                    case 'sprite':
+                        obj = that.game.add[data.type]('main', data.x, data.y, data.key, data.w, data.h);
+                        break;
+                }
+            }
+           
+            obj.sockID = data.sockID;
+            obj.ID = data.ID;
+
+            return obj;
         }
     });
 

@@ -115,7 +115,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 
 		multiUpdate: function(){
 			if(this.previousX !== this.x || this.previousY !== this.y){
-				this.game.multiplayer.emit("update obj", {x: this.x, y: this.y})
+				this.game.multiplayer.emit("update obj", {x: this.x, y: this.y, ID: this.ID});
 			}
 		},
 

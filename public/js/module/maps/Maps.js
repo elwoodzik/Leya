@@ -85,7 +85,7 @@ define([
                             // dzwignie
                             { "name":"Lever", "pool": true, "context":"main", "image": "items", "x":640, "y":70*10, "method":[ {"name": "configure", "attr": [ { moveToX:2200, moveToY:0, actionObj:'BoxDesc' } ] } ] },
                             // Klucze
-                            { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":140, "y":220, "method":[ {"name": "configure", "attr": [ { key:'red'} ] } ] },
+                            { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":150, "y":220, "method":[ {"name": "configure", "attr": [ { key:'red'} ] } ] },
                             { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":340, "y":520, "method":[ {"name": "configure", "attr": [ { key:'blue'} ] } ] },
                             { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":440, "y":520, "method":[ {"name": "configure", "attr": [ { key:'green'} ] } ] },
                             { "name":"Keys", "pool": true, "context":"main", "image": "items", "x":770, "y":710, "method":[ {"name": "configure", "attr": [ { key:'yellow'} ] } ] },

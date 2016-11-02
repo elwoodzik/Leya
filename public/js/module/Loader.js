@@ -9,7 +9,8 @@ define([
     'module/Irobot2',
     'module/Menu',
     'module/Intro',
-], function(my, AssetManager, Game, Irobot2, Menu, Intro){
+    'module/LevelSelect',
+], function(my, AssetManager, Game, Irobot2, Menu, Intro, LevelSelect){
     
     //variable
     var that;
@@ -26,6 +27,13 @@ define([
 
         create: function(){
             this.assetManager.load({
+                "graj": "images/graj.png",
+                "menu": "images/menu.png",
+                "menu-hover": "images/menu-hover.png",
+                "selectLevel": "images/selectLevel.png",
+                "graj-hover": "images/graj-hover.png",
+                "opcje": "images/opcje.png",
+                "opcje-hover": "images/opcje-hover.png",
                 "mapa": "images/mapa1.png",
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
@@ -68,11 +76,8 @@ define([
                 this.showFPS();
                 
                 this.add.multiplayer('http://localhost:4000');
-                
-                
-                
-            
-               
+                this.multiplayer.init();
+
                 this.add.sounds(that.assetManager);
 
                 this.sounds.useSounds(false);
@@ -81,17 +86,13 @@ define([
                 this.keyboard.initialize();
                 
                 this.state.add("Irobot2", Irobot2);
+                this.state.add("LevelSelect", LevelSelect);
                 this.state.add("Menu", Menu);
                 this.state.add("Intro", Intro);
                 this.state.start("Menu");
             });
             //
         },
-
-
-        
-
-       
     });
 
     return new Loader();

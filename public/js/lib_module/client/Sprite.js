@@ -216,6 +216,12 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
 
+        // multiUpdate: function(){
+		// 	if(this.previousX !== this.x || this.previousY !== this.y){
+		// 		this.game.multiplayer.emit("update obj", {x: this.x, y: this.y, ID: this.ID});
+		// 	}
+		// },
+
         destroy: function(array){  
             if(Array.isArray(array)){
                 array.splice(array.indexOf(this), 1);

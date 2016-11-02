@@ -1,7 +1,7 @@
 define(['Class'], function(my){
    var that;
 
-   var Button = my.Class( {
+   var ButtonImg = my.Class( {
 
         constructor: function(game,pooled, context, key, keyHover, x, y, width, height, action){
             this.Loader = require('module/Loader');
@@ -41,10 +41,16 @@ define(['Class'], function(my){
         },
 
         update: function() {
+            var wasNotClicked = this.game.mouse.click;
             
-           this.game.mouse.trigger(that, function(){
-               console.log('s')
-           })
+            if (this.game.mouse.updateStats(this) && wasNotClicked && typeof this.action === 'function') {
+                this.game.mouse.click = false;
+                
+                this.action.call(this.game, this);
+            }
+        //    this.game.mouse.trigger(that, function(){
+        //        console.log('s')
+        //    })
             //     this.game.mouse.click = false;
             //     console.log('p;')
             //     this.action.call(this.game, this);
@@ -119,5 +125,5 @@ define(['Class'], function(my){
         },
     })
 
-    return Button;
+    return ButtonImg;
 })

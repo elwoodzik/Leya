@@ -22,6 +22,7 @@
             that.objs.push(obj);
             Objs.ID++;
             //if(this.objs[i].socketID !== sockID){
+                console.log(obj)
             this.broadcast.emit("share obj", obj);
             //}
             callback(obj);
