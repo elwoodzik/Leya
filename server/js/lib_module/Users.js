@@ -10,18 +10,23 @@
            this.multiplayer = multiplayer;
         },
 
-        addNewUser: function(name, socket, callback){
-            if(!socket || typeof callback !== 'function'){
-                return callback(true);
-            }else{
-                var user = {
-                    id: socket.id,
-                    name: name,
-                    socket: socket,
-                }
-                this.users.push(user);
-                return callback(false, user);
+        addNewUser: function(socket, callback){
+            var user = {
+                id: socket.id,
+                //name: name,
+                socket: socket,
             }
+            that.users.push(user);
+           
+            that.multiplayer.rooms.joinRoom('global', socket, function(err, room, sock){
+                if(err){
+                    console.error(err);
+                    callback(err);
+                }else{
+                    that.multiplayer.objs.getObj(socket)
+                    callback(false);
+                }
+            })
         },
 
         findUserById: function(id){
@@ -35,17 +40,23 @@
             return console.error('Nie znaleziono uzytkownika o id: ' + id);
         },
 
-        removeUser: function(id, callback){
-            var user = this.findUserById(id);
+        removeUser: function(){
+            var id = this.id;
+            var user = that.findUserById(id);
             if(user){
-                var index = this.users.indexOf(user);
-                this.users.splice(index, 1);
-                if(typeof callback === 'function'){
-                     return callback(false, user);
-                }
+                var index = that.users.indexOf(user);
+                that.users.splice(index, 1);
+                that.multiplayer.rooms.leaveRoom(user, function(err){
+                    if(err){
+                        console.error("\nWystąpił błąd przy probie disconnect\n");
+                    }else{
+                        //console.log("\nUżytkownik poprawnie WYLOGOWANY z servera" + id +"\n");
+                        that.multiplayer.objs.remove(id);
+                    }
+                })
             }
-            else if(typeof callback === 'function'){
-                return callback("\nWystąpił błąd przy probie dodania nowego użytkownika\n");
+            else {
+                console.error('blad kurwa!');
             }
            
         }

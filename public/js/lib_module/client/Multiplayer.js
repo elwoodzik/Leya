@@ -13,6 +13,10 @@ define(['Class', 'Socket'], function(my, io){
         },
 
         initialize: function(){
+            that.onSocket('not connected', function(data) {
+                console.error(data)
+                //that.emit("get object");
+            });
             that.onSocket('share obj', that.shareObj); 
             that.onSocket('removed objs', that.removeAllObjects); 
             that.onSocket('update obj', that.updateObject); 
@@ -50,6 +54,7 @@ define(['Class', 'Socket'], function(my, io){
         shareObj: function(data){
             var obj = that.game.add[data.type]('main', data.x, data.y, data.key, data.w, data.h);
             obj.sockID = data.sockID;
+            obj.ID = data.ID;
 		},
 
         updateObject: function(data){

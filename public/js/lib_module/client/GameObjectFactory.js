@@ -94,9 +94,9 @@ define([
 				state: obj.state,
 				type: obj.type
 			}
-            this.game.multiplayer.emit('add object', o, function(err, sockID){
-				obj.sockID = sockID;
-				console.error(obj.sockID)
+            this.game.multiplayer.emit('add object', o, function(obj){
+				obj.sockID = obj.sockID;
+				obj.ID = obj.ID;
 			});
         }
 	});

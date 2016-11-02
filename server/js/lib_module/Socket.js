@@ -14,14 +14,20 @@
 
         initializeSockets: function(callback){
             this.io.on('connection', function(socket){
-                that.socket = socket;
-                console.error(socket.id)
-                that.onConnection(socket ,callback)
-            });
-        },
+                socket.on("disconnect", that.multiplayer.users.removeUser);
 
-        onConnection: function(socket, callback){
-            callback.call(this, socket);
+                that.multiplayer.users.addNewUser(socket, function(err){
+                    if(err){
+                        socket.emit("not connected", "Nie udało się połączyć. \n"+err )
+                    }else{
+                        socket.on("add object", that.multiplayer.objs.add);
+                        socket.on("update obj", that.multiplayer.objs.update);
+
+                        // callback socketow zdefiniowanych przez uzytkownika w Classie Game.
+                        callback.call(this, socket);
+                    }
+                })
+            });
         },
 
         onSocket: function(name, callback){
@@ -42,13 +48,13 @@
         },
 
         // wysyla wiadomosc tylko do osoby wysylajacej socketa
-        emitToMe: function(name, data){
-            if(!name){
-                throw 'musisz podac jako pierwszy parametr nazwe socketu';
-            }
+        // emitToMe: function(name, data){
+        //     if(!name){
+        //         throw 'musisz podac jako pierwszy parametr nazwe socketu';
+        //     }
             
-            this.socket.emit(name, data);
-        },
+        //     this.socket.emit(name, data);
+        // },
 
         // wysyla wiadomosc do wszystkich z podanego pokoju (room)
         emitToRoom: function(name, room, data){
@@ -69,13 +75,13 @@
         },
         
         // wysyla wiadomosc do wszystkich oprocz osoby ktora wyslala socketa
-        broadcastToAll: function(name, data, sock){
-            if(!name){
-                throw 'musisz podac jako pierwszy parametr nazwe socketu';
-            }
+        // broadcastToAll: function(name, data, sock){
+        //     if(!name){
+        //         throw 'musisz podac jako pierwszy parametr nazwe socketu';
+        //     }
             
-            sock.broadcast.emit(name, data);
-        }
+        //     sock.broadcast.emit(name, data);
+        // }
     });
 
     module.exports = Socket;

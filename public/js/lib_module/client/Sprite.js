@@ -4,7 +4,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         constructor: function(game, pooled, context, x, y, key, width, height){
             this.loader = require('module/Loader');
 
-            
+            this.type = 'sprite';
             this.pooled = pooled;
 
             this.game = game; 

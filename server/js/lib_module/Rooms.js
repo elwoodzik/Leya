@@ -21,7 +21,7 @@
                     room.users++;
                     socket.join(roomName);
                    
-                    callback(false, room)
+                    callback(false, room, socket)
                     console.log(this.getUsersIdList(roomName));
                 }else{
                     callback('Pokoj jest pełny', room);
@@ -45,7 +45,7 @@
         leaveRoom: function(user, callback){
             var room = this.findRoomByName(user.room);
 
-            if(user){
+            if(user && room){
                 var index = room.players.indexOf(user);      
                 room.players.splice(index, 1);
                 room.users--;

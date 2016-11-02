@@ -46,20 +46,18 @@
             this.multiplayer.socket.emitToAll("removed objs", sockID);
         },
 
-        getObj: function(id){
-            var sockID = id
-
-            for(var i= 0, max=this.objs.length; i<max; i++){
-                if(this.objs[i].socketID !== sockID){
-                     this.multiplayer.socket.emitToMe("share obj", this.objs[i]);
+        getObj: function(sock){
+            for(var i = 0, max = that.objs.length; i < max; i++){
+                if(that.objs[i].socketID !== sock.id){
+                     sock.emit("share obj", that.objs[i]);
                 }
             }
         },
 
-        update: function(data, sock){
-            if(sock){
-                this.multiplayer.socket.broadcastToAll("update obj", data, sock);
-            }
+        update: function(data){
+            this.broadcast.emit("update obj", data);
+            //this.multiplayer.socket.broadcastToAll("update obj", data, sock);
+           
         }
         
     });
