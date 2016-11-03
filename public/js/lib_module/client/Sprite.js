@@ -42,7 +42,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 this.renderX = (this.x - this.previousX) * dt + this.previousX //this.x + (this.body.velocity.x * dt);                 
             } else {
                 this.renderX = this.x;
-                
             }
             if (this.previousY) {
                 this.renderY = (this.y - this.previousY) * dt + this.previousY  //this.y + (this.body.velocity.y * dt);
@@ -74,8 +73,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 this.rowAndColumn();
             }
             this.frameUpdate();
-            //this.inRange();
-            //this.collide();
+
         },
         redraw: function(dt){
 
@@ -379,7 +377,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         moveToPoint: function(x, y, speed, callback){
             //if(!this.moveTo){
                 this.positionToMoveX = Math.floor(x);
-                this.positionToMoveY = Math.floor(y)  ;
+                this.positionToMoveY = Math.floor(y);
                 this.positionSpeed = speed;
                 this.oldVelocityX = this.body.velocity.x;
                 this.oldVelocityY = this.body.velocity.y;
