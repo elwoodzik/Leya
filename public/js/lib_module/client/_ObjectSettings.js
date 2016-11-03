@@ -17,13 +17,16 @@ define(['Class'], function(my){
             this.isOutOfScreen = false;
             this.updateOfScreen = true;
             this.used = true;
+            this.static = false;
+            this.scale = 1;
+            this.timeLocal = 0;
 
             if(this.key){
                 this.image = Loader.assetManager.get(this.key); 
             }
-
-            this.currentWidth = options.width  || this.image.width || 0;
-			this.currentHeight = options.height || this.image.height || 0;
+            
+            this.currentWidth = options.width   || (this.image ? this.image.width : 10);
+			this.currentHeight = options.height || (this.image ? this.image.height : 10);
 
             this.currentHalfWidth = this.currentWidth / 2;
 	        this.currentHalfHeight = this.currentHeight / 2;
@@ -33,6 +36,27 @@ define(['Class'], function(my){
             if(!this.pooled){
                 this.setContext(this.contextType);
             } 
+        },
+
+         worldBounce: function(){
+            if(this.body.colideWorldSide){
+                if(this.body.colideWorldSideBottom && this.y + this.currentHeight > this.game.portViewHeight ){
+                    this.body.velocity.y = this.body.worldBounds ? this.body.velocity.y*-1 : 0;
+                    this.y = this.game.portViewHeight - this.currentHeight;
+                }
+                else if(this.body.colideWorldSideTop && this.y < 0){
+                    this.body.velocity.y = this.body.worldBounds ? this.body.velocity.y*-1 : 0;
+                    this.y = 0;
+                }
+                if(this.body.colideWorldSideRight && this.x + this.currentWidth > this.game.portViewWidth ){
+                    this.body.velocity.x = this.body.worldBounds ? this.body.velocity.x*-1 : 0;
+                    this.x = this.game.portViewWidth - this.currentWidth;
+                }
+                else if(this.body.colideWorldSideLeft && this.x < 0){
+                    this.body.velocity.x = this.body.worldBounds ? this.body.velocity.x*-1 : 0;
+                    this.x = 0;
+                }
+            }
         },
 
         changeContext: function(context, array){

@@ -45,8 +45,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
 	            this.currentWidth,
 	            this.currentHeight
 	        )
-
-		
 		},
 
 		redraw: function(lag){

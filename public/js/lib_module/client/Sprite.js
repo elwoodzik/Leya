@@ -2,56 +2,31 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
    var id = 0; 
    var Sprite = my.Class(null, Settings, {
         constructor: function(game, pooled, context, x, y, key, width, height){
-            this.loader = require('module/Loader');
+            
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: pooled || false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: key || null,
+				width: width,
+				height: height 
+			});
 
             this.type = 'sprite';
-            this.pooled = pooled;
-
-            this.game = game; 
-            this.x = x || -500; 
-            this.y = y || -500; 
-
-            this.isOutOfScreen = false;
-            this.updateOfScreen = true;
-
-            this.renderX = this.x;
-            this.renderY = this.y;
-            this.previousX = this.x;
-            this.previousY = this.y;
-
-            this.key = key;
             this.zIndex = 3;
-            this.image = this.loader.assetManager.get(this.key) || {}; 
-
-            this.fW = this.image.width || -500;
-            this.fH = this.image.height || -500; 
-
-            this.currentWidth = null;
-            this.currentHeight = null;
-            this.currentHalfWidth = null;
-            this.currentHalfHeight = null;
-            
-            this.timeLocal = 0;
-
-            this.clicked = false;
-            this.hovered = false;
 
             this.state = 'static';
+            
             this.states =  {
-                'static': {sx:0, sy:0, fW:this.fW,fH:this.fH, f:[0]}
+                'static': {sx:0, sy:0, fW:this.currentWidth, fH:this.currentHeight, f:[0]}
             };
-
-            this.scale = 1;
-
-            this.static = false;
-
-            this.contextType = context;
             
             this.animations = new GameAnimationFactory(this);
             
             this.body = new Body(this.game, this);
 
-            this.useCollision = true;
             this.useRpgCollision = false;
 
             this.body.tolerance = 0;
@@ -60,35 +35,9 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.change_f_delay = 0;
             this.f_max_delay = 4;
             this.playCallbackDellayCurrent = 0;
-            
-              //
-            // this.ID = id;
-            // id++;
-            // this.game.gameObject.push(this); 
-            
-            // this.sortByIndex();
-            this.used = true;
-
-            if(!this.pooled){
-                this.setContext(this.contextType);
-            }
-        },
-
-        sortByIndex: function(){
-            this.game.gameObject.sort(function(obj1, obj2) {
-                if(obj1.zIndex > obj2.zIndex)
-                    return 1;
-                else if(obj1.zIndex < obj2.zIndex) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
         },
 
         draw: function(dt){
-            
-            
             if (this.previousX) { 
                 this.renderX = (this.x - this.previousX) * dt + this.previousX //this.x + (this.body.velocity.x * dt);                 
             } else {
@@ -117,7 +66,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                this.states[this.state].fH * this.scale 
             )
 
-             if(this.states[this.state].flip){
+            if(this.states[this.state].flip){
                 this.game.ctx.restore();
             }
 
@@ -183,8 +132,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
                 this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
             }
-           
-          
         },
 
         frameUpdate: function(){
@@ -228,9 +175,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
         
 
         rpgCollision: function(){
- 
             this.useRpgCollision = this.useRpgCollision ? false : true;
-
         },
 
         rowAndColumn: function(){
@@ -335,26 +280,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 // }
         },
 
-        worldBounce: function(){
-            if(this.body.colideWorldSide){
-                if(this.body.colideWorldSideBottom && this.y + this.currentHeight > this.game.portViewHeight ){
-                    this.body.velocity.y = this.body.worldBounds ? this.body.velocity.y*-1 : 0;
-                    this.y = this.game.portViewHeight - this.currentHeight;
-                }
-                else if(this.body.colideWorldSideTop && this.y < 0){
-                    this.body.velocity.y = this.body.worldBounds ? this.body.velocity.y*-1 : 0;
-                    this.y = 0;
-                }
-                if(this.body.colideWorldSideRight && this.x + this.currentWidth > this.game.portViewWidth ){
-                    this.body.velocity.x = this.body.worldBounds ? this.body.velocity.x*-1 : 0;
-                    this.x = this.game.portViewWidth - this.currentWidth;
-                }
-                else if(this.body.colideWorldSideLeft && this.x < 0){
-                    this.body.velocity.x = this.body.worldBounds ? this.body.velocity.x*-1 : 0;
-                    this.x = 0;
-                }
-            }
-        },
+       
         
         thereAndBack: function(_dis, _dir, _speed){
             this.thereAndBack_startX = this.x;
@@ -490,27 +416,11 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
 
-        // doInTime: function(time, callback){
-        //     this.timeLocal += this.game.FRAMEDURATION;
-
-        //     if(this.timeLocal > time ){
-        //         this.timeLocal = 0;
-        //         callback.call(this);
-        //     }
-        // },
-
         setAtributes: function(options){
             for(var i=0; i<Object.keys(options).length; i++){
                 this[Object.keys(options)[i]] = options[Object.keys(options)[i]];
             }
         },
-
-        
-
-        
-
-        
-        
     });  
    
     return Sprite;    

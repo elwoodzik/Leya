@@ -23,7 +23,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 	var Irobot2 = my.Class(null, Maps, {
 
         STATIC: {
-            COINS: 50,
+            COINS: 80,
             BOXDESC: 20,
             BOX: 20,
             WATER: 40,
@@ -41,12 +41,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that = this;
             that.game = game;
 		},
-
-         getMessage: function(data){
-            console.log(this)
-            console.log(data);
-        },
-
+        
 		create: function(){
             
             that.game.CLASS.BoxDesc = BoxDesc;
@@ -66,7 +61,6 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.VAR.player = null;
             that.game.VAR.ufo = null;
 
-            
             ParticleBox.setupPool(Irobot2.PARTICLEBOX, 'main');
             Water.setupPool(Irobot2.WATER, 'main');
             Coin.setupPool(Irobot2.COINS, 'main');
@@ -79,8 +73,6 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             Lock.setupPool(Irobot2.LOCK, 'main');
             Switch.setupPool(Irobot2.SWITCH, 'main');
             Enemy1.setupPool(Irobot2.ENEMY1, 'main');
-            
-            
             
             // tworzy mape
             var map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
@@ -104,19 +96,19 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 				main: function(dialog){
 					var star1 = that.game.add.sprite('main', dialog.x + 180, dialog.y + 150, 'stars');
 					star1.animations.add('full',0,0, 118,108, [0]);
-					star1.animations.add('empty',0,105, 118,108, [0]);
+					star1.animations.add('empty',0,106, 118,108, [0]);
 					star1.animations.play('empty');
                     star1.static = true;
 					
                     var star2 = that.game.add.sprite('main', dialog.x + 290, dialog.y + 90, 'stars');
 					star2.animations.add('full',0,0, 118,108, [0]);
-					star2.animations.add('empty',0,105, 118,108, [0]);
+					star2.animations.add('empty',0,106, 118,108, [0]);
 					star2.animations.play('empty');
                     star2.static = true;
 					
                     var star3 = that.game.add.sprite('main', dialog.x + 400, dialog.y + 150, 'stars');
 					star3.animations.add('full',0,0, 118,108, [0]);
-					star3.animations.add('empty',0,105, 118,108, [0]);
+					star3.animations.add('empty',0,106, 118,108, [0]);
 					star3.animations.play('empty');
                     star3.static = true;
                     
