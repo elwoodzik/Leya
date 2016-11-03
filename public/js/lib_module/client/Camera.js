@@ -1,11 +1,12 @@
 define([
     'Class',
-    'lib_module/client/Rectangle'
+    'lib_module/client/Rectangle',
+    'lib_module/client/_ObjectSettings'
 ],
     
-function(my, Rectangle){
+function(my, Rectangle, Settings){
     
-    var Camera = my.Class( {
+    var Camera = my.Class(null, Settings, {
 
         STATIC: {
             AXIS: {
@@ -49,9 +50,11 @@ function(my, Rectangle){
             this.worldRect = new Rectangle(0, 0, worldWidth, worldHeight);
 
             this.contextType = 'main';
-
-            this.game.gameObjectLength = Object.keys(this.game.gameObject).length;
-            this.game.gameObject[this.game.gameObjectLength] = this; 
+            this.pooled = false;
+          
+            if(!this.pooled){
+                this.setContext(this.contextType);
+            } 
         },
 
         update: function(dt){

@@ -1,7 +1,7 @@
-define(['Class'], function(my){
+define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
    var that;
 
-   var ButtonImg = my.Class( {
+   var ButtonImg = my.Class(null, Settings, {
 
         constructor: function(game,pooled, context, key, keyHover, x, y, width, height, action){
             this.Loader = require('module/Loader');
@@ -88,41 +88,7 @@ define(['Class'], function(my){
 	            this.width,
 	            this.height
 	        )
-        },
-
-         changeContext: function(context, array){
-            if(this.contextType != context){
-                this.destroy(array);
-                this.setContext(context);
-            }
-            return this;
-        },
-
-        setContext: function(context){
-            if( context){
-                if(context === 'main'){
-                    this.context = this.game.ctx;
-                    this.contextType = context;
-                    this.gameObjectLength = this.game.gameObject.length;
-                    this.game.gameObject[this.gameObjectLength] = this; 
-                }else if(context === 'background'){
-                    this.context = this.game.bgctx;
-                    this.contextType = context;
-                    this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-                    this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
-                    //this.redraw(); 
-                }
-                else if(context === 'onbackground'){
-                    this.context = this.game.onbgctx;
-                    this.contextType = context;
-                    this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
-                    this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-                    //this.redraw();
-                }else{
-                    return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
-                }
-            }
-        },
+        }
     })
 
     return ButtonImg;

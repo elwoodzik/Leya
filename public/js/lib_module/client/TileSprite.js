@@ -1,6 +1,6 @@
-define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Body){
+define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'], function(my, require, Body, Settings){
     
-  var TileSprite = my.Class({
+  var TileSprite = my.Class(null, Settings, {
         constructor: function(game, pooled, context, x, y, key, width, height){
             var Loader = require('module/Loader');
             this.game = game; 
@@ -29,8 +29,6 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	        if(!this.pooled){
 	        	this.setContext(context);
 	        }
-
-            
         },
 
         draw: function(){
@@ -82,40 +80,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             // else if(this.x >  this.game.canvas.width){
             //     this.x = 0 - this.velocity.x;
             // }   
-        },
-
-        changeContext: function(context, array){
-            if(this.contextType != context){
-				this.destroy(array);
-                this.setContext(context);
-            }
-			return this;
-        },
-
-        setContext: function(context){
-		
-            if(context === 'main'){
-				this.context = this.game.ctx;
-				this.contextType = context;
-				this.gameObjectLength = this.game.gameObject.length;
-				this.game.gameObject[this.gameObjectLength] = this; 
-			}else if(context === 'background'){
-				this.context = this.game.bgctx;
-				this.contextType = context;
-				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-				this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
-				//this.redraw(); 
-			}
-			else if(context === 'onbackground'){
-				this.context = this.game.onbgctx;
-				this.contextType = context;
-				this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
-				this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-				//this.redraw();
-			}else{
-				return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
-			}
-        },
+        }
     });
 
     return TileSprite;

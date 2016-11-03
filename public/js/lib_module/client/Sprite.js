@@ -1,6 +1,6 @@
-define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAnimationFactory', 'lib_module/client/Map',], function(my, require, Body, GameAnimationFactory, Map){
+define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAnimationFactory', 'lib_module/client/Map','lib_module/client/_ObjectSettings'], function(my, require, Body, GameAnimationFactory, Map, Settings){
    var id = 0; 
-   var Sprite = my.Class({
+   var Sprite = my.Class(null, Settings, {
         constructor: function(game, pooled, context, x, y, key, width, height){
             this.loader = require('module/Loader');
 
@@ -177,6 +177,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.moveToPointHandler();
             this.useThereAndBack();
             this.scaleUpDownHandler();
+            this.doInTimeHandler();
             
             if(this.body.velocity.x != 0 || this.body.velocity.y != 0){
                 this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
@@ -216,24 +217,15 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
 
+       
+
         // multiUpdate: function(){
 		// 	if(this.previousX !== this.x || this.previousY !== this.y){
 		// 		this.game.multiplayer.emit("update obj", {x: this.x, y: this.y, ID: this.ID});
 		// 	}
 		// },
 
-        destroy: function(array){  
-            if(Array.isArray(array)){
-                array.splice(array.indexOf(this), 1);
-            }
-            return this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-        },
-
-        kill: function(array){
-            if(Array.isArray(array)){
-                array.splice(array.indexOf(this), 1);
-            }
-        },
+        
 
         rpgCollision: function(){
  
@@ -341,18 +333,6 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 //     this.next_row = this.row;
                 //     this.next_column = this.column;
                 // }
-        },
-
-        t2p: function(t){
-            return t*this.game.map.currentWidth;
-        },
-
-        p2t: function(p){
-            return Math.floor(p/this.game.map.currentWidth);
-        },
-        
-        tcell: function(tx, ty) {
-            return this.game.map.b[ty][tx]; 
         },
 
         worldBounce: function(){
@@ -510,14 +490,14 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
 
-        doInTime: function(time, callback){
-            this.timeLocal += this.game.FRAMEDURATION;
+        // doInTime: function(time, callback){
+        //     this.timeLocal += this.game.FRAMEDURATION;
 
-            if(this.timeLocal > time ){
-                this.timeLocal = 0;
-                callback.call(this);
-            }
-        },
+        //     if(this.timeLocal > time ){
+        //         this.timeLocal = 0;
+        //         callback.call(this);
+        //     }
+        // },
 
         setAtributes: function(options){
             for(var i=0; i<Object.keys(options).length; i++){
@@ -525,94 +505,11 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             }
         },
 
-        scaleUp: function(too, speed, callback){
-            this.scaleUpTrig = true;
-            this.scaleSpeed = speed;
-            this.scaleToo = too;
-            this.scallUpCallback = callback;
-        },
+        
 
-        scaleDown: function(too, speed, callback){
-            this.scaleDownTrig = true;
-            this.scaleSpeed = speed;
-            this.scaleToo = too;
-            this.scallDownCallback = callback;
-        },
+        
 
-        scaleUpDownHandler: function(){
-            if(this.scaleUpTrig){
-                if(this.scale < this.scaleToo){
-                    this.scale += this.scaleSpeed;
-                }else{
-                    this.scaleUpTrig = false;
-                    if(typeof this.scallUpCallback === 'function'){
-                        this.scallUpCallback();
-                    }
-                   
-                }
-            }else if(this.scaleDownTrig){
-                if(this.scale > this.scaleToo){
-                    this.scale -= this.scaleSpeed;
-                }else{
-                    this.scaleDownTrig = false;
-                    this.scale = 1;
-                    if(typeof this.scallDownCallback === 'function'){
-                        this.scallDownCallback();
-                    }
-                }
-            }
-        },
-
-        setScale: function(scale){
-            this.scale = scale;
-        },
-
-        changeContext: function(context, array){
-            if(this.contextType != context){
-                this.destroy(array);
-                this.setContext(context);
-            }
-            return this;
-        },
-
-        setContext: function(context){
-            if( context){
-                if(context === 'main'){
-                    this.context = this.game.ctx;
-                    this.contextType = context;
-                    this.gameObjectLength = this.game.gameObject.length;
-                    this.game.gameObject[this.gameObjectLength] = this; 
-                }else if(context === 'background'){
-                    this.context = this.game.bgctx;
-                    this.contextType = context;
-                    this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-                    this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
-                    //this.redraw(); 
-                }
-                else if(context === 'onbackground'){
-                    this.context = this.game.onbgctx;
-                    this.contextType = context;
-                    this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
-                    this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-                    //this.redraw();
-                }else{
-                    return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
-                }
-            }
-        },
-
-        setIndex: function(index){
-            this.zIndex = index;
-            this.game.gameObject.sort(function(obj1, obj2) {
-                if(obj1.zIndex > obj2.zIndex)
-                    return 1;
-                else if(obj1.zIndex < obj2.zIndex) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
-        },
+        
         
     });  
    

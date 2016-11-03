@@ -1,8 +1,8 @@
-define(['Class'], function(my){
+define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
    
    var that;
 
-   var Map = my.Class({
+   var Map = my.Class(null, Settings, {
         constructor: function(game, context, key, arr, width, height, scalled){
         	var Loader = require('module/Loader');
 
@@ -191,30 +191,6 @@ define(['Class'], function(my){
                 }
             }
             return true;
-        },
-
-        setContext: function(context){
-            if(context === 'main'){
-				this.context = this.game.ctx;
-				this.contextType = context;
-				this.gameObjectLength = this.game.gameObject.length;
-				this.game.gameObject[this.gameObjectLength] = this; 
-			}else if(context === 'background'){
-				this.context = this.game.bgctx;
-				this.contextType = context;
-				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-				this.game.gameObjectStatic[this.gameObjectStaticLength] = this;
-				this.draw(); 
-			}
-			else if(context === 'onbackground'){
-				this.context = this.game.onbgctx;
-				this.contextType = context;
-				this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
-				this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-				this.draw();
-			}else{
-				return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
-			}
         }
 
     });

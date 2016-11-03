@@ -1,45 +1,22 @@
-define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Body){
+define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'], function(my, require, Body, Settings){
 	
-	var Image = my.Class({
+	var Image = my.Class(null, Settings, {
 		constructor: function(game, pooled, context, x, y, key, width, height, fullscreen){
-			var Loader = require('module/Loader');
 			
-			this.game = game; 
-			this.used = true;
+			this.initializeGlobalSettings({
+				game: game,
+				pooled: pooled || false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: key || null,
+				width: width,
+				height: height
+			});
+
 			this.type = "image";
-
-			this.pooled = pooled;
-
-			this.x = x || 0; 
-			this.y = y || 0; 
-			this.key = key;
-			
-			this.image = Loader.assetManager.get(this.key); 
-			
 			this.body = new Body(this.game, this);
 			this.zIndex = 2;
-
-			this.fW = width || this.image.width;
-            this.fH = height || this.image.height;
-
-			this.width = width || this.image.width;
-			this.height = height || this.image.height;
-
-			this.currentWidth = this.width;
-			this.currentHeight = this.height;
-
-			this.useCollision = true;
-			
-	        this.currentHalfWidth = this.currentWidth / 2;
-	        this.currentHalfHeight = this.currentHeight / 2;
-
-	       	this.isOutOfScreen = false;
-            this.updateOfScreen = true;
-
-	        if(!this.pooled){
-	        	this.setContext(context);
-	        }
-			
 		},
 
 		draw: function(lag){
@@ -65,8 +42,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.image.height,
 	            this.renderX - this.game.camera.xScroll, // * this.scale
 	            this.renderY - this.game.camera.yScroll, // * this.scale
-	            this.width,
-	            this.height
+	            this.currentWidth,
+	            this.currentHeight
 	        )
 
 		
@@ -97,8 +74,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.image.height,
 	            this.renderX - this.game.camera.xScroll, // * this.scale
 	            this.renderY - this.game.camera.yScroll, // * this.scale
-				this.width,
-	            this.height
+				this.currentWidth,
+	            this.currentHeight
 	        )
 		},
 
@@ -118,27 +95,6 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 				this.game.multiplayer.emit("update obj", {x: this.x, y: this.y, ID: this.ID});
 			}
 		},
-
-		kill: function(){
-            this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-        },
-
-		destroy: function(array){  
-            if(Array.isArray(array)){
-                array.splice(array.indexOf(this), 1);
-            }else if(typeof array === 'object'){
-				array = null;
-			}
-			if(this.contextType === 'main'){
-            	return this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-			}else if(this.contextType === 'background'){
-				var destroyed = this.game.gameObjectStatic.splice(this.game.gameObjectStatic.indexOf(this), 1);
-				this.context.clearRect(destroyed[0].x, destroyed[0].y, destroyed[0].currentWidth, destroyed[0].currentHeight);
-			}else if(this.contextType === 'onbackground'){
-				var destroyed = this.game.gameObjectOnStatic.splice(this.game.gameObjectOnStatic.indexOf(this), 1);
-				this.context.clearRect(destroyed[0].x, destroyed[0].y, destroyed[0].currentWidth, destroyed[0].currentHeight);
-			}
-        },
 		
 		worldBounce: function(){
             if(this.body.colideWorldSide){
@@ -159,39 +115,6 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                     this.x = 0;
                 }
             }
-        },
-
-		changeContext: function(context, array){
-            if(this.contextType != context){
-				this.destroy(array);
-                this.setContext(context);
-            }
-			return this;
-        },
-
-        setContext: function(context){
-		
-            if(context === 'main'){
-				this.context = this.game.ctx;
-				this.contextType = context;
-				this.gameObjectLength = this.game.gameObject.length;
-				this.game.gameObject[this.gameObjectLength] = this; 
-			}else if(context === 'background'){
-				this.context = this.game.bgctx;
-				this.contextType = context;
-				this.gameObjectStaticLength = this.game.gameObjectStatic.length;
-				this.game.gameObjectStatic[this.gameObjectStaticLength] = this; 
-				//this.redraw(); 
-			}
-			else if(context === 'onbackground'){
-				this.context = this.game.onbgctx;
-				this.contextType = context;
-				this.gameObjectOnStaticLength = this.game.gameObjectOnStatic.length;
-				this.game.gameObjectOnStatic[this.gameObjectOnStaticLength] = this; 
-				//this.redraw();
-			}else{
-				return console.error("Niepoprawna nazwa Contextu. Dostępne nazwy to: \n1. background \n2. onbackground \n3. main")
-			}
         },
 		
 		useRotate: function(){
@@ -264,22 +187,8 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                         this.positionCallback.call(this.game, this);
                     }
                 }
-            }
-            
-        },
-		
-		setIndex: function(index){
-            this.zIndex = index;
-            this.game.gameObject.sort(function(obj1, obj2) {
-                if(obj1.zIndex > obj2.zIndex)
-                    return 1;
-                else if(obj1.zIndex < obj2.zIndex) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
-        },
+            }   
+        }
 	});
 
 	return Image;

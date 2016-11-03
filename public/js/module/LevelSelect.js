@@ -1,9 +1,10 @@
 define([
 	'Class',
-], function(my){
+	'module/Levels'
+], function(my, Levels){
 	var that;
 
-	var Menu = my.Class({
+	var LevelSelect = my.Class({
 
 		constructor: function(game){
 			that = this;
@@ -11,18 +12,15 @@ define([
 		},
 		
 		create: function(){
-			this.add.image('main', 0,0,'menu-bg',1366, 768);
+			this.add.image('main', 0, 0, 'menu-bg', 1366, 768);
 			
-			this.add.text('main', "Nazwa", (this.canvas.width/2)-170, 170, 99, "#333", null);
-		
-			//this.add.button("Graj", 500, 300, 300, 80, '#077607', '#0cd70c', '#333', null);
-			//this.add.button("Opcje", 500, 410, 300, 80, '#077607', '#0cd70c', '#333', null);
-			this.add.buttonImg("main", 'graj', 'graj-hover', 550, 280, 0,0, that.play);	
+			this.add.image('main', 400, 80, 'selectLevel');
+			//this.add.text('main', "Wybierz Poziom", (this.canvas.width/2)-300, 170, 99, "#333", null);
+			
+			that.levels = new Levels(this);
+			
+			this.add.buttonImg("main", 'menu', 'menu-hover', this.width-200, 40, 0,0, that.backToMenu);	
 
-			this.add.buttonImg("main", 'opcje', 'opcje-hover', 530, 430, 0,0, null);	
-	
-			
-			
 			// that.img = this.add.image('main', this.rand(20,800),this.rand(20,600),'menu-bg',80, 80);
 			// var img2 = this.add.image('main', this.rand(20,800),this.rand(20,800),'menu-bg',80, 80);
 
@@ -31,7 +29,7 @@ define([
 		},
 
 		update: function(){
-			
+			that.levels.update();
 			// if (this.keyboard.use['A'].pressed){
 			// 	that.img.x -= 3;
 			// }
@@ -41,10 +39,10 @@ define([
 			// that.img.multiUpdate();
 		},
 
-		play: function(){
-			that.game.state.start('LevelSelect');
+		backToMenu: function(){
+			that.game.state.start('Menu');
 		}
 	})
 	
-	return Menu;
+	return LevelSelect;
 })

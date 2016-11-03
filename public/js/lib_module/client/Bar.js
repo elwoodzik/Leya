@@ -1,6 +1,6 @@
-define(['Class', 'require'], function(my, require){
+define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 	
-	var Bar = my.Class({
+	var Bar = my.Class(null, Settings, {
 		constructor: function(game, x, y, width, height, strokeStyle, fillStyle, min, max){
 			
 			this.game = game; 
@@ -86,15 +86,7 @@ define(['Class', 'require'], function(my, require){
 
 		update: function(){
 
-		},
-
-		 destroy: function(array){
-            this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-            if(Array.isArray(array)){
-                array.splice(array.indexOf(this), 1);
-            }
-        },
-		
+		}
 		
 	});
 

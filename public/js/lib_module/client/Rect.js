@@ -1,7 +1,7 @@
-define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Body){
+define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'], function(my, require, Body, Settings){
 	
-	var Rect = my.Class({
-		constructor: function(game, x, y, width, height, strokeStyle, fillStyle){
+	var Rect = my.Class(null, Settings, {
+		constructor: function(game, pooled, context, x, y, width, height, strokeStyle, fillStyle){
 			
 			this.game = game; 
 			this.used = true;
@@ -11,6 +11,10 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 			this.width = width || this.image.width;
 			this.height = height || this.image.height;
 
+			this.pooled = pooled;
+
+			this.alfa = 1;
+
 			this.currentWidth = this.width;
 			this.currentHeight = this.height;
 
@@ -19,24 +23,33 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 
 			this.contextType = 'main';
 
-            
             this.strokeStyle = strokeStyle;
             this.fillStyle = fillStyle;
+
+			this.borderWidth = 1;
+
+			this.static = false;
 
 			this.useCollision = true;
 
 	        this.currentHalfWidth = this.currentWidth / 2;
 	        this.currentHalfHeight = this.currentHeight / 2;
 
-	        this.isOutOfScreen = false;
+			this.isOutOfScreen = false;
+            this.updateOfScreen = true;
 
-			this.gameObjectLength = Object.keys(this.game.gameObject).length;
-			this.game.gameObject[this.gameObjectLength] = this; 
+	        if(!this.pooled){
+	        	this.setContext(context);
+	        }
 
 		},
 
 		draw: function(lag){
 			//this.useRotate();
+			if(this.alfa !== 1){
+				this.game.ctx.globalAlpha = this.alfa;
+			}
+			
 			if (this.previousX) {
 	            this.renderX = (this.x - this.previousX) * lag + this.previousX;
 	        } else {
@@ -48,19 +61,27 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
 	            this.renderY = this.y;
 	        }
 			this.game.ctx.strokeStyle = this.strokeStyle;
-            this.game.ctx.lineWidth = 1;
+            this.game.ctx.lineWidth = this.borderWidth;
             this.game.ctx.fillStyle = this.fillStyle;
             
 			if(this.strokeStyle === null){
-				this.game.ctx.fillRect(this.renderX - this.game.camera.xScroll, this.renderY - this.game.camera.yScroll, this.width, this.height);
-			}else{
+				this.game.ctx.fillRect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.width, this.height);
+			}else if(this.fillStyle === null){
 				this.game.ctx.beginPath();
-				this.game.ctx.rect(this.renderX - this.game.camera.xScroll, this.renderY - this.game.camera.yScroll, this.width, this.height);
+				this.game.ctx.rect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.width, this.height);
 				this.game.ctx.stroke();
 				//this.game.ctx.fill();
 				this.game.ctx.closePath();
+			}else{
+				this.game.ctx.beginPath();
+				this.game.ctx.rect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.width, this.height);
+				this.game.ctx.stroke();
+				this.game.ctx.fill();
+				this.game.ctx.closePath();
 			}
-            
+			if(this.alfa !== 1){
+				this.game.ctx.globalAlpha = 1;
+			}
 		},
 
 		update: function(dt){
@@ -69,12 +90,13 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
             this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
 		},
 
-		 destroy: function(array){
-            this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-            if(Array.isArray(array)){
-                array.splice(array.indexOf(this), 1);
-            }
-        },
+		setBorderWidth: function(width){
+			this.borderWidth = width;
+		},
+
+		setAlfa: function(alfa){
+			this.alfa = alfa;
+		},
 		
 		worldBounce: function(){
             if(this.body.colideWorldSide){
@@ -95,11 +117,7 @@ define(['Class', 'require', 'lib_module/client/Body'], function(my, require, Bod
                     this.x = 0;
                 }
             }
-        },
-		
-		// useRotate: function(){
-  //            this.body.angle += this.body.angleSpeed; 
-  //       }
+        }
 	});
 
 	return Rect;

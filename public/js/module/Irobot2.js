@@ -95,7 +95,70 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             // okresla wielkosc calego swiata
             that.game.world.setPortView(map.mapObj.w * map.w, map.mapObj.h * map.h);
 
-           
+            var r = this.add.dialog('main', 350, 150, 700, 450, '#333', 'white');
+
+			r.configure({
+				alfa: 1,
+				borderWidth: 5,
+                
+				main: function(dialog){
+					var star1 = that.game.add.sprite('main', dialog.x + 180, dialog.y + 150, 'stars');
+					star1.animations.add('full',0,0, 118,108, [0]);
+					star1.animations.add('empty',0,105, 118,108, [0]);
+					star1.animations.play('empty');
+                    star1.static = true;
+					
+                    var star2 = that.game.add.sprite('main', dialog.x + 290, dialog.y + 90, 'stars');
+					star2.animations.add('full',0,0, 118,108, [0]);
+					star2.animations.add('empty',0,105, 118,108, [0]);
+					star2.animations.play('empty');
+                    star2.static = true;
+					
+                    var star3 = that.game.add.sprite('main', dialog.x + 400, dialog.y + 150, 'stars');
+					star3.animations.add('full',0,0, 118,108, [0]);
+					star3.animations.add('empty',0,105, 118,108, [0]);
+					star3.animations.play('empty');
+                    star3.static = true;
+                    
+                    star1.doInTime(500, function(star){
+						star.state = 'full';
+					});
+
+					star2.doInTime(1200, function(star){
+						star.state = 'full';
+					});
+
+					star3.doInTime(2000, function(star){
+						star.state = 'full';
+					});
+
+                    dialog.add(star1);
+                    dialog.add(star2);
+                    dialog.add(star3);
+				},
+				headline:{
+					text: 'WYGRAŁEŚ!',
+					x: 235,
+					y: 60,
+					color: '#333',
+					size: 45
+				},
+				button1: {
+					text: 'Wroć',
+                   
+					action: function(x){
+						console.log(x)
+                        r.close();
+					},
+				},
+				button2: {
+					text: 'OK',
+					action: function(){
+						console.log('b')
+                        r.close();
+					},
+				}
+			})
 		}
 	});
 
