@@ -1,16 +1,18 @@
 define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 	
 	var Bar = my.Class(null, Settings, {
-		constructor: function(game, x, y, width, height, strokeStyle, fillStyle, min, max){
+		constructor: function(game,  pooled, context, x, y, width, height, strokeStyle, fillStyle, min, max){
 			
-			this.game = game; 
-			this.used = true;
-			
-			this.x = x || 1; 
-			this.y = y || 1;
-
-			this.isOutOfScreen = false;
-            this.updateOfScreen = true;
+			this.initializeGlobalSettings({
+				game: game,
+				pooled: pooled || false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: null,
+				width: width,
+				height: height
+			});
 
 			this.max = max;
 			this.min = min > this.max ? this.error() : min;
@@ -21,32 +23,13 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 		
 			this.zIndex = 4;
 
-			this.width = width || this.image.width;
-			this.height = height || this.image.height;
-
 			this.lineWidth = 1;
-
-			this.currentWidth = this.width;
-			this.currentHeight = this.height;
             
             this.strokeStyle = strokeStyle;
             this.fillStyle = fillStyle;
-
-			this.useCollision = true;
-
-	        this.currentHalfWidth = this.currentWidth / 2;
-	        this.currentHalfHeight = this.currentHeight / 2;
-
-	        this.isOutOfScreen = false;
-
-			this.gameObjectLength = Object.keys(this.game.gameObject).length;
-			this.game.gameObject[this.gameObjectLength] = this; 
-
 		},
 
 		draw: function(lag){
-			//this.useRotate();
-			
 			if (this.previousX) {
 	            this.renderX = (this.x - this.previousX) * lag + this.previousX;
 	        } else {
@@ -65,19 +48,18 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 				this.game.ctx.strokeStyle = this.strokeStyle;
 	            this.game.ctx.lineWidth = this.lineWidth;
 	           
-				this.game.ctx.rect(this.renderX, this.renderY, this.width, this.height);
+				this.game.ctx.rect(this.renderX, this.renderY, this.currentWidth, this.currentHeight);
 				this.game.ctx.stroke();
 				//this.game.ctx.fill();
 				this.game.ctx.closePath();
 	        }
-	        
 	       	if(this.fillStyle){
-				this.game.ctx.fillRect(this.renderX+this.lineWidth, this.renderY+this.lineWidth, this.statusX-this.lineWidth*2, this.height-this.lineWidth*2);
+				this.game.ctx.fillRect(this.renderX+this.lineWidth, this.renderY+this.lineWidth, this.statusX-this.lineWidth*2, this.currentHeight-this.lineWidth*2);
 			}
 		},
 
 		setStatusX: function(statusX){
-			this.statusX = statusX / this.max * this.width;
+			this.statusX = statusX / this.max * this.currentWidth;
 		},
 
 		error: function(){

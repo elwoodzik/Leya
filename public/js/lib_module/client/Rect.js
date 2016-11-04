@@ -3,45 +3,26 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
 	var Rect = my.Class(null, Settings, {
 		constructor: function(game, pooled, context, x, y, width, height, strokeStyle, fillStyle){
 			
-			this.game = game; 
-			this.used = true;
-			this.x = x || 0; 
-			this.y = y || 0; 
-			
-			this.width = width || this.image.width;
-			this.height = height || this.image.height;
-
-			this.pooled = pooled;
-
+			this.initializeGlobalSettings({
+				game: game,
+				pooled: pooled || false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: null,
+				width: width,
+				height: height
+			});
+	
 			this.alfa = 1;
-
-			this.currentWidth = this.width;
-			this.currentHeight = this.height;
 
 			this.body = new Body(this.game, this);
 			this.zIndex = 2;
-
-			this.contextType = 'main';
 
             this.strokeStyle = strokeStyle;
             this.fillStyle = fillStyle;
 
 			this.borderWidth = 1;
-
-			this.static = false;
-
-			this.useCollision = true;
-
-	        this.currentHalfWidth = this.currentWidth / 2;
-	        this.currentHalfHeight = this.currentHeight / 2;
-
-			this.isOutOfScreen = false;
-            this.updateOfScreen = true;
-
-	        if(!this.pooled){
-	        	this.setContext(context);
-	        }
-
 		},
 
 		draw: function(lag){
@@ -65,16 +46,16 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
             this.game.ctx.fillStyle = this.fillStyle;
             
 			if(this.strokeStyle === null){
-				this.game.ctx.fillRect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.width, this.height);
+				this.game.ctx.fillRect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.currentWidth, this.currentHeight);
 			}else if(this.fillStyle === null){
 				this.game.ctx.beginPath();
-				this.game.ctx.rect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.width, this.height);
+				this.game.ctx.rect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.currentWidth, this.currentHeight);
 				this.game.ctx.stroke();
 				//this.game.ctx.fill();
 				this.game.ctx.closePath();
 			}else{
 				this.game.ctx.beginPath();
-				this.game.ctx.rect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.width, this.height);
+				this.game.ctx.rect(this.renderX - (!this.static ? this.game.camera.xScroll : 0), this.renderY - (!this.static ? this.game.camera.yScroll : 0), this.currentWidth, this.currentHeight);
 				this.game.ctx.stroke();
 				this.game.ctx.fill();
 				this.game.ctx.closePath();

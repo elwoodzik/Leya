@@ -5,18 +5,17 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
         constructor: function(game, text, x, y, width, height, background, backgroundHover, strokeStyle, strokeStyleHover, textColor, action){
             //Button.Super.apply(this, arguments); 
             //
-            this.game = game;
-            this.used = true;
-
-            this.isOutOfScreen = false;
-            this.updateOfScreen = true;
-            //
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.currentWidth = width; 
-            this.currentHeight = height;
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: false,
+				context: 'main',
+				x: x || 1,
+				y: y || 1,
+				key: null,
+				width: width,
+				height: height
+			});
+        
             this.fillStyle = background; 
             this.fillStyleHover = backgroundHover;
             this.strokeStyle = strokeStyle;
@@ -24,21 +23,11 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
             this.textColor = textColor;
             this.borderWidth = 2;
 
-            this.hovered = false;
-            this.scale = 1;
             this.text = text;
             this.action = action;
             this.zIndex = 5;
 
-            this.contextType = 'main';
-            this.pooled = false;
-            
             this.colors = ["#FFABAB", "#FFDAAB", "#DDFFAB", "#ABE4FF", "#D9ABFF"];
-            //
-            //this.game.physic.outOfScreen(this)
-            if(!this.pooled){
-                this.setContext(this.contextType);
-            } 
         },
 
         update: function() {
@@ -84,14 +73,6 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
                 this.game.ctx.closePath();
 			}
 
-
-            // this.game.ctx.beginPath();
-            // this.game.ctx.rect(this.x , this.y , this.width, this.height);
-            // this.game.ctx.strokeStyle = this.col;
-            // this.game.ctx.lineWidth = 2;
-            // this.game.ctx.stroke();
-            // //this.game.ctx.fill();
-            // this.game.ctx.closePath();
             //text options
             var fontSize = 42;
             this.game.ctx.fillStyle = this.textColor;
@@ -109,14 +90,6 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 
         changeText: function(text){
             this.text = text;
-        },
-
-        setWidth: function(width){
-            this.currentWidth = width;
-        },
-
-        setHeight: function(height){
-            this.currentHeight = height;
         }
     })
 

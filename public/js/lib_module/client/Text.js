@@ -2,28 +2,26 @@ define(['Class', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'],
     
    var Text = my.Class(null, Settings, {
         constructor: function(game, context, text, x, y, size, color, action){
-            this.game = game;
-            //
-            this.used = true;
-            this.x = x;
-            this.y = y;
+            
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: null,
+				width: 1,
+				height: 1
+			});
+
             this.size = size;
             this.color = color;
             this.text = text;
             this.action = action;
             
-            
-            this.isOutOfScreen = false;
-            this.updateOfScreen = true;
-
-            this.static = true;
 
             this.body = new Body(this.game, this);
 
-            this.contextType = 'main';
-            //
-            //this.game.physic.outOfScreen(this);
-            this.setContext(context);
             var textSize = this.context.measureText(this.text);
             
             this.currentWidth = textSize.width;

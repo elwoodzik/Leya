@@ -21,8 +21,6 @@ define([
 
 			this.add.buttonImg("main", 'opcje', 'opcje-hover', 530, 430, 0,0, null);	
 	
-			
-			
 			// that.img = this.add.image('main', this.rand(20,800),this.rand(20,600),'menu-bg',80, 80);
 			// var img2 = this.add.image('main', this.rand(20,800),this.rand(20,800),'menu-bg',80, 80);
 

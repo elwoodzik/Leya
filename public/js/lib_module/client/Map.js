@@ -4,13 +4,19 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 
    var Map = my.Class(null, Settings, {
         constructor: function(game, context, key, arr, width, height, scalled){
-        	var Loader = require('module/Loader');
 
             that = this;
 
-            this.game = game;
-            this.used = true;
-            this.key = key;
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: false,
+				context: context || 'main',
+				x: 1,
+				y: 1,
+				key: key,
+				width: width,
+				height: height
+			});
 
             this.mapObj = arr;
             this.mapArray = arr.map;
@@ -20,26 +26,15 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 
             this.zIndex = 4;
 
-            this.x = 0;
-            this.y = 0;
-
             this.static = true;
 
             this.cw = this.game.width;
             this.ch = this.game.height;
-        
-
-            this.currentWidth = width;
-            this.currentHeight = height;
 
             this.scalled = scalled;
-
-            this.image = Loader.assetManager.get(this.key); 
-
+         
             this.lastXScroll = null;
             this.lastYScroll = null;
-            
-            this.contextType = context;
         },
 
         generate: function(){

@@ -65,8 +65,8 @@ define([
 	        return this.game.map;
 	    },
 
-	    bar: function (x, y, w, h, s, f, min, max) {
-	        return new Bar(this.game, x, y, w, h, s, f, min, max);
+	    bar: function (context, x, y, w, h, s, f, min, max) {
+	        return new Bar(this.game, false, context, x, y, w, h, s, f, min, max);
 	    },
 
 		multiplayer: function (id) {

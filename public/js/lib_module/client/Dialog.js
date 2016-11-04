@@ -6,40 +6,33 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 		
 		constructor: function(game, context, x, y, width, height, strokeColor, fillColor){
             that = this;
-            that.game = game;
-
-            this.isOutOfScreen = false;
-            this.updateOfScreen = true;
-
-            this.pooled = false;
-
-            this.x = x || 1; 
-			this.y = y || 1; 
+            
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: null,
+				width: width,
+				height: height
+			});
 
             this.obj = [];
             
-            this.fW = width || 100;
-            this.fH = height || 100;
-
             this.strokeColor = strokeColor;
             this.fillColor = fillColor;
 
-	        if(!this.pooled){
-                this.setContext(context);
-	        }
-
-            this.static = true;
-            
-            this.border = that.game.add.rect('main', this.x, this.y, this.fW,this.fH, this.strokeColor, this.fillColor);
+            this.border = this.game.add.rect('main', this.x, this.y, this.currentWidth,this.currentHeight, this.strokeColor, this.fillColor);
             this.border.static = true;
 
-            this.button1 = that.game.add.button('Menu', this.x + 110, this.y + this.fH - 80 , 180, 60, null, null, 'black', 'green', '#333', null);
+            this.button1 = this.game.add.button('Menu', this.x + 110, this.y + this.currentHeight - 80 , 180, 60, null, null, 'black', 'green', '#333', null);
             this.button1.static = true;
             
-            this.button2 = that.game.add.button('Ok', this.x + this.fW - 290, this.y + this.fH - 80 , 180, 60, null, null, 'black', 'green', '#333', null);
+            this.button2 = this.game.add.button('Ok', this.x + this.currentWidth - 290, this.y + this.currentHeight - 80 , 180, 60, null, null, 'black', 'green', '#333', null);
             this.button2.static = true;
             
-            this.headline = that.game.add.text('main', 'Jestem tytułem', this.x + 200, this.y + 60, 44, '#333', null);
+            this.headline = this.game.add.text('main', 'Jestem tytułem', this.x + 200, this.y + 60, 44, '#333', null);
             this.headline.static = true;
 		},
 
@@ -134,8 +127,6 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
             that.obj = [];
         }
 	});
-
-   
 
 	return Dialog;
 });

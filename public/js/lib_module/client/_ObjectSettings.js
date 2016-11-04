@@ -5,24 +5,25 @@ define(['Class'], function(my){
 	var _ObjectSettings = my.Class({
 
         initializeGlobalSettings: function(options){
-            var Loader = require('module/Loader');
+            this.Loader = require('module/Loader');
 
             that = this;
             this.game = options.game;
             this.pooled = options.pooled;
             this.contextType = options.context;
-            this.x = options.x
-            this.y = options.y 
-            this.key = options.key 
+            this.x = options.x;
+            this.y = options.y; 
+            this.key = options.key; 
             this.isOutOfScreen = false;
             this.updateOfScreen = true;
             this.used = true;
             this.static = false;
             this.scale = 1;
             this.timeLocal = 0;
+            this.hovered = false;
 
             if(this.key){
-                this.image = Loader.assetManager.get(this.key); 
+                this.image = this.Loader.assetManager.get(this.key); 
             }
             
             this.currentWidth = options.width   || (this.image ? this.image.width : 10);

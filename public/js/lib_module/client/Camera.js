@@ -18,9 +18,17 @@ function(my, Rectangle, Settings){
         },
 
         constructor: function(game, xView, yView, canvasWidth, canvasHeight, worldWidth, worldHeight){
-            this.game = game;
             
-            this.used = true;
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: false,
+				context: 'main',
+				x: 1,
+				y: 1,
+				key: null,
+				width: 0,
+				height: 0
+			});
 
             this.type = 'CAMERA'
 
@@ -29,32 +37,19 @@ function(my, Rectangle, Settings){
             this.xScroll = xView || 0;
             this.yScroll = yView || 0;
 
-            // distance from followed object to border before camera starts move
             this.xDeadZone = 0; // min distance to horizontal borders
             this.yDeadZone = 0; // min distance to vertical borders
 
-            // viewport dimensions
             this.wView = canvasWidth;
             this.hView = canvasHeight;	
             
-            // allow camera to move in vertical and horizontal axis
             this.axis = Camera.AXIS.BOTH;	
 
-            // object that should be followed
             this.followed = null;
 
-            // rectangle that represents the viewport
             this.viewportRect = new Rectangle(this.xScroll, this.yScroll, this.wView, this.hView);				
                             
-            // rectangle that represents the world's boundary (room's boundary)
             this.worldRect = new Rectangle(0, 0, worldWidth, worldHeight);
-
-            this.contextType = 'main';
-            this.pooled = false;
-          
-            if(!this.pooled){
-                this.setContext(this.contextType);
-            } 
         },
 
         update: function(dt){

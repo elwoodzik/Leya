@@ -1,57 +1,53 @@
-define(['Class', 'require'], function(my, require){
+define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 	
   
-	var Particles = my.Class({
+	var Particles = my.Class(null, Settings, {
 		constructor: function(game, x, y, options){
            
             this.options =  options || {};
            
-			this.game = game; 
-			this.used = true;
-			this.x = x || 0; 
-			this.y = y || 0;
+			this.initializeGlobalSettings({
+				game: game,
+				pooled: false,
+				context: 'main',
+				x: x || 1,
+				y: y || 1,
+				key: null,
+				width: 1,
+				height: 1
+			});
 
 			
 			this.zIndex = 7;
-
-			this.contextType = 'main';
             
             this.repeatX = x;
 			this.repeatY = y;
 		    //
-			this.speed = this.options.speed || {x: -10+Math.random()*65, y: -14+Math.random()*14};
+			this.speed = this.options.speed || {x: -3+Math.random()*5, y: -4+Math.random()*5};
 
 			this.velocity ={
 				x: this.speed.x,
 				y: this.speed.y
 			}
+			
             //
             if(this.options.radius){
                 this.radius = this.game.rand(this.options.radius.min, this.options.radius.max) + this.options.radius.static;
             }else{
                  this.radius = this.game.rand(0,10)+5;
             }
-
-			this.currentWidth = this.radius/2;
-			this.currentHeight =  this.radius/2;
 			
             //
             this.life = this.options.life || this.game.rand(10,35);
             this.remaining_life = this.life;
             //
             this.colors = this.options.colors || {
-                r: this.game.rand(155,255),
-                g: this.game.rand(0,180),
+                r: this.game.rand(188,255),
+                g: this.game.rand(0,200),
                 b: 0
             }
             //
             this.composite = this.options.composite || "lighter"; //screen, lighter
-            //
-			//this.game.physic.outOfScreen(this)
-
-			this.gameObjectLength = Object.keys(this.game.gameObject).length;
-			this.game.gameObject[this.gameObjectLength] = this; 
-
 		},
 
 		draw: function(){
@@ -89,7 +85,7 @@ define(['Class', 'require'], function(my, require){
                     this.radius = this.game.rand(0,10)+7;
                 }
                
-			    this.speed = this.options.speed || {x: -40+Math.random()*85, y: -134};
+			    this.speed = this.options.speed || {x: -1+Math.random()*2, y: -3};
 				this.velocity ={
 					x: this.speed.x,
 					y: this.speed.y
@@ -100,14 +96,7 @@ define(['Class', 'require'], function(my, require){
 				this.x = this.repeatX;
 				this.y = this.repeatY;
 			}
-		},
-
-		destroy: function(array){
-			this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
-            if(array){
-                array.splice(array.indexOf(this), 1);
-            }
-		},
+		}
 	});
 
 	return Particles;

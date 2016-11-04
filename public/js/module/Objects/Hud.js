@@ -49,6 +49,7 @@ define([
             this.scoreIcon.static = true;
             this.scoreIcon.zIndex = 10;
             this.score = this.game.add.text('main', 0, 420, 63, 60, '#795548', null);
+            this.score.static = true;
         },
 
         createKeysIcon : function(){

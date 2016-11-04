@@ -2,33 +2,29 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
     
   var TileSprite = my.Class(null, Settings, {
         constructor: function(game, pooled, context, x, y, key, width, height){
-            var Loader = require('module/Loader');
-            this.game = game; 
-            this.used = true;
-            this.x = x || 0; 
-            this.y = y || 0; 
+            
+            this.initializeGlobalSettings({
+				game: game,
+				pooled: pooled || false,
+				context: context || 'main',
+				x: x || 1,
+				y: y || 1,
+				key: key,
+				width: width,
+				height: height
+			});
+           
             this.velocity = {
                 x:0,
                 y:0
             };
 
-            this.key = key;
+            
             this.zIndex = 1;
-            this.image = Loader.assetManager.get(this.key); 
-        
-
-            this.contextType = 'main';
-            this.width =  width || this.image.width;
-            this.height = height || this.image.height;
-
-            this.currentWidth = this.image.width; 
-            this.currentHeight = this.image.height; 
-
-            this.isOutOfScreen = false;
-
-	        if(!this.pooled){
-	        	this.setContext(context);
-	        }
+            
+            // MOZLIWE ZE BEDZIE BLAD WROC DO TEGO
+            // this.width =  width || this.image.width;
+            // this.height = height || this.image.height;
         },
 
         draw: function(){
@@ -43,8 +39,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
                         this.image.height,
                         w + this.x - this.game.camera.xScroll, // * this.scale
                         h - this.y - this.game.camera.yScroll, // * this.scale
-                        this.width,
-                        this.height
+                        this.currentWidth,
+                        this.currentHeight
                     );
 
                     this.game.ctx.drawImage(
@@ -55,8 +51,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
 	                    this.image.height,
                         w + this.x + this.width - this.game.camera.xScroll, // * this.scale
                         h - this.y - this.game.camera.yScroll, // * this.scale
-                        this.width,
-                        this.height
+                        this.currentWidth,
+                        this.currentHeight
                     )
                 }
             }
