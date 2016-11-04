@@ -1,4 +1,5 @@
 define(['Class'], function(my){
+    'use strict';
    var that;
 
    var Keyboard = my.Class({

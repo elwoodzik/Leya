@@ -1,4 +1,5 @@
 define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
+   'use strict';
    var that;
 
    var ButtonImg = my.Class(null, Settings, {

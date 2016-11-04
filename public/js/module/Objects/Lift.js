@@ -2,6 +2,7 @@ define([
 	'Class',
 	'lib_module/client/Sprite'
 ], function(my, Sprite){
+    'use strict';
 	var that;
 
 	var Lift = my.Class(Sprite, {

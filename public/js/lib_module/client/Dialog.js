@@ -1,5 +1,5 @@
 define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
-	
+	'use strict';
     var that;
 
 	var Dialog = my.Class(null, Settings, {
@@ -60,7 +60,7 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
             this.main = options.main || null;
 
             if(options.close){
-                this.closeButton = that.game.add.button('X', this.x + this.fW - 45, this.y  , 45, 45, null, 'red', 'black', 'black', '#333', that.close);
+                this.closeButton = that.game.add.button('X', this.x + this.currentWidth - 45, this.y  , 45, 45, null, 'red', 'black', 'black', '#333', that.close);
                 this.closeButton.static = true;
             }
            
@@ -112,6 +112,7 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
         },
 
         close: function(){
+           
             that.destroy();
             that.border.destroy();
             that.button1.destroy();

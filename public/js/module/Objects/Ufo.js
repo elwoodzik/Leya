@@ -2,6 +2,7 @@ define([
 	'Class',
 	'lib_module/client/Image'
 ], function(my, Image){
+    'use strict';
 	var that;
 
 	var Ufo = my.Class(Image, {

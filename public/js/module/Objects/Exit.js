@@ -3,6 +3,7 @@ define([
 	'lib_module/client/Image',
     'module/Levels'
 ], function(my, Image, Levels){
+    'use strict';
 	var that;
 
 	var Exit = my.Class(Image, Levels, {

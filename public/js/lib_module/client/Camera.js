@@ -5,7 +5,7 @@ define([
 ],
     
 function(my, Rectangle, Settings){
-    
+    'use strict';
     var Camera = my.Class(null, Settings, {
 
         STATIC: {

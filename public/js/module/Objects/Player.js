@@ -4,6 +4,7 @@ define([
     'module/Objects/Hud',
     'module/Objects/Coin',
 ], function(my, Sprite, Hud, Coin){
+    'use strict';
 	var that;
 
 	var Player = my.Class(Sprite, Hud, {
@@ -163,6 +164,7 @@ define([
 
         overlapWater: function(p, w, dir, oy, ox){
             if(p.life > 1 ){
+                console.log('aa')
                 p.life--;
                	that.game.ARR.playerLifes[p.life].animations.play('empty');
                 p.x = p.startX;
@@ -187,7 +189,32 @@ define([
                     // })
                 })
             }else{
-                that.game.state.start('LevelSelect');
+               // 
+                p.life--;
+                that.game.ARR.playerLifes[p.life].animations.play('empty');
+                p.destroy();
+                p.used = false;
+
+                var d = new that.game.CLASS.DialogBox(that.game, 'main', 350, 150, 700, 450, '#333', 'white');
+                d.configure({
+                    close:true,
+                    main: d.loseMain,
+                    headline: {
+                        text: 'Przegrałeś!',
+                        x: 235,
+                        y: 60,
+                        color: '#333',
+                        size: 45
+                    },
+                    button1: {
+                        text: 'Menu',
+                        action: d.loseButton1
+                    },
+                    button2: {
+                        text: 'Powtórz',
+                        action: d.repeatButton1
+                    }
+                })
             }
         },
 

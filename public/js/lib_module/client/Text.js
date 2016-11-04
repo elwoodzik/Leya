@@ -1,6 +1,6 @@
 define(['Class', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'], function(my, Body, Settings){
-    
-   var Text = my.Class(null, Settings, {
+    'use strict';
+    var Text = my.Class(null, Settings, {
         constructor: function(game, context, text, x, y, size, color, action){
             
             this.initializeGlobalSettings({

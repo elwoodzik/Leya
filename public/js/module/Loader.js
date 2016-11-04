@@ -11,7 +11,7 @@ define([
     'module/Intro',
     'module/LevelSelect',
 ], function(my, AssetManager, Game, Irobot2, Menu, Intro, LevelSelect){
-    
+    'use strict';
     //variable
     var that;
     var game;

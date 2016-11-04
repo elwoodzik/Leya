@@ -1,6 +1,7 @@
 define([
 	'Class',
 ], function(my, Levels){
+    'use strict';
 	var that;
 
 	var Logo = my.Class({

@@ -1,4 +1,5 @@
 define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAnimationFactory', 'lib_module/client/Map','lib_module/client/_ObjectSettings'], function(my, require, Body, GameAnimationFactory, Map, Settings){
+   'use strict';
    var id = 0; 
    var Sprite = my.Class(null, Settings, {
         constructor: function(game, pooled, context, x, y, key, width, height){

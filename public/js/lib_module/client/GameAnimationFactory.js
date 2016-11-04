@@ -1,6 +1,6 @@
 define(['Class'], function(my){
-    
-   var GameAnimationFactory = my.Class( {
+    'use strict';
+    var GameAnimationFactory = my.Class( {
         
         constructor: function(sprite){
             this.sprite = sprite;

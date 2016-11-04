@@ -1,5 +1,5 @@
 define(['Class', 'lib_module/client/Platformer'], function(my, Platformer){
-    
+    'use strict';
     var Body = my.Class({
         
         constructor: function(game, sprite){

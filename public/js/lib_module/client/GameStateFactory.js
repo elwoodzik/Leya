@@ -1,5 +1,5 @@
 define(['Class'], function(my, game){
-	
+	'use strict';
 	var GameStateFactory = my.Class( {
 		
 		constructor: function(game){

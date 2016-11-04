@@ -16,7 +16,7 @@ define([
 	'lib_module/client/Dialog',
 	'lib_module/client/Multiplayer',
 	], function(my, game, Image, Sprite, TileSprite, Button, ButtonImg, Text, Particles, Rect, Camera, Map, Bar, Pool, Dialog, Multiplayer ){
-
+	'use strict';
 	var GameObjectFactory = my.Class( {
 		
 		constructor: function(game){

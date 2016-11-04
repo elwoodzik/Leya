@@ -1,5 +1,5 @@
 define(['Class'], function(my){
-    
+    'use strict';
    var World = my.Class({
         constructor: function(game){
             this.bounce = false;

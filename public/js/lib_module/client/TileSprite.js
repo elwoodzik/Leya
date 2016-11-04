@@ -1,6 +1,6 @@
 define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'], function(my, require, Body, Settings){
-    
-  var TileSprite = my.Class(null, Settings, {
+    'use strict';
+    var TileSprite = my.Class(null, Settings, {
         constructor: function(game, pooled, context, x, y, key, width, height){
             
             this.initializeGlobalSettings({

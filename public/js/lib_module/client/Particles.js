@@ -1,5 +1,5 @@
 define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
-	
+	'use strict';
   
 	var Particles = my.Class(null, Settings, {
 		constructor: function(game, x, y, options){

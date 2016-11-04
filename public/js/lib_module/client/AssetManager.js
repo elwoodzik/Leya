@@ -1,5 +1,5 @@
 define(['Class'], function(my){
-    
+    'use strict';
     var AssetManager = my.Class({
         
         constructor: function(placeholderDataUri){

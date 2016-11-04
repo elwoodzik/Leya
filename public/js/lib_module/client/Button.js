@@ -1,6 +1,6 @@
 define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
-    
-   var Button = my.Class(null, Settings, {
+    'use strict';
+    var Button = my.Class(null, Settings, {
 
         constructor: function(game, text, x, y, width, height, background, backgroundHover, strokeStyle, strokeStyleHover, textColor, action){
             //Button.Super.apply(this, arguments); 

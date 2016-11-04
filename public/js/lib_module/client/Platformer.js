@@ -1,5 +1,5 @@
 define(['Class'], function(my){
-    
+    'use strict';
     var Platformer = my.Class({
         
         constructor: function(body, sprite){

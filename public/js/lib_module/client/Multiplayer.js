@@ -1,5 +1,5 @@
 define(['Class', 'Socket'], function(my, io){
-
+    'use strict';
     var that;
 
     var Multiplayer = my.Class({

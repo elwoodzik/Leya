@@ -1,5 +1,5 @@
 define(['Class'], function(my){
-    
+    'use strict';
      var Rectangle = my.Class({
 
         constructor: function(game, left, top, width, height){

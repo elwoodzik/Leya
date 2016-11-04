@@ -1,6 +1,6 @@
 define(['Class'], function(my){
-    
-  var Physic = my.Class({
+    'use strict';  
+    var Physic = my.Class({
 
         constructor: function(game){
             this.game = game;
@@ -57,7 +57,10 @@ define(['Class'], function(my){
             if (!Array.isArray(obj1) && Array.isArray(obj2)){
                 if(typeof obj1 === 'object'){
                     for (var i = 0, max = obj2.length;  i < max; i++){
-                        this.collectedHandler(obj1, obj2[i], callback, bounds)
+                        if(obj2[i] !== null && obj1[i] !== null){
+                            this.collectedHandler(obj1, obj2[i], callback, bounds)
+                        }
+                        
                     }
                 }else{
                     throw 'overlap(): oczekiwano obiektu jako pierwszy parametr';

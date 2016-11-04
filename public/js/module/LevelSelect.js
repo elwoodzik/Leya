@@ -2,6 +2,7 @@ define([
 	'Class',
 	'module/Levels'
 ], function(my, Levels){
+	'use strict';
 	var that;
 
 	var LevelSelect = my.Class({

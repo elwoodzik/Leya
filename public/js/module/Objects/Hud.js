@@ -1,6 +1,7 @@
 define([
 	'Class',
 ], function(my){
+    'use strict';
 	var that;
 
 	var Hud = my.Class({

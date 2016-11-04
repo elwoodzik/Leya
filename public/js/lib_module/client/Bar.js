@@ -1,5 +1,5 @@
 define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
-	
+	'use strict';
 	var Bar = my.Class(null, Settings, {
 		constructor: function(game,  pooled, context, x, y, width, height, strokeStyle, fillStyle, min, max){
 			
@@ -64,11 +64,8 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 
 		error: function(){
 			throw "BAR --> Minimalna wartosc nie moze byc wieksza od maksymalnej";
-		},
-
-		update: function(){
-
 		}
+
 		
 	});
 

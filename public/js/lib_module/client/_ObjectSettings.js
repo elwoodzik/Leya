@@ -1,10 +1,11 @@
 define(['Class'], function(my){
-	
+	'use strict';
     var that;
 
 	var _ObjectSettings = my.Class({
-
+        
         initializeGlobalSettings: function(options){
+          
             this.Loader = require('module/Loader');
 
             that = this;
@@ -153,6 +154,8 @@ define(['Class'], function(my){
             if(Array.isArray(array)){
                 array.splice(array.indexOf(this), 1);
             }
+            this.x = -500;
+            this.y = -500;
             return this.game.gameObject.splice(this.game.gameObject.indexOf(this), 1);
         },
 

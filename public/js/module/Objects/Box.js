@@ -3,6 +3,7 @@ define([
 	'lib_module/client/Sprite',
     // 'module/Objects/Water',
 ], function(my, Sprite){
+    'use strict';
 	var that;
 
 	var Box = my.Class(Sprite, {

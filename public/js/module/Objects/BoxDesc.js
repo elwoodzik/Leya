@@ -4,6 +4,7 @@ define([
     'module/Objects/Coin',
     'module/Objects/ParticleBox',
 ], function(my, Sprite, Coin, ParticleBox){
+    'use strict';
 	var that;
 
 	var BoxDesc = my.Class(Sprite, {
@@ -31,11 +32,17 @@ define([
             var randCoin = that.game.rand(2,3);
             var randParticle = that.game.rand(3,8);
 
+            var randVelocityY = 0;
+            var randVelocityX = 0;
+            var particle = null;
+            var i = 0;
+            var coin = null;
+
             for( i=0; i<randCoin; i++){
                 randVelocityY = that.game.rand(-10,-2);
                 randVelocityX = that.game.rand(-2,2);
                 
-                var coin = Coin.pnew(that.game, true,'main', this.x, this.y, 'coin1');
+                coin = Coin.pnew(that.game, true,'main', this.x, this.y, 'coin1');
                
                 coin.body.velocity.y = randVelocityY;
                 coin.body.velocity.x = randVelocityX;
@@ -43,11 +50,12 @@ define([
                 coin = null;
             }
 
-            for(var i=0; i<randParticle; i++){
-                var randVelocityY = this.game.rand(-20,-3);
-                var randVelocityX = this.game.rand(-4,4);
+            for(i=0; i<randParticle; i++){
+                randVelocityY = this.game.rand(-20,-3);
+                randVelocityX = this.game.rand(-4,4);
                 
                 particle = ParticleBox.pnew(that.game, true, 'main', this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
+                
                 particle.body.velocity.y = randVelocityY;
                 particle.body.velocity.x = randVelocityX;
 
@@ -63,7 +71,6 @@ define([
         },
 
         configure: function(){
-            
             this.updateOfScreen = false;
         }
 	})
