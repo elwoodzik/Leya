@@ -33,12 +33,13 @@ define(['Class'], function(my){
             this.currentHalfWidth = this.currentWidth / 2;
 	        this.currentHalfHeight = this.currentHeight / 2;
 
-            this.useCollision = true; // NIE WIEM CZY POTRZEBNE NIE PAMIETAM TRZEBA SPRAWDZIC
+            this.useCollision = true;
            
             if(!this.pooled){
                 this.setContext(this.contextType);
             } 
         },
+        
 
          worldBounce: function(){
             if(this.body.colideWorldSide){

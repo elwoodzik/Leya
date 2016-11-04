@@ -51,7 +51,7 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
             } else {
                 this.renderY = this.y;
             } 
-			this.context.drawImage(
+            this.context.drawImage(
 	            this.image,
 	            0,
 	            0,

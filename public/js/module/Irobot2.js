@@ -90,8 +90,37 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.world.setPortView(map.mapObj.w * map.w, map.mapObj.h * map.h);
 
             
+                that.iconToMenu()
+		},
+
+        iconToMenu: function(){
             
-		}
+            var b = that.game.add.button("||", that.game.width - 60, 30, 50, 50, 'white', 'green', 'black', 'black', 'black', that.showMenu);
+            b.static = true;
+        },
+
+        showMenu: function(){
+            var d = new that.game.CLASS.DialogBox(that.game, 'main', 350, 150, 700, 450, '#333', 'white');
+                d.configure({
+                    close:true,
+                    main: function(){},
+                    headline: {
+                        text: 'Opcje',
+                        x: 295,
+                        y: 60,
+                        color: '#333',
+                        size: 45
+                    },
+                    button1: {
+                        text: 'Menu',
+                        action: d.loseButton1
+                    },
+                    button2: {
+                        text: 'Powtórz',
+                        action: d.repeatButton1
+                    }
+                })
+        }
 	});
 
 	return Irobot2;

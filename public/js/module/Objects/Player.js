@@ -164,7 +164,6 @@ define([
 
         overlapWater: function(p, w, dir, oy, ox){
             if(p.life > 1 ){
-                console.log('aa')
                 p.life--;
                	that.game.ARR.playerLifes[p.life].animations.play('empty');
                 p.x = p.startX;

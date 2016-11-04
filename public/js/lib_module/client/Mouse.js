@@ -29,10 +29,8 @@ define(['Class'], function(my){
         mouseMove: function(e){ 
             e.preventDefault();
             //
-            this.mouseX = e.offsetX  / this.game.scale1 ;
-            this.mouseY = e.offsetY  / this.game.scale1 ;
-
-            
+            this.mouseX = e.offsetX  / this.game.scale1;
+            this.mouseY = e.offsetY  / this.game.scale1;
             //
             //this.click = (e.which == 1 && !this.down);
             //this.down = (e.which == 1);
