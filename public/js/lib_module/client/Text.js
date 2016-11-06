@@ -52,7 +52,7 @@ define(['Class', 'lib_module/client/Body', 'lib_module/client/_ObjectSettings'],
             
             var fontSize = this.size;
             this.context.fillStyle = this.color;
-            this.context.font = fontSize + "px Sans";
+            this.context.font = fontSize + "px Forte";
     
             var textSize = this.context.measureText(this.text);
             this.currentWidth = textSize.width;
