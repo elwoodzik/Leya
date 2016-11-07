@@ -47,6 +47,40 @@ define([
         repeatButton1: function(button){
             that.close();
             that.game.state.start('Irobot2');
+        },
+
+        levelSelect: function(button){
+            that.close();
+            that.game.state.start('LevelSelect');
+        },
+
+        winMain: function(dialog){
+            
+            var stars = that.game.VAR.player.life;
+            var dx = [dialog.x + 180, dialog.x + 290, dialog.x + 400];
+            var dy = [dialog.y + 150, dialog.y + 90, dialog.y + 150];
+            var times = [600, 1400, 2200];
+            var tabStars = [];
+
+            for(var j=0; j<stars; j++){
+                tabStars.push(1);
+            }
+            
+            for(var i=0; i<3; i++){
+                var star = that.game.add.sprite('main', dx[i], dy[i], 'stars');
+                    star.animations.add('full',0,0, 118,108, [0]);
+					star.animations.add('empty',0,106, 118,108, [0]);
+					star.animations.play('empty');
+                    star.static = true;
+
+                    if(tabStars[i]){
+                        star.doInTime(times[i], function(star){
+                            star.animations.play('full');
+                        })
+                    }
+        
+                    dialog.add(star);
+            }
         }
 	})
 

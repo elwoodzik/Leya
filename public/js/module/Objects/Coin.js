@@ -45,8 +45,6 @@ define([
         },
 
         configure: function(options){
-           
-            
             this.body.immoveable = options.immoveable;
             this.updateOfScreen = false;
             this.body.platformer.configure({

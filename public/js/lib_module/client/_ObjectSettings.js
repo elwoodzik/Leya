@@ -41,7 +41,7 @@ define(['Class'], function(my){
         },
         
 
-         worldBounce: function(){
+        worldBounce: function(){
             if(this.body.colideWorldSide){
                 if(this.body.colideWorldSideBottom && this.y + this.currentHeight > this.game.portViewHeight ){
                     this.body.velocity.y = this.body.worldBounds ? this.body.velocity.y*-1 : 0;

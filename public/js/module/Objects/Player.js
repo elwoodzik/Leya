@@ -177,26 +177,16 @@ define([
                     p.body.velocity.y = 0;
 
                     that.game.VAR['ufo'].startPoint();
-                    //that.game.VAR['ufo'].used = true;
-                    //
-                    // that.game.VAR.ufo.moveToPoint(p.startX, 270, 30, function(u){
-                    //     p.used = true;
-                    //     that.game.VAR.camera.follow(that, that.game.width/2, that.game.height/2);
-                    //     u.moveToPoint(-530, -50, 40, function(u){
-                    //         u.used = false
-                    //     })
-                    // })
-                })
+                });
             }else{
                // 
                 p.life--;
                 that.game.ARR.playerLifes[p.life].animations.play('empty');
-                p.destroy();
                 p.used = false;
-
+                p.destroy();
+                
                 var d = new that.game.CLASS.DialogBox(that.game, 'main', 350, 150, 700, 450, '#333', 'white');
                 d.configure({
-                    close:true,
                     main: d.loseMain,
                     headline: {
                         text: 'Przegrałeś!',

@@ -44,9 +44,30 @@ define([
                     levelNext.icon = 'stars0';
                     levelNext.playable = true;
                 }
-                
+
                 that.game.saveData('levels', loadLevels);
-                that.game.state.start('Menu');
+
+                var d = new that.game.CLASS.DialogBox(that.game, 'main', 350, 150, 700, 450, '#333', 'white');
+                d.configure({
+                    main: d.winMain,
+                    headline: {
+                        text: 'Wygrałeś!',
+                        x: 235,
+                        y: 60,
+                        color: '#333',
+                        size: 45
+                    },
+                    button1: {
+                        text: 'Menu',
+                        action: d.loseButton1
+                    },
+                    button2: {
+                        text: 'Dalej',
+                        action: d.levelSelect
+                    }
+                })
+                
+                //that.game.state.start('Menu');
             }
         }
 	})
