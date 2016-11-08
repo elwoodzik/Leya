@@ -55,7 +55,6 @@ define([
         },
 
         winMain: function(dialog){
-            
             var stars = that.game.VAR.player.life;
             var dx = [dialog.x + 180, dialog.x + 290, dialog.x + 400];
             var dy = [dialog.y + 150, dialog.y + 90, dialog.y + 150];

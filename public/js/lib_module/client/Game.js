@@ -116,20 +116,18 @@ define([
                 elapsed = that.FRAMEDURATION;
             }
            
-            //LAG += elapsed;
+            LAG += elapsed;
             //console.log(LAG + "          " + step)
             if (elapsed >= that.FRAMEDURATION) { 
                that.capturePreviousPositions(that.gameObject);  
                //that.cTime += that.FRAMEDURATION;
                that.update(1);
-               //LAG -= that.FRAMEDURATION;
+               LAG -= that.FRAMEDURATION;
             }
 
-           
-
-            //lagOffset = LAG / that.FRAMEDURATION;
+            lagOffset = LAG / that.FRAMEDURATION;
             
-            that.render(1);
+            that.render(lagOffset);
 
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
@@ -420,8 +418,7 @@ define([
             this.onbgcanvas.style.left = '50%';
             this.onbgcanvas.style.marginLeft = -this.onbgcanvas.width/2 + "px";
             
-         
-                
+  
             document.body.appendChild(this.onbgcanvas);
 
             // this.resizeCanvas(this.onbgcanvas, this.orientation);

@@ -75,6 +75,7 @@ define([
                // this.scallable(false)
               
                 this.showFPS();
+                //this.scallable(false)
                 
                 this.add.multiplayer('http://localhost:4000');
                 this.multiplayer.init();
