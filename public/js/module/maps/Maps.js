@@ -77,7 +77,7 @@ define([
                             { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":2310, "y":280 },
                             { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":3290, "y":280 },
                             // skrzynki do przesuwania
-                            { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":140, "y":220 },
+                            //{ "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":140, "y":220 },
                             // Windy
                             //{ "name":"Lift", "pool": true, "context":"main", "image":"mapa", "x":70*8, "y":70*7, "method":[ {"name": "thereAndBack", "attr": [220, 'left', 160] } ] },
                             // platforma do wybijania
@@ -98,7 +98,7 @@ define([
                            // { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
                         
                             // Gracz
-                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
+                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":497.5 },
                             // Exit
                             { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 3220, "y": 560, "marginY": 30 },
 
