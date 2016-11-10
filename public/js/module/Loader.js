@@ -36,6 +36,7 @@ define([
                 "opcje-hover": "images/opcje-hover.png",
                 "mapa": "images/mapa1.png",
                 "stars": "images/stars.png",
+                "potion": "images/potion.png",
                 //"player1": "images/player1.png",
                 "player2": "images/player2.png",
                 "player3": "images/player3.png",

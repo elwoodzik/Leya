@@ -98,7 +98,7 @@ define([
                            // { "name":"Enemy1", "pool": true, "context":"main", "image": "enemies", "x":70*2, "y":70*6, "method":[ {"name": "thereAndBack", "attr": [200, 'right', 160] } ] },
                         
                             // Gracz
-                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":497.5 },
+                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
                             // Exit
                             { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 3220, "y": 560, "marginY": 30 },
 
@@ -177,6 +177,10 @@ define([
                             { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1610, "y":890, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
                             { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1660, "y":890, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
                             { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1710, "y":890, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            
+                            { "name":"PotionLife", "pool": true, "context":"main", "image":"potion", "x":100, "y":280 },
+
+                           
                             { "name":Player, "context": "main", "image": "player3", "varr": "player", "x": 200, "y": 197 },
 
                             { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 3640, "y": 560, "marginY": 30 },

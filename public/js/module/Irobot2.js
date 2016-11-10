@@ -15,9 +15,10 @@ define([
     'module/Objects/Lock',
     'module/Objects/Switch',
     'module/Objects/Enemies/Enemy1',
+    'module/Objects/PotionLife',
     'module/Objects/DialogBox',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Keys, Lock, Switch, Enemy1, DialogBox){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Keys, Lock, Switch, Enemy1, PotionLife, DialogBox){
 	'use strict';
     var that;
 
@@ -35,7 +36,8 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             KEYS: 4,
             LOCK: 4,
             SWITCH: 4,
-            ENEMY1: 5
+            ENEMY1: 5,
+            POTION: 10
         },
 
 		constructor: function(game){
@@ -56,6 +58,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Lock = Lock;
             that.game.CLASS.Switch = Switch;
             that.game.CLASS.Enemy1 = Enemy1;
+            that.game.CLASS.PotionLife = PotionLife;
             that.game.CLASS.DialogBox = DialogBox;
             
             that.game.VAR.exit = null;
@@ -74,6 +77,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             Lock.setupPool(Irobot2.LOCK, 'main');
             Switch.setupPool(Irobot2.SWITCH, 'main');
             Enemy1.setupPool(Irobot2.ENEMY1, 'main');
+            PotionLife.setupPool(Irobot2.POTION, 'main');
             
             // tworzy mape
             var map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);

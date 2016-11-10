@@ -72,18 +72,10 @@ define(['Class'], function(my){
             
             if(this.sprite.used){
 
-                
+            
                 this.body.velocity.x = this.bound(this.body.velocity.x + (dt * this.ddx), -this.maxdx, this.maxdx);
                 this.body.velocity.y = this.bound(this.body.velocity.y + (dt * this.ddy), -this.maxdy, this.maxdy);
                 
-                //var toleranceWidth = this.sprite.currentWidth >= 70 ? this.sprite.currentWidth  : this.sprite.currentWidth;
-
-            //    this.checkmove(this.sprite.x, this.sprite.y + this.sprite.currentHeight) // DOWN
-            //    this.checkmove(this.sprite.x, this.sprite.y) // TOP
-            //    this.checkmove(this.sprite.x, this.sprite.y) // LEFT
-                //this.checkmove(this.sprite.x+this.sprite.currentWidth, this.sprite.y) // RIGHT COLLISION
-
-
                 if ((this.wasleft  && (this.body.velocity.x > 0)) ||
                     (this.wasright && (this.body.velocity.x < 0))) {
                         
@@ -91,68 +83,111 @@ define(['Class'], function(my){
                     this.body.velocity.x = 0; 
                 }
                 
-            //     this.ddy = this.body.falling ? this.gravity : 0;
+                this.ddy = this.body.falling ? this.gravity : 0;
             
-            //     this.body.tolerance =  this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile) : (this.tile - this.sprite.currentHeight);
-            //     //this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
+                this.body.tolerance =  this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile) : (this.tile - this.sprite.currentHeight);
+                //this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
                 
-            //     var tx        = this.p2t(this.sprite.x ),
-            //         ty        = this.p2t(this.sprite.y + this.body.tolerance+1),
-            //         nx        = this.sprite.x % this.tile,         // true if player overlaps right
-            //         ny        = this.sprite.y % this.tile,         // true if player overlaps below
-            //     // cell      = this.tcell(tx,     ty),
-            //         //cellright = this.tcell(tx + 1, ty),
-            //         celldown  = this.tcell(tx,     ty + 1),
-            //         celldiag  = this.tcell(tx + 1, ty + 1);
-            //         // this.game.ctx.fillStyle="red"
-            //         // this.game.ctx.fillRect(this.sprite.x, this.sprite.y, 170,170)
+                var tx        = this.p2t(this.sprite.x ),
+                    ty        = this.p2t(this.sprite.y + this.body.tolerance+1)  ,
+                    nx        = this.sprite.x % this.tile,         // true if player overlaps right
+                    ny        = this.sprite.y % this.tile,         // true if player overlaps below
+                // cell      = this.tcell(tx,     ty),
+                    //cellright = this.tcell(tx + 1, ty),
+                    celldown  = this.tcell(tx,     ty + 1),
+                    celldiag  = this.tcell(tx + 1, ty + 1);
+                    // this.game.ctx.fillStyle="red"
+                    // this.game.ctx.fillRect(this.sprite.x, this.sprite.y, 170,170)
                     
-            // //console.log(this.checkmove(this.sprite.x, this.sprite.y))
+            //console.log(this.checkmove(this.sprite.x, this.sprite.y))
             
-            //     if(this.body.velocity.y > 0){
-            //         if(this.checkmove(this.sprite.x, this.sprite.y + this.body.tolerance)){
-            //             this.body.velocity.y = 0;
+                if(this.body.velocity.y > 0){
+                    if(this.checkmove(this.sprite.x, this.sprite.y + this.body.tolerance)){
+                        this.body.velocity.y = 0;
                         
-            //             this.body.falling = false;   // no longer falling
-            //             this.body.jumping = false;
-            //             var tol = this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile - 1) : - (this.tile - this.sprite.currentHeight-1);
+                        this.body.falling = false;   // no longer falling
+                        this.body.jumping = false;
+                        var tol = this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile - 1) : - (this.tile - this.sprite.currentHeight-1);
                       
-            //             this.sprite.y = this.t2p(ty) - tol; 
+                        this.sprite.y = this.t2p(ty) - tol 
                         
-            //         }
-            //     }else if(this.body.velocity.y < 0){
-            //         if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
-            //             this.sprite.y = this.t2p(ty) + 3
-            //             this.body.velocity.y = 0;   
+                    }
+                }else if(this.body.velocity.y < 0){
+                    if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
+                        this.sprite.y = this.t2p(ty) + 3
+                        this.body.velocity.y = 0;   
 
-            //         }
-            //     }
-
-            var toleranceWidth = this.sprite.currentWidth < 70 ? -this.sprite.currentWidth : 0
-
+                    }
+                }
                 if (this.body.velocity.x > 0 || this.body.pushedRight) {
-                
-                    if(this.checkmove(this.sprite.x+toleranceWidth, this.sprite.y)){
+                    if(this.checkmove(this.sprite.x +5, this.sprite.y)){
                         //this.body.pushedLeft = false;
                         this.body.pushedRight = false;
                         this.body.velocity.x = 0;
-                        console.log('bb')
-                       
-                        //this.sprite.x = this.sprite.x - toleranceWidth;
+
+                        this.sprite.x = this.sprite.x -5;
                     }
-                }
-                else if (this.body.velocity.x < 0 || this.body.pushedLeft) {  
-                    if(this.checkmove(this.sprite.x+toleranceWidth, this.sprite.y)){
+                }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {  
+                    if(this.checkmove(this.sprite.x-5, this.sprite.y)){
                         this.body.pushedLeft = false;
-                        console.log('aa')
+
                         this.body.velocity.x = 0;
-                        //this.sprite.x = this.sprite.x + toleranceWidth;
-                        
+                        this.sprite.x = this.sprite.x +5
                     }
                 }
+           
+
+           
+               
+                // if(this.body.velocity.y > 0){
+                //     if ((celldown.type === 'solid' && cell.type != 'solid') || (celldiag.type === 'solid'  && cellright.type != 'solid' && nx)) {
+                //         this.sprite.y = this.t2p(ty)  - this.body.tolerance;
+                        
+                        
+                //         this.body.velocity.y = 0;
+                        
+                //         this.body.falling = false;   // no longer falling
+                //         this.body.jumping = false;
+                //         ny = 0;
+                        
+                //     }
+                // }
+
+                // else if (this.body.velocity.y < 0) {
+                //     ty = this.p2t(this.sprite.y - this.body.tolerance) 
+                    
+                //     cell      = this.tcell(tx,     ty);
+                //     cellright = this.tcell(tx + 1, ty);
+                //     celldown  = this.tcell(tx,     ty + 1);
+                //     celldiag  = this.tcell(tx + 1, ty + 1);
+                //     if ((cell.type === 'solid' && celldown.type != 'solid' ) || (cellright.type === 'solid' && celldiag.type != 'solid' && nx)) {
+                //         this.sprite.y = this.t2p(ty + 1) + this.body.tolerance ;   // clamp the y position to avoid jumping into platform above
+                //         this.body.velocity.y = 0;            // stop upward velocity
+                //         cell      = celldown;     // player is no longer really in that cell, we clamped them to the cell below 
+                //         cellright = celldiag;     // (ditto)
+                //         ny        = 0; 
+                //      }
+                // }
+                // if (this.body.velocity.x > 0 || this.body.pushedRight) {
+                //     if(cellright.type === 'solid' && cell.type != 'solid' || celldiag.type === 'solid'  && celldown.type != 'solid' && ny){
+                //         this.body.pushedRight = false;
+                //         this.sprite.x = this.t2p(tx);
+                //         this.body.velocity.x = 0;
+                        
+                //     }
+                // }else if (this.body.velocity.x < 0 || this.body.pushedLeft) {
+                  
+                //     if(cell.type === 'solid' && cellright.type != 'solid' || celldown.type === 'solid' && celldiag.type != 'solid' && ny){
+                //         this.body.pushedLeft = false;
+                //         this.sprite.x = this.t2p(tx+1);
+                        
+                //         this.body.velocity.x = 0;
+                        
+                //     }
+                // }
                 
-                //this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
-            }
+                    this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
+                }
                 ///this.onplatform = false;
         },
 
