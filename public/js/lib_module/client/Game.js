@@ -127,7 +127,7 @@ define([
 
             lagOffset = LAG / that.FRAMEDURATION;
             
-            that.render(lagOffset);
+            that.render(1);
 
             if(that.useFpsCounter){
                 that.fpsmeter.tick();

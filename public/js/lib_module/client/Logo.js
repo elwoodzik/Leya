@@ -27,7 +27,7 @@ define([
             that.TextE.moveToPoint(570 + that.TextE.currentHalfWidth, 366 + that.TextE.currentHalfHeight, 25, null);
             that.TextY.moveToPoint(660 + that.TextY.currentHalfWidth, 366 + that.TextY.currentHalfHeight, 25, null);
             that.TextA.moveToPoint(750 + that.TextA.currentHalfWidth, 366 + that.TextA.currentHalfHeight, 25, function(){
-                that.TextEngine.moveToPoint(611 + that.TextA.currentHalfWidth, 245 + that.TextA.currentHalfHeight, 15, function(a){
+                that.TextEngine.moveToPoint(681 + that.TextEngine.currentHalfWidth, 245 + that.TextEngine.currentHalfHeight, 15, function(a){
                     a.doInTime(2000, function(){
                         that.game.callback();
                     })
