@@ -128,8 +128,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             this.doInTimeHandler();
             
             if(this.body.velocity.x != 0 || this.body.velocity.y != 0){
-                this.x =  Math.floor(this.x  + (dt * this.body.velocity.x));
-                this.y =  Math.floor(this.y  + (dt * this.body.velocity.y));
+                this.x +=  (dt * this.body.velocity.x);
+                this.y +=  (dt * this.body.velocity.y);
             }
         },
 

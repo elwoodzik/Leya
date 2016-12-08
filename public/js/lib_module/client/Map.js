@@ -53,8 +53,8 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
                         this.b[i][j].y ,
                         this.w,
                         this.h,
-                        Math.floor((j * (this.currentWidth) )- this.game.camera.xScroll),
-                        Math.floor((i * (this.currentHeight)) - this.game.camera.yScroll),
+                        Math.floor((j * (this.currentWidth) ) - (this.game.camera.xScroll ? this.game.camera.xScroll : 0) ) ,
+                        Math.floor((i * (this.currentHeight)) - (this.game.camera.yScroll ? this.game.camera.yScroll : 0) ),
                         (!this.scalled ? this.currentWidth : Math.ceil(this.game.canvas.width / this.b[i].length)),
                         (!this.scalled ? this.currentHeight : Math.ceil(this.game.canvas.height / this.b.length))
                     ); 
@@ -67,15 +67,9 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
             ctx = null;  
         },
 
-        update: function(dt){
-            this.x = this.camera.xScroll;
-            this.y = this.camera.yScroll;
-        },
+       
 
         draw: function(dt) {
- 
-          
-
             this.context.drawImage(
                 this.imageMap,
                 this.camera.xScroll, //Math.floor(this.renderX), // + (this.game.camera.lerpAmount * dt)

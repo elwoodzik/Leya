@@ -22,9 +22,8 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/_Object
             
             this.zIndex = 1;
             
-            // MOZLIWE ZE BEDZIE BLAD WROC DO TEGO
-            // this.width =  width || this.image.width;
-            // this.height = height || this.image.height;
+            this.width =  width || this.image.width;
+            this.height = height || this.image.height;
         },
 
         draw: function(){

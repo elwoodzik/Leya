@@ -27,6 +27,7 @@ define([
 
         create: function(){
             this.assetManager.load({
+                "asteroid1": "images/asteroid1.png",
                 "graj": "images/graj.png",
                 "menu": "images/menu.png",
                 "menu-hover": "images/menu-hover.png",
@@ -79,7 +80,7 @@ define([
                 //this.scallable(false)
                 
                 this.add.multiplayer('http://localhost:4000');
-                this.multiplayer.init();
+                //this.multiplayer.init();
 
                 this.add.sounds(that.assetManager);
 

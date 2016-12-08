@@ -96,7 +96,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 		},
 
         iconToMenu: function(){
-            var b = that.game.add.button("||", that.game.width - 60, 30, 50, 50, 'white', 'green', 'black', 'black', 'black', that.showMenu);
+            var b = that.game.add.button("x", that.game.width - 60, 15, 50, 50, 'white', 'green', 'black', 'black', 'black', that.showMenu);
             b.static = true;
         },
 

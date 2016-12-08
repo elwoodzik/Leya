@@ -81,7 +81,7 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
             //text position
             var textSize = this.game.ctx.measureText(this.text);
             var textX = this.x + (this.currentWidth/2) - (textSize.width / 2);
-            var textY = this.y  + (this.currentHeight/2) + (fontSize/2)-(fontSize/7);
+            var textY = this.y  + this.currentHeight - this.currentHeight/4 ;
 
             //draw the text
             this.game.ctx.fillText(this.text, textX , textY );

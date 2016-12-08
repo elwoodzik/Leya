@@ -75,8 +75,6 @@ define([
 
             this.map = null;
 
-            
-
             this.cTime = 0;
 
             this.renderer = true;
@@ -93,8 +91,8 @@ define([
             this.scallable(true);
             this.callback = callback;
             this.useFpsCounter = false;
-            //this.state.add('Logo', Logo)
-            //this.state.start('Logo')
+            //this.state.add('Logo', Logo);
+            //this.state.start('Logo');
             this.callback();
         },
 
@@ -103,36 +101,36 @@ define([
         },
 
         animationLoop : function() {
-           
-           if(that.useFpsCounter){
+            if(that.useFpsCounter){
                 that.fpsmeter.tickStart();
             }
-            now = that.timestamp();
-            elapsed = elapsed + Math.min(1, (now - PREVIOUS) / 1000);
-               
-            PREVIOUS = now;
 
-            if (elapsed > that.FRAMEDURATION || elapsed < 0) {
-                elapsed = that.FRAMEDURATION;
-            }
+            now = that.timestamp();
+            elapsed = elapsed + Math.min(1, (now - last) / 1000);
+
+            // if (elapsed > that.FRAMEDURATION || elapsed < 0) {
+            //     elapsed = that.FRAMEDURATION;
+            // }
            
-            LAG += elapsed;
+            //LAG += elapsed;
             //console.log(LAG + "          " + step)
-            if (elapsed >= that.FRAMEDURATION) { 
+            while (elapsed > step) { 
                that.capturePreviousPositions(that.gameObject);  
                //that.cTime += that.FRAMEDURATION;
-               that.update(1);
-               LAG -= that.FRAMEDURATION;
+               elapsed = elapsed - step;
+               that.update(step);
+               //LAG -= that.FRAMEDURATION;
             }
 
-            lagOffset = LAG / that.FRAMEDURATION;
-            
+            //lagOffset = LAG / that.FRAMEDURATION;
             that.render(1);
 
             if(that.useFpsCounter){
                 that.fpsmeter.tick();
             }
 
+            last = now;
+            
             requestAnimationFrame( that.animationLoop, that.canvas );
             // if(that.useFpsCounter){
             //     that.fpsmeter.tickStart();
