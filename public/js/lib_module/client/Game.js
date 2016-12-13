@@ -12,7 +12,7 @@ define([
     'use strict';
     //private
     var that,
-        PREVIOUS = new Date().getTime(),
+        PREVIOUS = 0,
         FPS = 60,
         step = 1/60,
         LAG = 0,
@@ -91,9 +91,9 @@ define([
             this.scallable(true);
             this.callback = callback;
             this.useFpsCounter = false;
-            //this.state.add('Logo', Logo);
-            //this.state.start('Logo');
-            this.callback();
+            this.state.add('Logo', Logo);
+            this.state.start('Logo');
+            //his.callback();
         },
 
         timestamp: function() {
@@ -132,6 +132,42 @@ define([
             // last = now;
             
             // requestAnimationFrame( that.animationLoop, that.canvas );
+
+        //    if(that.useFpsCounter){
+        //         that.fpsmeter.tickStart();
+        //     }
+        //     now = that.timestamp();
+        //     elapsed = elapsed + Math.min(1, (now - PREVIOUS) / 1000);
+               
+        //     PREVIOUS = now;
+
+        //     if (elapsed > that.FRAMEDURATION || elapsed < 0) {
+        //         elapsed = that.FRAMEDURATION;
+        //     }
+           
+        //     LAG += elapsed;
+        //     //console.log(LAG + "          " + step)
+        //     if (elapsed >= that.FRAMEDURATION) { 
+        //        that.capturePreviousPositions(that.gameObject);  
+        //        //that.cTime += that.FRAMEDURATION;
+        //        that.update(1);
+        //        LAG -= that.FRAMEDURATION;
+        //     }
+
+        //     lagOffset = LAG / that.FRAMEDURATION;
+            
+        //     that.render(lagOffset);
+
+        //     if(that.useFpsCounter){
+        //         that.fpsmeter.tick();
+        //     }
+
+        //     requestAnimationFrame( that.animationLoop, that.canvas );
+
+
+// LAST to u gory bez dt!!
+
+
             // if(that.useFpsCounter){
             //     that.fpsmeter.tickStart();
             // }
@@ -210,37 +246,39 @@ define([
             
             if (!timestamp) {
                 timestamp = 0;
+                last = 0;
             } 
            
             
             
-            elapsed = elapsed + Math.min(1, (timestamp - last) ); 
-            
-            if (elapsed > 1000 || elapsed < 0) {
-                elapsed = this.FRAMEDURATION;
-                LAG = 0;
-            }
+            elapsed = elapsed + Math.min(1, (timestamp - last) / 1000); 
+             
+            // if (elapsed > 1000 || elapsed < 0) {
+            //     elapsed = this.FRAMEDURATION;
+            //     LAG = 0;
+            // }
            
-            LAG += elapsed;
+            //LAG += elapsed;
             
-            
+           
             while (elapsed >= step) {  
                 that.capturePreviousPositions(that.gameObject);
-                //this.cTime += this.FRAMEDURATION;
+                //this.cTime += step;
                
                this.update(step);
               
-               
-               elapsed -= this.FRAMEDURATION; 
+               //LAG -= step; 
+               elapsed -= step; 
             }
 
-            lagOffset = elapsed / this.FRAMEDURATION;
+            //lagOffset = LAG / this.FRAMEDURATION;
             
-            this.render(1);
+            this.render(elapsed);
             
             //this.showFPS(elapsed);
             
             PREVIOUS = timestamp;
+            last = timestamp;
 
             if(that.useFpsCounter){
                 that.fpsmeter.tick();

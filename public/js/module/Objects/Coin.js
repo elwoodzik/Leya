@@ -48,7 +48,7 @@ define([
             this.body.immoveable = options.immoveable;
             this.updateOfScreen = false;
             this.body.platformer.configure({
-                gravity: 0.5
+                gravity: 70*9.8*2
             })
             this.zIndex = 5;
         },

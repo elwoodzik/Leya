@@ -94,7 +94,8 @@ define(['Class'], function(my){
                 
                 this.ddy = this.body.falling ? this.gravity : 0;
             
-                this.body.tolerance =  this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile) : (this.tile - this.sprite.currentHeight);
+                this.body.tolerance =  this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile) : 0;
+                this.body.toleranceTop =  this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile) : this.sprite.currentHeight;
                 //this.body.tolerance2 = Math.abs(this.sprite.currentWidth - this.tile);
                 
                 var tx        = this.p2t(this.sprite.x ),
@@ -116,14 +117,14 @@ define(['Class'], function(my){
                         
                         this.body.falling = false;   // no longer falling
                         this.body.jumping = false;
-                        var tol = this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile - 1) : - (this.tile - this.sprite.currentHeight-1);
+                        var tol = this.sprite.currentHeight > 70 ? (this.sprite.currentHeight - this.tile - 1) : - (this.tile - this.sprite.currentHeight-1) 
                       
                         this.sprite.y = this.t2p(ty) - tol 
                         
                     }
                 }else if(this.body.velocity.y < 0){
-                    if(this.checkmove(this.sprite.x, this.sprite.y - this.body.tolerance)){
-                        this.sprite.y = this.t2p(ty) + 3
+                    if(this.checkmove(this.sprite.x, this.sprite.y - this.body.toleranceTop)){
+                        this.sprite.y = this.t2p(ty) + this.body.toleranceTop 
                         this.body.velocity.y = 0;   
 
                     }

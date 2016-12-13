@@ -39,8 +39,8 @@ define([
             var coin = null;
 
             for( i=0; i<randCoin; i++){
-                randVelocityY = that.game.rand(-10,-2);
-                randVelocityX = that.game.rand(-2,2);
+                randVelocityY = that.game.rand(-10*70,-4*70);
+                randVelocityX = that.game.rand(-3*70,3*70);
                 
                 coin = Coin.pnew(that.game, true,'main', this.x, this.y, 'coin1');
                
@@ -51,8 +51,8 @@ define([
             }
 
             for(i=0; i<randParticle; i++){
-                randVelocityY = this.game.rand(-20,-3);
-                randVelocityX = this.game.rand(-4,4);
+                randVelocityY = this.game.rand(-10*70,-4*70);
+                randVelocityX = this.game.rand(-3*70,3*70);
                 
                 particle = ParticleBox.pnew(that.game, true, 'main', this.x+this.currentHalfWidth, this.y+this.currentHeight, 'particleBox');
                 
