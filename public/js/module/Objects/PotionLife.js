@@ -15,12 +15,13 @@ define([
 			PotionLife.Super.apply(this, arguments);
             
             that = this;
+            that.game = game;
 
             //this.anims();
             this.configure();
 		},
 	
-        function(){
+        anims: function(){
             this.animations.add('idle', 0*72, 9*72, 72, 70, [0]);
             this.animations.play('idle', 7);
         },

@@ -100,38 +100,38 @@ define([
             return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
         },
 
-        animationLoop : function() {
-            if(that.useFpsCounter){
-                that.fpsmeter.tickStart();
-            }
-
-            now = that.timestamp();
-            elapsed = elapsed + Math.min(1, (now - last) / 1000);
-
-            // if (elapsed > that.FRAMEDURATION || elapsed < 0) {
-            //     elapsed = that.FRAMEDURATION;
+        animationLoop : function(timestamp) {
+            // if(that.useFpsCounter){
+            //     that.fpsmeter.tickStart();
             // }
+
+            // now = that.timestamp();
+            // elapsed = elapsed + Math.min(1, (now - last) / 1000);
+
+            // // if (elapsed > that.FRAMEDURATION || elapsed < 0) {
+            // //     elapsed = that.FRAMEDURATION;
+            // // }
            
-            //LAG += elapsed;
-            //console.log(LAG + "          " + step)
-            while (elapsed > step) { 
-               that.capturePreviousPositions(that.gameObject);  
-               //that.cTime += that.FRAMEDURATION;
-               elapsed = elapsed - step;
-               that.update(step);
-               //LAG -= that.FRAMEDURATION;
-            }
+            // //LAG += elapsed;
+            // //console.log(LAG + "          " + step)
+            // while (elapsed > step) { 
+            //    that.capturePreviousPositions(that.gameObject);  
+            //    //that.cTime += that.FRAMEDURATION;
+            //    elapsed = elapsed - step;
+            //    that.update(step);
+            //    //LAG -= that.FRAMEDURATION;
+            // }
 
-            //lagOffset = LAG / that.FRAMEDURATION;
-            that.render(1);
+            // //lagOffset = LAG / that.FRAMEDURATION;
+            // that.render(1);
 
-            if(that.useFpsCounter){
-                that.fpsmeter.tick();
-            }
+            // if(that.useFpsCounter){
+            //     that.fpsmeter.tick();
+            // }
 
-            last = now;
+            // last = now;
             
-            requestAnimationFrame( that.animationLoop, that.canvas );
+            // requestAnimationFrame( that.animationLoop, that.canvas );
             // if(that.useFpsCounter){
             //     that.fpsmeter.tickStart();
             // }
@@ -203,37 +203,50 @@ define([
             // now = this.last;
             // console.log(now - this.last)
             // dt = dt + Math.min(1, (now - this.last) / 1000);
+            // 
+            if(that.useFpsCounter){
+                that.fpsmeter.tickStart();
+            }
             
+            if (!timestamp) {
+                timestamp = 0;
+            } 
            
-            // requestAnimationFrame( this.animationLoop.bind(this) );
             
-            // elapsed = timestamp - PREVIOUS;
             
-            // if (elapsed > 1000 || elapsed < 0) {
-            //     elapsed = this.FRAMEDURATION;
-            //     LAG = 0;
-            // }
+            elapsed = elapsed + Math.min(1, (timestamp - last) ); 
+            
+            if (elapsed > 1000 || elapsed < 0) {
+                elapsed = this.FRAMEDURATION;
+                LAG = 0;
+            }
            
-            // LAG += elapsed;
+            LAG += elapsed;
             
             
-            // while (LAG >= this.FRAMEDURATION) {  
-            //    
-            //    this.cTime += this.FRAMEDURATION;
+            while (elapsed >= step) {  
+                that.capturePreviousPositions(that.gameObject);
+                //this.cTime += this.FRAMEDURATION;
                
-            //    this.update(this.cTime);
+               this.update(step);
               
-            //    LAG -= this.FRAMEDURATION;
-            // }
+               
+               elapsed -= this.FRAMEDURATION; 
+            }
 
-            // lagOffset = LAG / this.FRAMEDURATION;
+            lagOffset = elapsed / this.FRAMEDURATION;
             
-            // this.render(lagOffset);
+            this.render(1);
             
-            // this.showFPS(elapsed);
+            //this.showFPS(elapsed);
             
-            // PREVIOUS = timestamp;
+            PREVIOUS = timestamp;
 
+            if(that.useFpsCounter){
+                that.fpsmeter.tick();
+            }
+
+            requestAnimationFrame( this.animationLoop.bind(this) );
                // Throttle the frame rate.    
 
             // if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
