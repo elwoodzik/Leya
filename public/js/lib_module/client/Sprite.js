@@ -73,7 +73,7 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
             if(this.useRpgCollision){
                 this.rowAndColumn();
             }
-            this.frameUpdate();
+            //this.frameUpdate(dt);
 
         },
         redraw: function(dt){
@@ -131,12 +131,15 @@ define(['Class', 'require', 'lib_module/client/Body', 'lib_module/client/GameAni
                 this.x +=  (dt * this.body.velocity.x);
                 this.y +=  (dt * this.body.velocity.y);
             }
+
+             this.frameUpdate(dt);
         },
 
-        frameUpdate: function(){
+        frameUpdate: function(dt){
             if(!this.once){
                 if(this.change_f_delay<this.f_max_delay){
-                    this.change_f_delay++;
+                    this.change_f_delay += (1 + this.change_f_delay) * (dt*100);
+                    
                 }else{
                     this.change_f_delay = 0;
                     this.current_f = this.current_f+1>=this.states[this.state].f.length ? 0 : this.current_f+1;

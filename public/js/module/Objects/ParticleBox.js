@@ -51,7 +51,7 @@ define([
         anims: function(){
             this.animations.add('left', 0, 0, 29, 25, [3,2,1,0]);
             this.animations.add('right', 0, 0, 29, 25, [0,1,2,3]);
-            this.animations.play('left', 3);
+            this.animations.play('left', 9);
         },
 
         configure: function(){

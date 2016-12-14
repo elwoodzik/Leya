@@ -22,7 +22,7 @@ define([
 
         anims: function(){
             this.animations.add('idle', 5*72, 8*75, 72, 70, [0,1]);
-            this.animations.play('idle',6);
+            this.animations.play('idle',143);
         },
 
         configure: function(){

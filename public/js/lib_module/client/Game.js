@@ -91,9 +91,9 @@ define([
             this.scallable(true);
             this.callback = callback;
             this.useFpsCounter = false;
-            this.state.add('Logo', Logo);
-            this.state.start('Logo');
-            //his.callback();
+            // this.state.add('Logo', Logo);
+            // this.state.start('Logo');
+            this.callback();
         },
 
         timestamp: function() {
@@ -272,7 +272,7 @@ define([
             }
 
             //lagOffset = LAG / this.FRAMEDURATION;
-            
+            console.log()
             this.render(elapsed);
             
             //this.showFPS(elapsed);

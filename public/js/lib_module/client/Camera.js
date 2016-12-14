@@ -58,17 +58,17 @@ function(my, Rectangle, Settings){
 				if(this.axis === Camera.AXIS.HORIZONTAL || this.axis === Camera.AXIS.BOTH){		
 					// moves camera on horizontal axis based on followed object position
 					if(this.followed.renderX - this.xScroll  + this.xDeadZone  > this.wView)
-						this.xScroll = this.followed.renderX - (this.wView - this.xDeadZone);
+						this.xScroll = this.followed.x - (this.wView - this.xDeadZone);
 					else if(this.followed.renderX  - this.xDeadZone < this.xScroll)
-						this.xScroll = this.followed.renderX  - this.xDeadZone;
+						this.xScroll = this.followed.x  - this.xDeadZone;
 				}
 
 				if(this.axis === Camera.AXIS.VERTICAL || this.axis === Camera.AXIS.BOTH){
 					// moves camera on vertical axis based on followed object position
 					if(this.followed.renderY - this.yScroll + this.yDeadZone > this.hView)
-						this.yScroll = this.followed.renderY - (this.hView - this.yDeadZone);
+						this.yScroll = this.followed.y - (this.hView - this.yDeadZone);
 					else if(this.followed.renderY - this.yDeadZone < this.yScroll)
-						this.yScroll = this.followed.renderY - this.yDeadZone;
+						this.yScroll = this.followed.y - this.yDeadZone;
 				}
             }
            

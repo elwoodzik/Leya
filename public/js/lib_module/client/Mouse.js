@@ -160,7 +160,7 @@ define(['Class'], function(my){
 
         updateTouchStats: function(obj,static, hold){
             var tab = this.touchIntersects(obj, static);
-            var ac
+           
             for(var i=0; i<tab.length; i++){
                 if (tab[i]) {
                     console.log('ppp')

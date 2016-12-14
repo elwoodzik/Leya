@@ -49,7 +49,7 @@ define(['Class'], function(my){
 
             if (this.game.keyboard.use['A'].pressed  || this.game.keyboard.use['left'].pressed || this.sprite.leftPad.active){
                 this.ddx = this.ddx - this.accel;     // player wants to go left
-                this.sprite.animations.play('moveLeft') 
+                this.sprite.animations.play('moveLeft' ) 
                
             }else if (this.wasleft){
                 this.ddx = this.ddx + this.friction;  // player was going left, but not any more 

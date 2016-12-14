@@ -41,7 +41,7 @@ define([
             this.animations.add('silver', 1, 38, 39.5, 38, [0,1,2,3,4,5,6,7,8,9]);
             this.animations.add('bronze', 1.5, 76, 39.5, 38, [0,1,2,3,4,5,6,7,8,9]);
             //this.animations.add('idle', 0, 0, 55, 57, [0,1,2,3,4]);
-            this.animations.play('bronze', 4);
+            this.animations.play('bronze');
         },
 
         configure: function(options){

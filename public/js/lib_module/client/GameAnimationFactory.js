@@ -29,7 +29,7 @@ define(['Class'], function(my){
                 this.sprite.currentHeight = this.sprite.states[this.sprite.state].fH * this.sprite.scale;
                 this.sprite.currentHalfWidth = (this.sprite.states[this.sprite.state].fW / 2) * this.sprite.scale;
                 this.sprite.currentHalfHeight = (this.sprite.states[this.sprite.state].fH / 2) * this.sprite.scale;
-                this.sprite.f_max_delay = delay || 4;
+                this.sprite.f_max_delay = delay || 18;
                 if(typeof callback === 'function'){
                     this.sprite.playCallback = callback;
                     this.sprite.playCallbackDellay = callbackDellay || 1;
