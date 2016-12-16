@@ -79,7 +79,7 @@ define([
                 this.showFPS();
                 //this.scallable(false)
                 
-                this.add.multiplayer('http://192.168.0.10:4000');
+                this.add.multiplayer('http://localhost:4000');
                 //this.multiplayer.init();
 
                 this.add.sounds(that.assetManager);

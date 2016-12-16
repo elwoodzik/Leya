@@ -93,6 +93,9 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.world.setPortView(map.mapObj.w * map.w, map.mapObj.h * map.h);
 
             that.iconToMenu();
+
+            that.game.VAR.padRight = this.add.button('Graj',600, 310 , 180, 60, null, null, 'black', 'green', '#333', null);
+            that.game.VAR.padJump = this.add.button('AAA',600, 330 , 180, 60, null, null, 'black', 'green', '#333', null);
 		},
 
         iconToMenu: function(){

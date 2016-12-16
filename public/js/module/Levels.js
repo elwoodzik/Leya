@@ -28,6 +28,15 @@ define(['Class'], function(my){
                     that.game.state.start('Irobot2');
                 }
 			},true);
+
+             that.game.mouse.touchIntersects(that.lvls[0], true);
+             if ( that.lvls[0].touchActive ) {
+                
+                if(that.lvls[0].playable){
+                    Levels.LEVEL = that.lvls[0].lvl;
+                    that.game.state.start('Irobot2');
+                }
+            }
 		},
 
         createBlockLevels: function(posX, posY, margin, breaks, count){

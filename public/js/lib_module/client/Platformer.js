@@ -59,7 +59,7 @@ define(['Class'], function(my){
             }else if(this.wasleft === 0){
                  this.sprite.animations.playOnce('idle')   
             }
-             if ( this.game.keyboard.use['D'].pressed  || this.game.keyboard.use['right'].pressed || this.sprite.rightPad.active){
+             if ( this.game.VAR.padRight.touchActive || this.game.keyboard.use['D'].pressed  || this.game.keyboard.use['right'].pressed || this.sprite.rightPad.active){
                 this.ddx = this.ddx + this.accel;
                 this.sprite.animations.play('moveRight')   
             }else if (this.wasright){
@@ -69,7 +69,7 @@ define(['Class'], function(my){
             }else if(this.wasright === 0){
                 this.sprite.animations.playOnce('idle')   
             }
-            if ((this.game.keyboard.use['W'].pressed  || this.game.keyboard.use['up'].pressed || this.sprite.jumpPad.active ) && !this.body.jumping && !this.body.falling) {
+            if ((this.game.VAR.padJump.touchActive ||this.game.keyboard.use['W'].pressed  || this.game.keyboard.use['up'].pressed || this.sprite.jumpPad.active ) && !this.body.jumping && !this.body.falling) {
                 this.ddy = this.ddy - this.jump;     // apply an instantaneous (large) vertical impulse
                 this.body.jumping = true;
                 this.onplatform = false;

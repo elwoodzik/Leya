@@ -272,7 +272,7 @@ define([
             }
 
             //lagOffset = LAG / this.FRAMEDURATION;
-            console.log()
+            
             this.render(elapsed);
             
             //this.showFPS(elapsed);

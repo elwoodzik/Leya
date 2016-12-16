@@ -22,6 +22,7 @@ define(['Class'], function(my){
             this.scale = 1;
             this.timeLocal = 0;
             this.hovered = false;
+            this.touchActive = false;
 
             if(this.key){
                 this.image = this.Loader.assetManager.get(this.key); 
