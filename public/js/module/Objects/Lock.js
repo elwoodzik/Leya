@@ -25,7 +25,7 @@ define([
             var hudKey = player.keysIcon[lock.state];
             var lockState = lock.state;
             
-            if(hudKey.available && this.game.keyboard.use['SPACE'].pressed){
+            if(hudKey.available && (this.game.keyboard.use['SPACE'].pressed || this.game.VAR.padAction.touchActive)){
                 hudKey.moveToPoint(lock.x+lock.currentHalfWidth, lock.y-lock.currentHalfHeight, 10, function(){
                     hudKey.used = false;
                     hudKey.available = false;

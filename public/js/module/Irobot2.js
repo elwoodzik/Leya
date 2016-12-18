@@ -94,9 +94,21 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 
             that.iconToMenu();
 
-            that.game.VAR.padRight = this.add.button('Graj',600, 310 , 180, 60, null, null, 'black', 'green', '#333', null);
-            that.game.VAR.padJump = this.add.button('AAA',600, 330 , 180, 60, null, null, 'black', 'green', '#333', null);
+            that.game.VAR.padRight = this.add.button('>',260, 620 , 140, 100, null, null, 'black', 'green', '#333', null);
+            that.game.VAR.padRight.static = true;
+            that.game.VAR.padRight.size = 65;
+            that.game.VAR.padLeft = this.add.button('<',60, 620 , 140, 100, null, null, 'black', 'green', '#333', null);
+            that.game.VAR.padLeft.static = true;
+            that.game.VAR.padLeft.size = 65;
+            that.game.VAR.padJump = this.add.button('Skok',1100, 620 , 180, 100, null, null, 'black', 'green', '#333', null);
+            that.game.VAR.padJump.static = true;
+            that.game.VAR.padJump.size = 57;
+            that.game.VAR.padAction = this.add.button('Akcja',870, 620 , 200, 100, null, null, 'black', 'green', '#333', null);
+            that.game.VAR.padAction.static = true;
+            that.game.VAR.padAction.size = 57;
 		},
+
+       
 
         iconToMenu: function(){
             var b = that.game.add.button("x", that.game.width - 60, 15, 50, 50, 'white', 'green', 'black', 'black', 'black', that.showMenu);

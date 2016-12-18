@@ -76,7 +76,7 @@ define([
                // this.createOnBgCanvas(6);
                // this.scallable(false)
               
-                this.showFPS();
+                //this.showFPS();
                 //this.scallable(false)
                 
                 this.add.multiplayer('http://localhost:4000');

@@ -107,6 +107,7 @@ define([
             //that.game.physic.overlap(this, this.Coin, this.overlapWater);
 
             this.body.platformer.move(dt);
+            
 		},
 
         usePotion: function(){
@@ -133,7 +134,7 @@ define([
         },
 
         collideLever: function(p, l, dir, oy, ox){
-            if(this.game.keyboard.use['SPACE'].pressed && !l.active){
+            if((this.game.VAR.padAction.touchActive || this.game.keyboard.use['SPACE'].pressed) && !l.active){
          	    l.animations.playOnce('active');
                 l.active = true;
                 l.actived();

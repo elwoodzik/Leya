@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <style>
+    body{
+        height:1400px;
+    }
     @font-face {
         font-family: 'Forte';
         src: url('fonts/Forte.ttf');
@@ -16,7 +19,7 @@
     	overflow: hidden;
     }
     canvas{
-        border:1px solid black;
+        
        /* background-image: url("images/bg.png"); */
        background: black;
       /* -webkit-transform: translateZ(0); */
@@ -24,6 +27,15 @@
 
     </style>
     <body>
+
+<button id="goFS">Go Fullscreen</button>
+<script>
+  var goFS = document.getElementById("goFS");
+  goFS.addEventListener("click", function() {
+      document.body.webkitRequestFullScreen();
+      this.remove();
+  }, false);
+</script>
         <script src="js/lib/sound.js"></script>
         <script src="js/lib/fps.js"></script>
 

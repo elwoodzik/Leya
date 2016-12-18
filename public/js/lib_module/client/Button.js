@@ -15,7 +15,8 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 				width: width,
 				height: height
 			});
-        
+            
+            this.size = 42;
             this.fillStyle = background; 
             this.fillStyleHover = backgroundHover;
             this.strokeStyle = strokeStyle;
@@ -33,21 +34,25 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
         update: function() {
             var wasNotClicked = this.game.mouse.click;
 
-            this.game.mouse.touchIntersects(this, true);
+            if(!this.touchActive){
+                this.game.mouse.touchIntersects(this, true);
+            }
             
-            if (this.game.mouse.updateStats(this, true) && wasNotClicked && typeof this.action === 'function') {
+            if ( this.touchActive && typeof this.action === 'function') {
+                this.action.call(this.game, this);
+            }else if ( !this.touchActive && this.game.mouse.updateStats(this, true) && wasNotClicked && typeof this.action === 'function') {
                 this.game.mouse.click = false;
                 
                 this.action.call(this.game, this);
             }
-
-            if ( this.touchActive && typeof this.action === 'function') {
-                this.action.call(this.game, this);
-            }
+            
+            
+            
         },
 
         draw: function() {
             if (this.hovered) {
+               
                 this.game.ctx.fillStyle = this.backgroundHover;
                 
                 this.fillCol = this.fillStyleHover ? this.fillStyleHover : 'transparent';
@@ -80,7 +85,7 @@ define(['Class', 'lib_module/client/_ObjectSettings'], function(my, Settings){
 			}
 
             //text options
-            var fontSize = 42;
+            var fontSize =  this.size;
             this.game.ctx.fillStyle = this.textColor;
             this.game.ctx.font = fontSize + "px Forte";
          

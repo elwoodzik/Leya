@@ -38,16 +38,18 @@ define(['Class'], function(my){
         move: function(dt){
             this.keys();
             this.collision(dt);   
+             
         },
 
         keys: function(dt){
+            
             this.wasleft  = !this.onplatform ? (this.body.velocity.x < 0) : 0;
             this.wasright = !this.onplatform ? (this.body.velocity.x > 0) : 0;
             this.body.falling  = this.body.falling;
 
             this.ddx = 0;
 
-            if (this.game.keyboard.use['A'].pressed  || this.game.keyboard.use['left'].pressed || this.sprite.leftPad.active){
+            if (this.game.VAR.padLeft.touchActive || this.game.keyboard.use['A'].pressed  || this.game.keyboard.use['left'].pressed || this.sprite.leftPad.active){
                 this.ddx = this.ddx - this.accel;     // player wants to go left
                 this.sprite.animations.play('moveLeft' ) 
                
@@ -199,6 +201,7 @@ define(['Class'], function(my){
                     this.body.falling = ! (celldown.type === 'solid' || (nx && celldiag.type === 'solid'));
                 }
                 ///this.onplatform = false;
+               
         },
 
         bound:function(x, min, max) {
