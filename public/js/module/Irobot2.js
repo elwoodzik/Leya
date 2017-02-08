@@ -17,8 +17,9 @@ define([
     'module/Objects/Enemies/Enemy1',
     'module/Objects/PotionLife',
     'module/Objects/DialogBox',
+    'module/Objects/Trap',
 ], 
-function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Keys, Lock, Switch, Enemy1, PotionLife, DialogBox){
+function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox, JumpPlatform, Lever, Keys, Lock, Switch, Enemy1, PotionLife, DialogBox, Trap){
 	'use strict';
     var that;
 
@@ -37,7 +38,8 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             LOCK: 4,
             SWITCH: 4,
             ENEMY1: 5,
-            POTION: 10
+            POTION: 10,
+            TRAPS: 10
         },
 
 		constructor: function(game){
@@ -60,6 +62,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             that.game.CLASS.Enemy1 = Enemy1;
             that.game.CLASS.PotionLife = PotionLife;
             that.game.CLASS.DialogBox = DialogBox;
+            that.game.CLASS.Trap = Trap;
             
             that.game.VAR.exit = null;
             that.game.VAR.player = null;
@@ -78,6 +81,7 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
             Switch.setupPool(Irobot2.SWITCH, 'main');
             Enemy1.setupPool(Irobot2.ENEMY1, 'main');
             PotionLife.setupPool(Irobot2.POTION, 'main');
+            Trap.setupPool(Irobot2.TRAPS, 'main');
             
             // tworzy mape
             var map = that.game.add.map('main', 'mapa', that.getMap(Levels.LEVEL), 70, 70, false);
@@ -94,18 +98,23 @@ function(my, Maps, Levels, Player, Lift, Coin, BoxDesc, Box, Water, ParticleBox,
 
             that.iconToMenu();
 
+            //mobile pad
             that.game.VAR.padRight = this.add.button('>',260, 620 , 140, 100, null, null, 'black', 'green', '#333', null);
             that.game.VAR.padRight.static = true;
             that.game.VAR.padRight.size = 65;
+            that.game.VAR.padRight.used = false;
             that.game.VAR.padLeft = this.add.button('<',60, 620 , 140, 100, null, null, 'black', 'green', '#333', null);
             that.game.VAR.padLeft.static = true;
             that.game.VAR.padLeft.size = 65;
+            that.game.VAR.padLeft.used = false;
             that.game.VAR.padJump = this.add.button('Skok',1100, 620 , 180, 100, null, null, 'black', 'green', '#333', null);
             that.game.VAR.padJump.static = true;
             that.game.VAR.padJump.size = 57;
+            that.game.VAR.padJump.used = false;
             that.game.VAR.padAction = this.add.button('Akcja',870, 620 , 200, 100, null, null, 'black', 'green', '#333', null);
             that.game.VAR.padAction.static = true;
             that.game.VAR.padAction.size = 57;
+            that.game.VAR.padAction.used = false;
 		},
 
        

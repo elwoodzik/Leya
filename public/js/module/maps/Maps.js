@@ -188,7 +188,123 @@ define([
                             { "name":Ufo, "context":"main", "image":"ufo", "varr":"ufo", "x": 534, "y":  -254 }
                         ]
                     }
-                }
+                },
+                LEVEL3 : {
+                    map: [79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 180, 181, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 189, 190, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 193, 194, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 172, 144, 144, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 193, 194, 91, 91, 91, 79, 79, 112, 112, 112, 112, 112, 113, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 180, 181, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 189, 190, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 112, 91, 91, 91, 91, 91, 91, 91, 91, 91, 70, 91, 91, 91, 173, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 139, 112, 112, 112, 112, 113, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 165, 165, 91, 91, 91, 91, 180, 190, 91, 79, 79, 91, 91, 91, 91, 112, 175, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 192, 112, 165, 112, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 112, 165, 165, 165, 112, 91, 91, 91, 172, 91, 192, 91, 180, 181, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 139, 112, 112, 112, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 175, 91, 91, 91, 91, 91, 91, 91, 165, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 112, 112, 112, 112, 113, 91, 91, 91, 91, 91, 91, 91, 165, 112, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 189, 190, 91, 91, 91, 91, 91, 91, 91, 91, 171, 165, 165, 91, 91, 91, 189, 190, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 112, 112, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 57, 91, 91, 91, 91, 91, 91, 91, 91, 91, 112, 112, 165, 165, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 139, 112, 112, 112, 112, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 189, 190, 91, 91, 91, 91, 91, 165, 91, 171, 91, 172, 91, 91, 91, 191, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 165, 112, 112, 112, 112, 112, 112, 112, 112, 112, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 174, 192, 91, 91, 91, 91, 91, 180, 181, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 112, 112, 112, 112, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 165, 165, 165, 165, 112, 91, 91, 91, 91, 91, 91, 91, 91, 189, 190, 91, 91, 91, 165, 165, 174, 91, 91, 91, 171, 91, 91, 91, 79, 79, 165, 165, 165, 165, 165, 112, 173, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 112, 112, 112, 112, 112, 91, 91, 91, 79, 79, 165, 165, 165, 165, 165, 165, 112, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 165, 165, 165, 165, 165, 91, 91, 91, 79, 79, 165, 165, 165, 165, 165, 165, 165, 112, 171, 171, 36, 36, 36, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 189, 190, 91, 91, 91, 79, 79, 165, 165, 165, 165, 165, 165, 165, 165, 112, 112, 112, 112, 112, 112, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 165, 165, 91, 91, 91, 91, 91, 91, 180, 181, 79, 79, 91, 91, 91, 91, 91, 171, 91, 91, 91, 91, 91, 91, 91, 192, 91, 91, 173, 91, 165, 165, 91, 175, 91, 192, 91, 91, 91, 91, 79, 79, 91, 91, 91, 139, 112, 112, 112, 112, 91, 91, 91, 91, 112, 112, 112, 112, 112, 112, 165, 165, 112, 112, 112, 112, 112, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 165, 91, 91, 191, 112, 165, 91, 91, 91, 91, 91, 91, 91, 91, 91, 193, 194, 91, 91, 91, 91, 79, 79, 180, 181, 91, 91, 91, 91, 91, 165, 171, 173, 112, 165, 165, 91, 91, 193, 194, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 165, 112, 112, 165, 165, 165, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 79, 79, 91, 91, 171, 184, 91, 91, 175, 91, 172, 91, 91, 192, 91, 91, 91, 91, 91, 171, 91, 91, 91, 191, 91, 91, 171, 171, 91, 91, 79, 79, 112, 112, 112, 112, 91, 91, 112, 112, 112, 112, 112, 112, 112, 112, 112, 91, 91, 112, 112, 112, 112, 112, 91, 91, 112, 112, 112, 112, 79],
+                    w: 30,
+                    h: 40,
+                    ELEMENTS:{
+                        offsety : 70,
+                        tiles: {
+                            "111":{ "type":"solid"},
+                            "112":{ "type":"solid"},
+                            "138":{ "type":"solid"},
+                            "143":{ "type":"solid"},
+                            "156":{ "type":"solid"},
+                            "164":{ "type":"solid"},
+                            "22" :{ "type":"empty"},
+                            "3"  :{ "type":"solid"},
+                            "33" :{ "type":"empty"},
+                            "78" :{ "type":"solid"},
+                            "173" :{ "type":"solid"},
+                            "117" :{ "type":"solid"},
+                            "125" :{ "type":"solid"},
+                            "99" :{ "type":"solid"},
+                        },
+                        objects:[
+                            
+                            { "name":"Box", "pool": true, "context":"main", "image":"mapa", "x":210, "y":1180 },
+
+                            // skrzynki do zniszczenia
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1190, "y":1050 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1260, "y":1050 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":490, "y":1680 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":280, "y":630 },
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":770, "y":1400},
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":840, "y":1400},
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1190, "y":2030},
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1260, "y":2030},
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1190, "y":1820},
+                            { "name":"BoxDesc", "pool": true, "context":"main", "image":"mapa", "x":1260, "y":1820},
+
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":500, "y":650, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                           
+
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":710, "y":1080, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":780, "y":1080, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":850, "y":1080, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":920, "y":1080, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            //
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1020, "y":1570, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1070, "y":1570, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1130, "y":1570, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1180, "y":1570, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1230, "y":1570, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1280, "y":1570, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1020, "y":1620, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1070, "y":1620, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1130, "y":1620, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1180, "y":1620, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1230, "y":1620, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1280, "y":1620, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            //
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":370, "y":1830, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":440, "y":1900, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":510, "y":1970, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":580, "y":2040, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":650, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":720, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":790, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":860, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            //
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":630, "y":2390, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":630, "y":2460, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":630, "y":2530, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":700, "y":2390, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":700, "y":2460, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":700, "y":2530, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":770, "y":2390, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":770, "y":2460, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":840, "y":2390, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1470, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1470, "y":2180, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1470, "y":2250, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1470, "y":2320, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1540, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1540, "y":2180, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1540, "y":2250, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1540, "y":2320, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1610, "y":2110, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1610, "y":2180, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1610, "y":2250, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            { "name":"Coin", "pool": true, "context":"main", "image":"coin1", "x":1610, "y":2320, "method":[ {"name": "configure", "attr": [ { immoveable: false} ] } ] },
+                            //
+                            { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":1890, "y":2765, "method":[ {"name": "configure", "attr": [ { jump:1900 } ] } ] },
+                            { "name":"JumpPlatform", "pool": true, "context":"main", "image": "items", "x":1610, "y":1920, "method":[ {"name": "configure", "attr": [ { jump:2200 } ] } ] },
+                            //
+                            { "name":"Trap", "pool": true, "context":"main", "image":"items", "x":455, "y":1506},
+                            { "name":"Trap", "pool": true, "context":"main", "image":"items", "x":525, "y":1506},
+                            { "name":"Trap", "pool": true, "context":"main", "image":"items", "x":595, "y":1506},
+                            //{ "name":"Trap", "pool": true, "context":"main", "image":"items", "x":1400, "y":2772, "method":[ {"name": "configure", "attr": [ { animate: 'two'} ] } ] },
+
+                            //      Woda
+                            { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":350, "y":2800, "marginY": 30},
+                            { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":420, "y":2800, "marginY": 30},
+                            { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":1120, "y":2800, "marginY": 30},
+                            { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":1190, "y":2800, "marginY": 30},
+                            { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":1610, "y":2800, "marginY": 30},
+                            { "name":"Water", "pool": true, "context":"main", "image":"mapa", "x":1680, "y":2800, "marginY": 30},
+        
+                            // Gracz
+                            { "name":Player, "context":"main", "image":"player3", "varr":"player", "x":297.5, "y":297.5 },
+                            // Exit
+                            { "name":Exit, "context":"main", "image":"exit", "varr":"exit", "x": 1260, "y": 560, "marginY": 30 },
+
+                            { "name":Ufo, "context":"main", "image":"ufo", "varr":"ufo", "x": -530, "y":  -250 },
+                        ]
+                    },
+                },
             },
         },
 		

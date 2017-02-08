@@ -62,7 +62,7 @@ define(['Class'], function(my){
             //
             e.preventDefault();
             var touches = event.changedTouches;
-            var touch = e.changedTouches[0]
+            var touch = e.changedTouches[0];
 
             for (var i=0; i < touches.length; i++) {
                 var touch = touches[i];

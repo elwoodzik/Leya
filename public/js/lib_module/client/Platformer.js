@@ -16,9 +16,9 @@ define(['Class'], function(my){
             this.tile     = options.tile || 70;              // the size of each tile (in game pixels)
             this.meter    = this.tile;            // abitrary choice for 1m
             this.gravity  = options.gravity || this.meter * 9.8 * 4 ;    // very exagerated gravity (6x)
-            this.maxdx    = options.maxdx || this.meter * 3 - 30;         // max horizontal speed (20 tiles per second)
+            this.maxdx    = options.maxdx || this.meter * 3 - 15;         // max horizontal speed (20 tiles per second)
             this.maxdy    = options.maxdy || this.meter * 40;         // max vertical speed   (60 tiles per second)
-            this.accel    = options.accel || this.maxdx / (1 / 3);          // horizontal acceleration -  take 1/2 second to reach maxdx
+            this.accel    = options.accel || this.maxdx / (1 / 2);          // horizontal acceleration -  take 1/2 second to reach maxdx
             this.friction = options.maxdx || this.maxdx / (1/6);          // horizontal friction     -  take 1/6 second to stop from maxdx
             this.jump     = options.meter || this.meter * 850;     
         
